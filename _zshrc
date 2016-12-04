@@ -1,0 +1,219 @@
+export GOPATH=$HOME
+export PATH=$HOME/.pyenv/shims/:$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
+export MANPATH=/opt/local/man:$MANPATH
+autoload -U compinit
+compinit
+bindkey -v
+
+branch_flag=true
+
+export PYENV_ROOT="${HOME}/.pyenv"
+eval "$(pyenv init -)"
+eval "$(rbenv init -)"
+# eval "$(direnv hook zsh)"
+
+zstyle ':completion:*:default' menu select=1
+# ------- PROMPT SETTING ----------------------
+# PROMPT=$'`battery-status`'
+#RPROMPT=$'`pyenv-status` `branch-status-check` %F{5}[%C]%f' # %~はpwd
+RPROMPT=$'`branch-status-check` %F{5}[%C]%f' # %~はpwd
+function zle-line-init zle-keymap-select {
+    case $KEYMAP in
+        vicmd)
+        PROMPT="%n %{$fg[black]%}%{$fg[red]%}>>%{$reset_color%}"
+        ;;
+        main|viins)
+        PROMPT="%n %{$fg[black]%}%{$fg[green]%}>>%{$reset_color%}"
+        ;;
+    esac
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+setopt prompt_subst #表示毎にPROMPTで設定されている文字列を評価する
+# ---------------------------------------------
+
+HISTFILE=${HOME}/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt hist_ignore_dups
+setopt share_history
+setopt EXTENDED_HISTORY
+#setopt auto_menu
+#setopt list_packed
+
+#cd ../のときに今いるディレクトリを表示しない
+zstyle ':completion:*' ignore-parents parent pwd ..
+
+zle -N change-flag
+bindkey '^\' change-flag
+bindkey '^r' history-incremental-search-backward
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+# peco+ghq Gitのリポジトリを一覧表示
+# ghq get (Git repos PATH)
+zle -N peco-src
+bindkey '^]' peco-src
+
+# Ctrl+g gitのブランチをぺこ
+zle -N git-branch-src
+bindkey '^g' git-branch-src
+
+zle -N tmux-newwindow
+bindkey '^n' tmux-newwindow
+
+function tmux-newwindow {
+    tmux new-window
+}
+
+function git-branch-src(){
+    local selected_branch=$(git branch | peco --query "$LBUFFER" | cut -c3-)
+    if [ -n "$selected_branch" ]; then
+        BUFFER="git checkout ${selected_branch}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+
+function change-flag(){
+    if $branch_flag ; then
+        branch_flag=false
+    else
+        branch_flag=true
+    fi
+    zle accept-line
+}
+
+# --------------- alias ---------------------
+#emacs?知らない子ですねvimですか？
+alias tmux="tmux"
+alias checkout='git checkout'
+
+# ------------------ functions --------------------
+# {{{ methods for RPROMPT
+# fg[color]表記と$reset_colorを使いたい
+# @see https://wiki.archlinux.org/index.php/zsh
+autoload -U colors; colors
+function branch-status-check {
+    local prefix branchname suffix
+        # .gitの中だから除外
+        if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+            return
+        fi
+        branchname=`get-branch-name`
+        # ブランチ名が無いので除外
+        if [[ -z $branchname ]]; then
+            return
+        fi
+        # if $branch_flag; then
+        #     branchname='♨ '
+        #     # branchname=':('
+        # fi
+        prefix=`get-branch-status` #色だけ返ってくる
+        suffix='%{'${reset_color}'%}'
+        # echo ${prefix}${branchname}${suffix}
+        green='%{'${fg[green]}'%}'
+        echo ${prefix}${branchname}${suffix}
+}
+function get-branch-name {
+    # gitディレクトリじゃない場合のエラーは捨てます
+    echo `git rev-parse --abbrev-ref HEAD 2> /dev/null`
+}
+function get-branch-status {
+    local res color
+        output=`git status --short 2> /dev/null`
+        if [ -z "$output" ]; then
+            res=':' # status Clean
+            color='%{'${fg[green]}'%}'
+        elif [[ $output =~ "[\n]?\?\? " ]]; then
+            res='?:' # Untracked
+            color='%{'${fg[yellow]}'%}'
+        elif [[ $output =~ "[\n]? M " ]]; then
+            res='M:' # Modified
+            color='%{'${fg[red]}'%}'
+        else
+            res='A:' # Added to commit
+            color='%{'${fg[cyan]}'%}'
+        fi
+        # echo ${color}${res}'%{'${reset_color}'%}'
+        echo ${color} # 色だけ返す
+}
+
+#left prompt setting
+function battery-status
+{
+    name='%n'
+    arrow='->'
+    suffix='%{'${reset_color}'%}'
+    local color
+    battery=`ioreg -n AppleSmartBattery | awk '/MaxCapacity/{ MAX=$5 }
+        /CurrentCapacity/{ CURRENT=$5 }
+        END { printf("%.0f\n",CURRENT/MAX*100)}'`
+    if [[ ${battery} < 30 ]] then color='%{'${fg[red]}'%}'
+    elif [[ ${battery} < 50 ]] then color='%{'${fg[magenta]}'%}'
+    elif [[ ${battery} < 70 ]] then color='%{'${fg[yellow]}'%}'
+    elif [[ ${battery} < 90 ]] then color='%{'${fg[green]}'%}'
+    else color='%{'${fg[cyan]}'%}'
+    fi
+    color='%{'${fg[cyan]}'%}'
+    echo ${color}${name}${suffix}${arrow}
+}
+
+function pyenv-status
+{
+    pyenv=`pyenv version|cut -d" " -f1`
+    if [ "${pyenv}" = "system" ]; then
+        pyversion=""
+    else
+        pyversion="${pyenv}"
+    fi
+    echo "%{"${fg[yellow]}"%}"${pyversion}"%{"${reset_color}"%}"
+}
+
+
+############################################################
+# Manegiment Git Repository
+# Use:
+#   ghq
+#   peco
+# Memo:
+#   ghq get (Git Repository PATH)
+############################################################
+function peco-src () {
+    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+
+#---------------------------------------------------------------
+# pyenv
+#export PYENV_ROOT="${HOME}/.pyenv"
+#if [ -d "${PYENV_ROOT}" ]; then
+#    export PATH=${PYENV_ROOT}/bin:$PATH
+#    eval "$(pyenv init -)"
+# if which tmux 2>&1 >/dev/null; then
+#     test -z "$TMUX" && (tmux attach || tmux new-session)
+# fi
+
+function notify () {
+    case $? in
+        0 ) echo "display notification \"SUCCESS\" with title \"$1\"" | osascript - ;;
+        * )echo "display notification \"!!!!!!FAILD!!!!!\" with title \"$1\"" | osascript - ;;
+    esac
+ }
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/yamawaki/Documents/src/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/Users/yamawaki/Documents/src/google-cloud-sdk/completion.zsh.inc'
+
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+if [ -f ~/.local.zsh ]; then
+  source ~/.local.zsh
+fi

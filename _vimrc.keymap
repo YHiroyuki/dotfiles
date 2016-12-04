@@ -1,0 +1,22 @@
+" 検索などをした時に画面中央に表示
+nmap n nzz
+nmap N Nzz
+nmap * *zz
+"nmap # #zz
+nmap g* g*zz
+nmap g# g#zz
+nmap { gT
+nmap } gt
+" 半ページ送りの時画面中央に表示
+nmap <C-d> <C-d>zz
+nmap <C-u> <C-u>zz
+" 画面分割時の移動をCtrl+j,k,h,lに
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-h> <C-w>h
+noremap <C-l> <C-w>l
+"挿入モード時にCtrl+h,j,k,lで移動出来るように変更
+imap <C-h> <Left>
+imap <C-l> <Right>
+imap <C-k> <Up>
+imap <C-j> <Down>
