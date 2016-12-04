@@ -1,50 +1,49 @@
 
-"" NeoBundle Pugin 関係
-" if has('vim_starting')
-"     set runtimepath+=~/.vim/bundle/neobundle.vim/
-" endif
-" 
-" "neobundleを使う上で必要なもの
-" "ファンクションの呼び出しneobundleはクラスかな？
-" call neobundle#begin(expand('~/.vim/bundle/'))
-" "謎？
-" NeoBundleFetch 'Shougo/neobundle.vim'
-" "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
-" filetype plugin indent on
-" NeoBundleCheck
-" " ステータスラインをいい感じに
-" NeoBundle 'itchyny/lightline.vim'
-" " インデントの可視化
-" NeoBundle 'nathanaelkane/vim-indent-guides'
-" " NerdTree
-" NeoBundle 'scrooloose/nerdtree'
-" " unite
-" NeoBundle 'Shougo/unite.vim'
-" " 構文チェック
-" "NeoBundle 'scrooloose/syntastic'
-" " 補完
-" NeoBundle 'Syougo/neocomplete'
-" " python用補完
-" NeoBundle 'davidhalter/jedi-vim'
-" 
-" "NeoBundle 'plasticboy/vim-markdown'
-" NeoBundle 'kannokanno/previm'
-" NeoBundle 'tyru/open-browser.vim'
-" 
-" " ファイル検索するの楽にするやつ
-" NeoBundle "ctrlpvim/ctrlp.vim"
-" 
-" " パイソンようのプラグイン
-" " NeoBundle 'klen/python-mode'
-" 
-" NeoBundle 'derekwyatt/vim-scala'
-" 
-" NeoBundle 'h1mesuke/vim-alignta'
-" 
-" NeoBundle 'airblade/vim-gitgutter'
-" 
-" "NeoBundle 'Flake8-vim'
-" call neobundle#end()
+"ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
+filetype plugin indent on
+
+"""" Plugin
+if &compatible
+  set nocompatible
+endif
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+
+call dein#begin(expand('~/.vim/dein'))
+
+" ステータスラインをいい感じに
+call dein#add('itchyny/lightline.vim')
+" インデントの可視化
+call dein#add('nathanaelkane/vim-indent-guides')
+" NerdTree
+call dein#add('scrooloose/nerdtree')
+" unite
+call dein#add('Shougo/unite.vim')
+" 構文チェック
+"call dein#add('scrooloose/syntastic')
+" 補完
+call dein#add('Syougo/neocomplete')
+" python用補完
+call dein#add('davidhalter/jedi-vim')
+
+"call dein#add('plasticboy/vim-markdown')
+call dein#add('kannokanno/previm')
+call dein#add('tyru/open-browser.vim')
+
+" ファイル検索するの楽にするやつ
+call dein#add("ctrlpvim/ctrlp.vim")
+
+" パイソンようのプラグイン
+" call dein#add('klen/python-mode')
+
+call dein#add('derekwyatt/vim-scala')
+
+call dein#add('h1mesuke/vim-alignta')
+
+call dein#add('airblade/vim-gitgutter')
+call dein#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 
 au BufNewFile,BufRead *.scala setf scala
 

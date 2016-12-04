@@ -40,6 +40,10 @@ ln -s ${CURRENT_DIR}/_tmux.conf ~/.tmux.conf
 ln -s ${CURRENT_DIR}/_tmux ~/.tmux
 
 cecho $green "\n----> setup vim"
+[ -d ~/.vim/dein/repos/github.com/Shougo/dein.vim ] || (
+    mkdir -p ~/.vim/dein/repos/github.com/Shougo/dein.vim
+    git clone https://github.com/Shougo/dein.vim.git ~/.vim/dein/repos/github.com/Shougo/dein.vim
+)
 [ -e ~/.vimrc ] && rm ~/.vimrc
 ln -s ${CURRENT_DIR}/_vimrc ~/.vimrc
 [ -e ~/.vimrc.keymap ] && rm ~/.vimrc.keymap
