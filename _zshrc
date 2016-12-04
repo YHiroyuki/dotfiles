@@ -2,7 +2,7 @@ export GOPATH=$HOME
 export PATH=$HOME/.pyenv/shims/:$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
 export MANPATH=/opt/local/man:$MANPATH
 autoload -U compinit
-compinit
+compinit -u
 bindkey -v
 
 branch_flag=true
@@ -206,10 +206,10 @@ function notify () {
  }
 
 # The next line updates PATH for the Google Cloud SDK.
-source '/Users/yamawaki/Documents/src/google-cloud-sdk/path.zsh.inc'
+# source '/Users/yamawaki/Documents/src/google-cloud-sdk/path.zsh.inc'
 
 # The next line enables shell command completion for gcloud.
-source '/Users/yamawaki/Documents/src/google-cloud-sdk/completion.zsh.inc'
+# source '/Users/yamawaki/Documents/src/google-cloud-sdk/completion.zsh.inc'
 
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

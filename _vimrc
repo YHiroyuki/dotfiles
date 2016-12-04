@@ -1,50 +1,50 @@
 
 "" NeoBundle Pugin 関係
-if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-
-"neobundleを使う上で必要なもの
-"ファンクションの呼び出しneobundleはクラスかな？
-call neobundle#begin(expand('~/.vim/bundle/'))
-"謎？
-NeoBundleFetch 'Shougo/neobundle.vim'
-"ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
-filetype plugin indent on
-NeoBundleCheck
-" ステータスラインをいい感じに
-NeoBundle 'itchyny/lightline.vim'
-" インデントの可視化
-NeoBundle 'nathanaelkane/vim-indent-guides'
-" NerdTree
-NeoBundle 'scrooloose/nerdtree'
-" unite
-NeoBundle 'Shougo/unite.vim'
-" 構文チェック
-"NeoBundle 'scrooloose/syntastic'
-" 補完
-NeoBundle 'Syougo/neocomplete'
-" python用補完
-NeoBundle 'davidhalter/jedi-vim'
-
-"NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'tyru/open-browser.vim'
-
-" ファイル検索するの楽にするやつ
-NeoBundle "ctrlpvim/ctrlp.vim"
-
-" パイソンようのプラグイン
-" NeoBundle 'klen/python-mode'
-
-NeoBundle 'derekwyatt/vim-scala'
-
-NeoBundle 'h1mesuke/vim-alignta'
-
-NeoBundle 'airblade/vim-gitgutter'
-
-"NeoBundle 'Flake8-vim'
-call neobundle#end()
+" if has('vim_starting')
+"     set runtimepath+=~/.vim/bundle/neobundle.vim/
+" endif
+" 
+" "neobundleを使う上で必要なもの
+" "ファンクションの呼び出しneobundleはクラスかな？
+" call neobundle#begin(expand('~/.vim/bundle/'))
+" "謎？
+" NeoBundleFetch 'Shougo/neobundle.vim'
+" "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
+" filetype plugin indent on
+" NeoBundleCheck
+" " ステータスラインをいい感じに
+" NeoBundle 'itchyny/lightline.vim'
+" " インデントの可視化
+" NeoBundle 'nathanaelkane/vim-indent-guides'
+" " NerdTree
+" NeoBundle 'scrooloose/nerdtree'
+" " unite
+" NeoBundle 'Shougo/unite.vim'
+" " 構文チェック
+" "NeoBundle 'scrooloose/syntastic'
+" " 補完
+" NeoBundle 'Syougo/neocomplete'
+" " python用補完
+" NeoBundle 'davidhalter/jedi-vim'
+" 
+" "NeoBundle 'plasticboy/vim-markdown'
+" NeoBundle 'kannokanno/previm'
+" NeoBundle 'tyru/open-browser.vim'
+" 
+" " ファイル検索するの楽にするやつ
+" NeoBundle "ctrlpvim/ctrlp.vim"
+" 
+" " パイソンようのプラグイン
+" " NeoBundle 'klen/python-mode'
+" 
+" NeoBundle 'derekwyatt/vim-scala'
+" 
+" NeoBundle 'h1mesuke/vim-alignta'
+" 
+" NeoBundle 'airblade/vim-gitgutter'
+" 
+" "NeoBundle 'Flake8-vim'
+" call neobundle#end()
 
 au BufNewFile,BufRead *.scala setf scala
 
@@ -179,12 +179,6 @@ if filereadable(glob("~/.vimrc.keymap"))
 endif
 
 let mapleader=','
-
-:command! GitConflict call s:git_conflict()
-
-function! s:git_conflict()
-    grep \<\<\<\<\<\<\< **
-endfunction
 
 let g:ctrlp_prompt_mappings = {
   \ 'PrtBS()':              ['<bs>', '<c-]>'],
