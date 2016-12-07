@@ -19,3 +19,4 @@
     ls = !git --no-pager log -10 --oneline --decorate
 [core]
     excludesfile = ~/.gitignore
+    editor = vim
