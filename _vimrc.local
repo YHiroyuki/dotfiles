@@ -1,6 +1,6 @@
 colorscheme default
 "コメントの文字が見にくかったから変えたやつ
-hi Comment ctermfg=22
+hi Comment ctermfg=34
 hi colorcolumn ctermbg=233
 hi Directory ctermfg=14
 hi String ctermfg=12
