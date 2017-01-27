@@ -9,8 +9,8 @@
     aa = add -A
     d = diff
     dw = diff --color-words
-    cm = commit
-    cmm = commit -m
+    co = commit
+    com = commit -m
     pb = !git branch | peco
     pl = !git pull origin `git rev-parse --abbrev-ref HEAD`
     ps = !git push origin `git rev-parse --abbrev-ref HEAD`
