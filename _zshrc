@@ -1,4 +1,4 @@
-export GOPATH=$HOME
+export GOPATH=~/.gocode
 export PATH=$HOME/.pyenv/shims/:$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
 export MANPATH=/opt/local/man:$MANPATH
 autoload -U compinit
@@ -7,9 +7,17 @@ bindkey -v
 
 branch_flag=true
 
+export LSCOLORS=exfxcxdxbxegedabagacad
+export LS_COLORS='di=32:ln=35:so=34:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+
+alias ls="ls -GF"
+alias gls="gls --color"
+
+zstyle ':completion:*' list-colors 'di=32' 'ln=35' 'so=34' 'ex=31' 'bd=46;34' 'cd=43;34'
+
 export PYENV_ROOT="${HOME}/.pyenv"
 eval "$(pyenv init -)"
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 # eval "$(direnv hook zsh)"
 
 zstyle ':completion:*:default' menu select=1
