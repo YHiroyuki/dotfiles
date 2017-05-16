@@ -12,6 +12,6 @@ test:
 deployment:
 
   env_branch_name:
-    branch: $TEST_BRANCH
+    branch: "$TEST_BRANCH"
     commands:
       - echo $SAMPLE
