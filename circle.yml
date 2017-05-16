@@ -1,0 +1,23 @@
+machine:
+  timezone:
+    Asia/Tokyo
+  environment:
+    SAMPLE: sample
+    TEST_BRANCH: my-mac-settings
+
+dependencies:
+  override:
+    - pip install -r dev-requirements.txt
+    - pip install -e .[admin]
+    - python setup.py develop
+
+test:
+  override:
+    - test $SAMPLE
+
+deployment:
+
+  env_branch_name:
+    branch: $TEST_BRANCH
+    commands:
+      - echo $SAMPLE
