@@ -18,4 +18,4 @@ deployment:
   hoge:
     branch: my-mac-settings
     commands:
-      - echo "XXX"
+      - echo $TEST_BRANCH
