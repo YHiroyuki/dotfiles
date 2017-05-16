@@ -15,3 +15,7 @@ deployment:
     branch: "$TEST_BRANCH"
     commands:
       - echo $SAMPLE
+  hoge:
+    branch: my-mac-settings
+    commands:
+      - echo "XXX"
