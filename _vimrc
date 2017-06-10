@@ -46,29 +46,8 @@ call dein#add('airblade/vim-gitgutter')
 
 call dein#add('thinca/vim-quickrun')
 "call dein#add('superbrothers/vim-quickrun-markdown-gfm')
-" -------colorscheme
-" solarized カラースキーム
-call dein#add('altercation/vim-colors-solarized')
-" mustang カラースキーム
-call dein#add('croaker/mustang-vim')
-" wombat カラースキーム
-call dein#add('jeffreyiacono/vim-colors-wombat')
-" jellybeans カラースキーム
-call dein#add('nanotech/jellybeans.vim')
-" lucius カラースキーム
-call dein#add('vim-scripts/Lucius')
-" zenburn カラースキーム
-call dein#add('vim-scripts/Zenburn')
-" mrkn256 カラースキーム
-call dein#add('mrkn/mrkn256.vim')
-" railscasts カラースキーム
-call dein#add('jpo/vim-railscasts-theme')
-" pyte カラースキーム
-call dein#add('therubymug/vim-pyte')
-" molokai カラースキーム
-call dein#add('tomasr/molokai')
 call dein#add('romainl/Apprentice')
-
+call dein#add('YHiroyuki/atea')
 
 call dein#end()
 
@@ -222,16 +201,9 @@ if filereadable(glob("~/.vimrc.keymap"))
     source ~/.vimrc.keymap
 endif
 
-autocmd ColorScheme * highlight Normal ctermbg=none
-colorscheme apprentice
-highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
-"hi colorcolumn ctermbg=233
-"hi LineNr ctermbg=235 ctermfg=120
-hi VertSplit ctermbg=237 ctermfg=123
-"hi CursorLineNr ctermfg=130
-"hi SignColumn ctermbg=234 ctermfg=15
-"hi StatusLine ctermfg=236 ctermbg=1
-hi todo term=reverse cterm=reverse ctermfg=208 ctermbg=235 gui=reverse guifg=#ff8700 guibg=#262626
+colorscheme atea
+" source ~/src/github.com/YHiroyuki/atea/colors/atea.vim
+
 hi link   Include   Statement
 hi link   Define    Statement
 hi link   Macro     Statement
