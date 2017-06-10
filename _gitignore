@@ -2,3 +2,4 @@
 .ropeproject/
 .envrc
 dist/
+.DS_Store
