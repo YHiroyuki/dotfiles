@@ -143,8 +143,8 @@ set relativenumber
 syntax on
 " 入力中のコマンド表示
 set showcmd
-" 80列目と120列目をハイライトで表示
-set colorcolumn=120
+" 80列目をハイライトで表示
+set colorcolumn=80
 " カーソルのある行に下線
 set cursorline
 " 行番号は6列分確保
@@ -154,13 +154,13 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 if has("autocmd")
-    autocmd   FileType   c        setlocal   sw=4   sts=4   ts=4   et
-    autocmd   FileType   html     setlocal   sw=2   sts=2   ts=2   et
-    autocmd   FileType   ruby     setlocal   sw=2   sts=2   ts=2   et
-    autocmd   FileType   js       setlocal   sw=4   sts=4   ts=4   et
-    autocmd   FileType   python   setlocal   sw=4   sts=4   ts=4   et
-    autocmd   FileType   css      setlocal   sw=4   sts=4   ts=4   et
-    autocmd   FileType   scss     setlocal   sw=4   sts=4   ts=4   et
+    autocmd   FileType   c        setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
+    autocmd   FileType   html     setlocal   sw=2   sts=2   ts=2   et    colorcolumn=80
+    autocmd   FileType   ruby     setlocal   sw=2   sts=2   ts=2   et    colorcolumn=80
+    autocmd   FileType   js       setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
+    autocmd   FileType   python   setlocal   sw=4   sts=4   ts=4   et    colorcolumn=120
+    autocmd   FileType   css      setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
+    autocmd   FileType   scss     setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
 endif
 " 自動インデント
 set autoindent
