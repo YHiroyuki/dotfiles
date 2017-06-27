@@ -20,7 +20,7 @@ call dein#add('scrooloose/nerdtree')
 " unite
 call dein#add('Shougo/unite.vim')
 " uniteを使ってカラースキーマのチェックをする :Unite colorscheme -auto-preview
-call dein#add('ujihisa/unite-colorscheme')
+" call dein#add('ujihisa/unite-colorscheme')
 " 構文チェック
 "call dein#add('scrooloose/syntastic')
 " 補完
@@ -44,9 +44,9 @@ call dein#add('h1mesuke/vim-alignta')
 
 call dein#add('airblade/vim-gitgutter')
 
-call dein#add('thinca/vim-quickrun')
+"call dein#add('thinca/vim-quickrun')
 "call dein#add('superbrothers/vim-quickrun-markdown-gfm')
-call dein#add('romainl/Apprentice')
+" call dein#add('romainl/Apprentice')
 call dein#add('YHiroyuki/atea')
 
 call dein#end()
@@ -102,9 +102,6 @@ let g:unite_enable_start_insert=1
 "let g:syntastic_python_checkers = ["flake8"]
 "let g:syntastic_enable_signs=1
 "let g:syntastic_auto_loc_list=2
-
-" いらないこかも
-"autocmd FileType python setlocal completeopt-=preview
 
 "" my function
 "全角スペースの可視化
@@ -172,8 +169,11 @@ set splitright
 
 
 let g:jedi#auto_initialization = 1
-let g:jedi#auto_vim_configuration = 1
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_select_first = 0
 " let g:jedi#use_splits_not_buffers = left
+" いらないこかも(超いる子だった)
+autocmd FileType python setlocal completeopt-=preview
 
 autocmd QuickFixCmdPost *grep* cwindow
 " autocmd BufWritePost *.py call Flake8()

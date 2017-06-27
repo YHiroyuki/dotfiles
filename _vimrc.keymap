@@ -15,8 +15,6 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
-"挿入モード時にCtrl+h,j,k,lで移動出来るように変更
-imap <C-h> <Left>
-imap <C-l> <Right>
-imap <C-k> <Up>
-imap <C-j> <Down>
+"挿入モード時にMac標準の前後移動と同じことができるように
+imap <C-b> <Left>
+imap <C-f> <Right>
