@@ -1,7 +1,7 @@
 [include]
     path = .gitconfig.local
 [ghq]
-    root = ~/src
+    root = ~/src/ghq
 [alias]
     br = branch
     co = checkout
