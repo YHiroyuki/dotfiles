@@ -19,21 +19,24 @@ call dein#add('Yggdroot/indentLine')
 call dein#add('scrooloose/nerdtree')
 " unite
 call dein#add('Shougo/unite.vim')
+"call dein#add('Shougo/vimfiler')
 " uniteを使ってカラースキーマのチェックをする :Unite colorscheme -auto-preview
 " call dein#add('ujihisa/unite-colorscheme')
 " 構文チェック
-"call dein#add('scrooloose/syntastic')
+call dein#add('scrooloose/syntastic')
 " 補完
 call dein#add('Syougo/neocomplete')
+" call dein#add('Shougo/neosnippet')
+" call dein#add('Shougo/neosnippet-snippets')
 " python用補完
 call dein#add('davidhalter/jedi-vim')
 
-call dein#add('plasticboy/vim-markdown')
+" call dein#add('plasticboy/vim-markdown')
 call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
 
 " ファイル検索するの楽にするやつ
-call dein#add("ctrlpvim/ctrlp.vim")
+" call dein#add("ctrlpvim/ctrlp.vim")
 
 " パイソンようのプラグイン
 " call dein#add('klen/python-mode')
@@ -44,10 +47,13 @@ call dein#add('h1mesuke/vim-alignta')
 
 call dein#add('airblade/vim-gitgutter')
 
-"call dein#add('thinca/vim-quickrun')
+call dein#add('thinca/vim-quickrun')
 "call dein#add('superbrothers/vim-quickrun-markdown-gfm')
 " call dein#add('romainl/Apprentice')
 call dein#add('YHiroyuki/atea')
+
+call dein#add('editorconfig/editorconfig-vim')
+
 
 call dein#end()
 
@@ -71,22 +77,28 @@ set list listchars=tab:\¦\
 let g:indentLine_fileTypeExclude = ['help', 'nerdtree']
 
 au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.volt set filetype=htmldjango
 let g:vim_markdown_folding_disabled=1
 "NERDTreeの設定
 "隠しファイルをdefaultで表示
 "let NERDTreeShowHidden = 1
-"^qでNERDTREEを開く&閉じる
-nmap <silent> <C-e> :NERDTreeToggle<CR>
-vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-omap <silent> <C-e> :NERDTreeToggle<CR>
 "挿入モードの時はNERDTreeの処理をさせない
 "imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
 "引数なしの時NERDTREEを開く
 "  autocmd vimenter * if !argc() | NERDTree | endif
 "NERDTreeを開いた状態で閉じたらNERDTreeも閉じる
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == 'primary') | q | endif
+
+"^qでNERDTREEを開く&閉じる
+nmap <silent> <C-e> :NERDTreeToggle<CR>
+vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+omap <silent> <C-e> :NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeDirArrows=1
+
+" nmap <silent> <C-e> :VimFilerExplorer<CR>
+" vmap <silent> <C-e> <Esc>:VimFilerExplorer<CR>
+" omap <silent> <C-e> :VimFilerExplorer<CR>
 
 "unite設定
 nmap U [unite]
@@ -137,6 +149,10 @@ if has("autocmd")
     autocmd   FileType   python   setlocal   sw=4   sts=4   ts=4   et    colorcolumn=120
     autocmd   FileType   css      setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
     autocmd   FileType   scss     setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
+    autocmd   FileType   php      setlocal   sw=4   sts=4   ts=4   et    colorcolumn=120
+    autocmd   FileType   yaml     setlocal   sw=2   sts=2   ts=2   et
+    autocmd   FileType   markdown setlocal   sw=2   sts=2   ts=2   et
+    au FileType go setlocal sw=4 ts=4 sts=4 noet
 endif
 " 自動インデント
 set autoindent
@@ -212,7 +228,7 @@ hi link   PreCondit Statement
 
 let mapleader=';'
 nmap <Leader>x :QuickRun python.pytest<CR>
-nmap <Leader>q :QuickRun python.pylama<CR>
+" nmap <Leader>q :QuickRun python.pylama<CR>
 "nmap <Leader>; :source ~/.vimrc<CR>
 
 
@@ -259,22 +275,22 @@ let g:ctrlp_prompt_mappings = {
 " \     'outputter': 'browser'
 " \   }
 " \ }
-let g:quickrun_config = {
-    \ '_': {
-    \   'name': 'XXX.quickrun',
-    \   'split': 'vsplit',
-    \   'filetype': 'nose_result',
-    \   'into': 1,
-    \ },
-    \ 'python.pytest': {
-    \   'command': 'py.test',
-    \   'cmdopt': '-s -v',
-    \ },
-    \ 'python.pylama': {
-    \   'command': 'pylama',
-    \   'split': '5split',
-    \ },
-    \}
+" let g:quickrun_config = {
+"     \ '_': {
+"     \   'name': 'XXX.quickrun',
+"     \   'split': 'vsplit',
+"     \   'filetype': 'nose_result',
+"     \   'into': 1,
+"     \ },
+"     \ 'python.pytest': {
+"     \   'command': 'py.test',
+"     \   'cmdopt': '-s -v',
+"     \ },
+"     \ 'python.pylama': {
+"     \   'command': 'pylama',
+"     \   'split': '5split',
+"     \ },
+"     \}
 
 function! s:get_syn_id(transparent)
   let synid = synID(line("."), col("."), 1)
@@ -313,3 +329,13 @@ function! s:get_syn_info()
         \ " guibg: " . linkedSyn.guibg
 endfunction
 command! SyntaxInfo call s:get_syn_info()
+
+"let g:neosnippet#snippets_directory='~/.vim/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets'
+
+" augroup PHP
+"   autocmd!
+"   autocmd FileType php set makeprg=php\ -l\ %
+"   " php -lの構文チェックでエラーがなければ「No syntax errors」の一行だけ出力される
+"   autocmd BufWritePost *.php silent make | if len(getqflist()) != 1 | copen | else | cclose | endif
+" augroup END
+

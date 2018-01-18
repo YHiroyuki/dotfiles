@@ -3,3 +3,4 @@
 .envrc
 dist/
 .DS_Store
+.vscode
