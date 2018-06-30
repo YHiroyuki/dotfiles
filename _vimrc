@@ -9,48 +9,52 @@ endif
 set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.vim/dein'))
-
 " ステータスラインをいい感じに
 call dein#add('itchyny/lightline.vim')
 " インデントの可視化
 call dein#add('Yggdroot/indentLine')
-" NerdTree
-call dein#add('scrooloose/nerdtree')
+" ack
+call dein#add('mileszs/ack.vim')
 " unite
 call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/neomru.vim')
-" uniteを使ってカラースキーマのチェックをする :Unite colorscheme -auto-preview
-" call dein#add('ujihisa/unite-colorscheme')
 " 構文チェック
 call dein#add('scrooloose/syntastic')
 " 補完
 call dein#add('Syougo/neocomplete')
-" call dein#add('Shougo/neosnippet')
-" call dein#add('Shougo/neosnippet-snippets')
-" python用補完
-call dein#add('davidhalter/jedi-vim')
-
-" call dein#add('plasticboy/vim-markdown')
+"
+call dein#add('thinca/vim-quickrun')
+" markdown preview用
 call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
-
-" ファイル検索するの楽にするやつ
-call dein#add("ctrlpvim/ctrlp.vim")
-
-call dein#add('derekwyatt/vim-scala')
-
+" 整形
 call dein#add('h1mesuke/vim-alignta')
-
-call dein#add('thinca/vim-quickrun')
-
-call dein#add('YHiroyuki/atea')
-
+" 
 call dein#add('editorconfig/editorconfig-vim')
 
+" 言語用プラグイン
+"" python
+""" 補完
+call dein#add('davidhalter/jedi-vim')
+"" scala
+call dein#add('derekwyatt/vim-scala')
+"" golang
 call dein#add('fatih/vim-go')
 
 " 左に差分を表示してくれる
 call dein#add('airblade/vim-gitgutter')
+
+" NerdTree
+" call dein#add('scrooloose/nerdtree')
+" uniteを使ってカラースキーマのチェックをする :Unite colorscheme -auto-preview
+" call dein#add('ujihisa/unite-colorscheme')
+" call dein#add('Shougo/neosnippet')
+" call dein#add('Shougo/neosnippet-snippets')
+" call dein#add('plasticboy/vim-markdown')
+" ファイル検索するの楽にするやつ
+" call dein#add("ctrlpvim/ctrlp.vim")
+
+call dein#add('YHiroyuki/atea')
 
 
 call dein#end()
@@ -88,22 +92,21 @@ let g:vim_markdown_folding_disabled=1
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == 'primary') | q | endif
 
 "^qでNERDTREEを開く&閉じる
-nmap <silent> <C-e> :NERDTreeToggle<CR>
-vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-omap <silent> <C-e> :NERDTreeToggle<CR>
-let g:NERDTreeMinimalUI=1
-let g:NERDTreeDirArrows=1
+" nmap <silent> <C-e> :NERDTreeToggle<CR>
+" vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+" omap <silent> <C-e> :NERDTreeToggle<CR>
+" let g:NERDTreeMinimalUI=1
+" let g:NERDTreeDirArrows=1
 
 " nmap <silent> <C-e> :VimFilerExplorer<CR>
 " vmap <silent> <C-e> <Esc>:VimFilerExplorer<CR>
 " omap <silent> <C-e> :VimFilerExplorer<CR>
 
 "unite設定
-nmap U [unite]
-nnoremap <silent> [unite]B :<C-u>Unite buffer<CR>
-nnoremap <silent> <Leader>F :<C-u>Unite file<CR>
-" nnoremap <silent> [unite]F :<C-u>Unite file_mru<CR>
-let g:unite_enable_start_insert=1
+nnoremap <Leader>b :<C-u>Unite buffer<CR>
+nnoremap <Leader>f :<C-u>Unite file<CR>
+nnoremap <Leader>p :<C-u>Unite file_rec<CR>
+" let g:unite_enable_start_insert=1
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 
 
@@ -315,3 +318,6 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
