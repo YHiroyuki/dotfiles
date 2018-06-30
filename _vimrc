@@ -44,6 +44,7 @@ call dein#add('fatih/vim-go')
 "" TODO
 " 左に差分を表示してくれる
 call dein#add('airblade/vim-gitgutter')
+" call dein#add('tpope/vim-fugitive')
 
 " NerdTree
 " call dein#add('scrooloose/nerdtree')
@@ -78,10 +79,6 @@ let g:indentLine_fileTypeExclude = ['help', 'nerdtree']
 
 let g:vim_markdown_folding_disabled=1
 
-"unite設定
-nnoremap <Leader>b :<C-u>Unite buffer<CR>
-nnoremap <Leader>f :<C-u>Unite file<CR>
-nnoremap <Leader>p :<C-u>Unite file_rec<CR>
 " let g:unite_enable_start_insert=1
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 
@@ -202,6 +199,10 @@ hi link   PreCondit Statement
 let mapleader = "\<Space>"
 nmap <silent><Leader>e :tabedit $MYVIMRC<CR>
 nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
+nnoremap <Leader>b :<C-u>Unite buffer<CR>
+nnoremap <Leader>f :<C-u>Unite file<CR>
+nnoremap <Leader>p :<C-u>Unite file_rec<CR>
+
 " 検索などをした時に画面中央に表示
 nmap n nzz
 nmap N Nzz
