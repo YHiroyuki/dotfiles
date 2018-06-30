@@ -20,3 +20,6 @@
 [core]
     excludesfile = ~/.gitignore
     editor = vim
+[user]
+	email = y.hiro4823gta@gmail.com
+	name = hiroyuki
