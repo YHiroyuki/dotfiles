@@ -16,6 +16,8 @@ function cecho {
 CURRENT_DIR=`pwd`
 
 # check brew and install
+# brew install the_silver_searcher
+
 
 # check zsh and install
 
