@@ -1,5 +1,6 @@
+export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=/Users/yamawaki/go
-export GOPATH=$HOME/src/ghq/github.com/Wonderplanet/YDS_gdmt
+# export GOPATH=$HOME/src/ghq/github.com/Wonderplanet/YDS_gdmt
 export PATH=$HOME/.pyenv/shims/:$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
 export MANPATH=/opt/local/man:$MANPATH
 export GO15VENDOREXPERIMENT=1
@@ -90,6 +91,8 @@ function change-flag(){
 #emacs?知らない子ですねvimですか？
 alias tmux="tmux"
 alias checkout='git checkout'
+alias ll="ls -al"
+alias vi="vim -u NONE -N"
 
 # ------------------ functions --------------------
 # {{{ methods for RPROMPT
