@@ -1,3 +1,10 @@
+" ハイライト
+syntax on
+" leaderのキーを変更
+let mapleader = "\<Space>"
+
+nmap <Leader>e :<C-u>tabnew $MYVIMRC<CR>
+nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
 
 "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
 filetype plugin indent on
@@ -13,13 +20,13 @@ call dein#begin(expand('~/.vim/dein'))
 " ステータスラインをいい感じに
 call dein#add('itchyny/lightline.vim')
 " インデントの可視化
-call dein#add('nathanaelkane/vim-indent-guides')
 call dein#add('Yggdroot/indentLine')
 " NerdTree
 call dein#add('scrooloose/nerdtree')
 " unite
 call dein#add('Shougo/unite.vim')
-"call dein#add('Shougo/vimfiler')
+call dein#add('moznion/unite-git-conflict.vim')
+call dein#add('Shougo/neomru.vim')
 " uniteを使ってカラースキーマのチェックをする :Unite colorscheme -auto-preview
 " call dein#add('ujihisa/unite-colorscheme')
 " 構文チェック
@@ -36,23 +43,29 @@ call dein#add('kannokanno/previm')
 call dein#add('tyru/open-browser.vim')
 
 " ファイル検索するの楽にするやつ
-" call dein#add("ctrlpvim/ctrlp.vim")
+call dein#add("ctrlpvim/ctrlp.vim")
 
-" パイソンようのプラグイン
-" call dein#add('klen/python-mode')
+call dein#add("mileszs/ack.vim")
 
 call dein#add('derekwyatt/vim-scala')
 
 call dein#add('h1mesuke/vim-alignta')
 
-call dein#add('airblade/vim-gitgutter')
-
 call dein#add('thinca/vim-quickrun')
-"call dein#add('superbrothers/vim-quickrun-markdown-gfm')
-" call dein#add('romainl/Apprentice')
-call dein#add('YHiroyuki/atea')
 
-call dein#add('editorconfig/editorconfig-vim')
+call dein#add('YHiroyuki/atea')
+call dein#add('altercation/vim-colors-solarized')
+call dein#add('romainl/Apprentice')
+
+" call dein#add('editorconfig/editorconfig-vim')
+
+call dein#add('fatih/vim-go')
+call dein#add('vim-jp/vim-go-extra')
+call dein#add('xwsoul/vim-zephir')
+
+" 左に差分を表示してくれる
+call dein#add('airblade/vim-gitgutter')
+call dein#add('tpope/vim-fugitive')
 
 
 call dein#end()
@@ -66,6 +79,7 @@ au BufNewFile,BufRead *.scala setf scala
 let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ }
+
 
 "indentの可視化
 " let g:indent_guides_auto_colors=0
@@ -103,8 +117,14 @@ let g:NERDTreeDirArrows=1
 "unite設定
 nmap U [unite]
 nnoremap <silent> [unite]B :<C-u>Unite buffer<CR>
+nnoremap <leader>b :<C-u>Unite buffer<CR>
+nnoremap <leader>f :<C-u>Unite file<CR>
+nnoremap <leader>p :<C-u>CtrlP<CR>
 nnoremap <silent> [unite]F :<C-u>Unite file<CR>
+nnoremap <silent> [unite]G :<C-u>Unite git-conflict<CR>
+" nnoremap <silent> [unite]F :<C-u>Unite file_mru<CR>
 let g:unite_enable_start_insert=1
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 
 
 "let g:PyFlakeOnWrite = 1
@@ -127,8 +147,6 @@ scriptencoding utf-8
 " 行番号表示
 set number
 set relativenumber
-" ハイライト
-syntax on
 " 入力中のコマンド表示
 set showcmd
 " 80列目をハイライトで表示
@@ -142,17 +160,18 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 if has("autocmd")
-    autocmd   FileType   c        setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
-    autocmd   FileType   html     setlocal   sw=2   sts=2   ts=2   et    colorcolumn=80
-    autocmd   FileType   ruby     setlocal   sw=2   sts=2   ts=2   et    colorcolumn=80
-    autocmd   FileType   js       setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
-    autocmd   FileType   python   setlocal   sw=4   sts=4   ts=4   et    colorcolumn=120
-    autocmd   FileType   css      setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
-    autocmd   FileType   scss     setlocal   sw=4   sts=4   ts=4   et    colorcolumn=80
-    autocmd   FileType   php      setlocal   sw=4   sts=4   ts=4   et    colorcolumn=120
-    autocmd   FileType   yaml     setlocal   sw=2   sts=2   ts=2   et
-    autocmd   FileType   markdown setlocal   sw=2   sts=2   ts=2   et
-    au FileType go setlocal sw=4 ts=4 sts=4 noet
+  autocmd FileType  c        setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  html     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
+  autocmd FileType  ruby     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
+  autocmd FileType  js       setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  python   setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
+  autocmd FileType  css      setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  scss     setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  php      setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
+  autocmd FileType  yaml     setlocal  sw=2  sts=2  ts=2  et
+  autocmd FileType  markdown setlocal  sw=2  sts=2  ts=2  et
+  autocmd FileType  go       setlocal  sw=4  sts=4  ts=4  noet  colorcolumn=120
+  autocmd FileType  json     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
 endif
 " 自動インデント
 set autoindent
@@ -161,7 +180,7 @@ set hlsearch
 " 下まで検索したら先頭に戻る
 set wrapscan
 " 大文字小文字を区別しない
-"set ignorecase
+set ignorecase
 " 大文字が含まれている場合は区別する
 set smartcase
 " バックスペースで改行とかも消せるように
@@ -182,7 +201,6 @@ set wildmenu
 set laststatus=2
 set splitbelow
 set splitright
-
 
 let g:jedi#auto_initialization = 1
 let g:jedi#auto_vim_configuration = 0
@@ -217,34 +235,52 @@ if filereadable(glob("~/.vimrc.keymap"))
     source ~/.vimrc.keymap
 endif
 
-colorscheme atea
+syntax enable
+"set background=dark
+" colorscheme solarized
+" colorscheme atea
+colorscheme Apprentice
 " source ~/src/github.com/YHiroyuki/atea/colors/atea.vim
 
 hi link   Include   Statement
 hi link   Define    Statement
 hi link   Macro     Statement
 hi link   PreCondit Statement
+highlight Comment ctermfg=208
+highlight Todo cterm=reverse gui=reverse ctermfg=208
 
 
-let mapleader=';'
-nmap <Leader>x :QuickRun python.pytest<CR>
+" nmap <Leader>x :QuickRun python.pytest<CR>
 " nmap <Leader>q :QuickRun python.pylama<CR>
-"nmap <Leader>; :source ~/.vimrc<CR>
+nmap <Leader>; :source ~/.vimrc<CR>
 
+let g:ctrlp_map = '<Nop>'
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_root_markers = ['Gemfile', '.python-version', 'pom.xml', 'build.xml', 'glide.yaml']
+" ctrlpにagを使う
+if executable('ag')
+  let g:ctrlp_use_caching=0
+  let g:ctrlp_user_command='ag %s -i --nocolor --nogroup -g ""'
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+let g:ctrlp_max_height = 15
 
 let g:ctrlp_prompt_mappings = {
   \ 'PrtBS()':              ['<bs>', '<c-]>'],
   \ 'PrtDelete()':          ['<del>'],
   \ 'PrtDeleteWord()':      ['<c-w>'],
   \ 'PrtClear()':           ['<c-u>'],
-  \ 'PrtSelectMove("j")':   ['<c-j>', '<c-n>'],
-  \ 'PrtSelectMove("k")':   ['<c-k>', '<c-p>'],
+  \ 'PrtSelectMove("j")':   ['<c-j>'],
+  \ 'PrtSelectMove("k")':   ['<c-k>'],
   \ 'PrtSelectMove("t")':   ['<Home>', '<kHome>'],
   \ 'PrtSelectMove("b")':   ['<End>', '<kEnd>'],
   \ 'PrtSelectMove("u")':   ['<PageUp>', '<kPageUp>'],
   \ 'PrtSelectMove("d")':   ['<PageDown>', '<kPageDown>'],
-  \ 'PrtHistory(-1)':       ['<c-j>'],
-  \ 'PrtHistory(1)':        ['<c-k>'],
+  \ 'PrtHistory(-1)':       ['<c-n>'],
+  \ 'PrtHistory(1)':        ['<c-p>'],
   \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
   \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>'],
   \ 'AcceptSelection("t")': ['<c-t>'],
@@ -268,29 +304,6 @@ let g:ctrlp_prompt_mappings = {
   \ 'OpenMulti()':          ['<c-o>'],
   \ 'PrtExit()':            ['<esc>', '<c-c>', '<c-g>'],
   \ }
-
-" let g:quickrun_config = {
-" \   'markdown': {
-" \     'type': 'markdown/gfm',
-" \     'outputter': 'browser'
-" \   }
-" \ }
-" let g:quickrun_config = {
-"     \ '_': {
-"     \   'name': 'XXX.quickrun',
-"     \   'split': 'vsplit',
-"     \   'filetype': 'nose_result',
-"     \   'into': 1,
-"     \ },
-"     \ 'python.pytest': {
-"     \   'command': 'py.test',
-"     \   'cmdopt': '-s -v',
-"     \ },
-"     \ 'python.pylama': {
-"     \   'command': 'pylama',
-"     \   'split': '5split',
-"     \ },
-"     \}
 
 function! s:get_syn_id(transparent)
   let synid = synID(line("."), col("."), 1)
@@ -330,12 +343,13 @@ function! s:get_syn_info()
 endfunction
 command! SyntaxInfo call s:get_syn_info()
 
-"let g:neosnippet#snippets_directory='~/.vim/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets'
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
 
-" augroup PHP
-"   autocmd!
-"   autocmd FileType php set makeprg=php\ -l\ %
-"   " php -lの構文チェックでエラーがなければ「No syntax errors」の一行だけ出力される
-"   autocmd BufWritePost *.php silent make | if len(getqflist()) != 1 | copen | else | cclose | endif
-" augroup END
+set wildignore+=*.a,vendor/**
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
+ca Ack Ack!
+ca AckFromSearch AckFromSearch!
 

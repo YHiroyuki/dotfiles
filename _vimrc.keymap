@@ -18,3 +18,9 @@ noremap <C-l> <C-w>l
 "挿入モード時にMac標準の前後移動と同じことができるように
 imap <C-b> <Left>
 imap <C-f> <Right>
+
+noremap <C-n> :cn<CR>zz
+noremap <C-p> :cp<CR>zz
+
+noremap tn :tabnext<CR>
+noremap tp :tabprevious<CR>
