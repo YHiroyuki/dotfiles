@@ -1,5 +1,7 @@
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+[[plugins]]
+repo = 'YHiroyuki/atea'
 
 [[plugins]]
 repo = 'Yggdroot/indentLine'
@@ -23,8 +25,21 @@ repo = 'romainl/Apprentice'
 repo = 'editorconfig/editorconfig-vim'
 
 [[plugins]]
-repo = 'fatih/vim-go'
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+  set signcolumn=yes
+  set updatetime=500
+'''
 
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+# Go言語用
+[[plugins]]
+repo = 'fatih/vim-go'
 [[plugins]]
 repo = 'vim-jp/vim-go-extra'
 
+# tomlファイル
+[[plugins]]
+repo = 'cespare/vim-toml'

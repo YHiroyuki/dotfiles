@@ -1,0 +1,125 @@
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+hook_add = '''
+nnoremap <silent> <C-e> :<C-u>Defx -toggle -split=vertical -direction=topleft -winwidth=30<CR>
+'''
+hook_source = '''
+autocmd FileType defx call s:defx_my_settings()
+function! s:defx_my_settings() abort
+  set nonumber
+  set norelativenumber
+  " Define mappings
+  " 移動
+  nnoremap <silent><buffer><expr> h
+  \ defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> j
+  \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k
+  \ line('.') == 1 ? 'G' : 'k'
+  nnoremap <silent><buffer><expr> l
+  \ defx#do_action('drop')
+  " 描画
+  nnoremap <silent><buffer><expr> i
+  \ defx#do_action('toggle_ignored_files')
+  " ファイル操作
+  nnoremap <silent><buffer><expr> c
+  \ defx#do_action('copy')
+  nnoremap <silent><buffer><expr> m
+  \ defx#do_action('move')
+  nnoremap <silent><buffer><expr> p
+  \ defx#do_action('paste')
+  nnoremap <silent><buffer><expr> nd
+  \ defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> nf
+  \ defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> r
+  \ defx#do_action('rename')
+  nnoremap <silent><buffer><expr> d
+  \ defx#do_action('remove')
+  " extra
+  nnoremap <silent><buffer><expr> <CR>
+  \ defx#do_action('drop')
+  " nnoremap <silent><buffer><expr> E
+  " \ defx#do_action('open', 'vsplit')
+  " nnoremap <silent><buffer><expr> P
+  " \ defx#do_action('open', 'pedit')
+  nnoremap <silent><buffer><expr> x
+  \ defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> yy
+  \ defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> ~
+  \ defx#do_action('cd')
+  nnoremap <silent><buffer><expr> q
+  \ defx#do_action('quit')
+  " nnoremap <silent><buffer><expr> <Space>
+  " \ defx#do_action('toggle_select') . 'j'
+  " nnoremap <silent><buffer><expr> *
+  " \ defx#do_action('toggle_select_all')
+  nnoremap <silent><buffer><expr> <C-g>
+  \ defx#do_action('print')
+  nnoremap <silent><buffer><expr> cd
+  \ defx#do_action('change_vim_cwd')
+endfunction
+'''
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+depends = 'unite.vim'
+# hook_add = '''
+# nnoremap <silent> <C-e> :VimFilerExplorer<CR>
+# '''
+hook_source = '''
+call vimfiler#custom#profile('default', 'context', {
+      \ 'safe' : 0,
+      \ 'auto_expand' : 1,
+      \ 'parent' : 0,
+      \ })
+" Like Textmate icons.
+let g:vimfiler_tree_leaf_icon = ' '
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▸'
+let g:vimfiler_file_icon = ' '
+let g:vimfiler_readonly_file_icon = '✗'
+let g:vimfiler_marked_file_icon = '✓'
+autocmd FileType vimfiler call s:vimfiler_my_settings()
+function! s:vimfiler_my_settings() abort
+    set nonumber
+    set norelativenumber
+endfunction
+'''
+
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+hook_add = '''
+nnoremap <Leader>b :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
+nnoremap <Leader>f :<C-u>Denite file_rec -highlight-mode-insert=Search<CR>
+nnoremap <Leader>g :<C-u>Denite grep -highlight-mode-insert=Search<CR>
+'''
+hook_source = '''
+call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
+call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+'''
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+hook_add = '''
+let g:deoplete#enable_at_startup = 1
+autocmd CompleteDone * silent! pclose!
+set completeopt+=noinsert
+imap <C-Space> <C-x><C-o>
+'''
+hook_source = '''
+call deoplete#custom#option('smart_case', v:true)
+'''

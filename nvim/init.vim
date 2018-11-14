@@ -1,6 +1,6 @@
 "
 if has('mac') "setting for mac
-    set t_Co=256
+  set t_Co=256
 endif
 
 " ハイライト
@@ -10,6 +10,9 @@ let mapleader = "\<Space>"
 
 nmap <Leader>e :<C-u>tabnew $MYVIMRC<CR>
 nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
+nmap <Leader>n :<C-u>split +enew<CR>
+cnoremap %%% <C-R>=expand("<cword>")<CR>
+nmap <leader>s :Ack %%%<CR>
 
 "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
 filetype plugin indent on
@@ -108,11 +111,44 @@ syntax enable
 "endif
 
 "End dein Scripts-------------------------
+" lightlineのwombatを書き換えたかった
 
+" let g:lightline#colorscheme#custom#palette = lightline#colorscheme#flatten(s:p)
 " ステータスラインのデザイン
 let g:lightline = {
-    \ 'colorscheme': 'wombat',
-    \ }
+  \ 'colorscheme': 'atea',
+  \ 'active': {
+  \   'left': [
+  \     ['mode', 'paste'],
+  \     ['fugitive'],
+  \     ['readonly'],
+  \     ['filename', 'modified']
+  \ ]
+  \ },
+  \ 'separator': {
+  \   'left': '⮀',
+  \ },
+  \ 'subseparator': {
+  \   'left': '>',
+  \ },
+  \ 'component_function': {
+  \   'fugitive': 'LightlineFugitive',
+  \   'readonly': 'LightlineReadonly',
+  \ },
+  \ }
+set noshowmode
+function! LightlineReadonly()
+  return &readonly && &filetype !=# 'help' ? '' : ''
+endfunction
+function! LightlineFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head())
+      return ' ' . fugitive#head()
+    endif
+  catch
+  endtry
+  return ''
+endfunction
 
 " ack
 set wildignore+=*.a,vendor/**
@@ -121,13 +157,7 @@ ca Ack Ack!
 ca AckFromSearch AckFromSearch!
 
 " scheme
-colorscheme Apprentice
-hi link   Include   Statement
-hi link   Define    Statement
-hi link   Macro     Statement
-hi link   PreCondit Statement
-highlight Comment ctermfg=208
-highlight Todo cterm=reverse gui=reverse ctermfg=208
+colorscheme atea
 
 
 " 検索などをした時に画面中央に表示
@@ -161,24 +191,18 @@ noremap tp :tabprevious<CR>
 
 " 全角スペースの可視化
 function! DoubleByteSpace()
-    highlight DoubleByteSpace cterm=underline ctermfg=lightblue guibg=darkgray
+  highlight DoubleByteSpace cterm=underline ctermfg=lightblue guibg=darkgray
 endfunction
 
 " 全角スペースの可視化
 if has('syntax')
-    augroup DoubleByteSpace
-        autocmd!
-        autocmd ColorScheme * call DoubleByteSpace()
-        autocmd VimEnter,WinEnter,BufRead * let w:m1=matchadd('DoubleByteSpace', '　')
-    augroup END
-    call DoubleByteSpace()
+  augroup DoubleByteSpace
+    autocmd!
+    autocmd ColorScheme * call DoubleByteSpace()
+    autocmd VimEnter,WinEnter,BufRead * let w:m1=matchadd('DoubleByteSpace', '　')
+  augroup END
+  call DoubleByteSpace()
 endif
-
-" go
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_term_mode = "vsplit"
 
 "
 if has("autocmd")
@@ -190,6 +214,7 @@ if has("autocmd")
   autocmd FileType  css      setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
   autocmd FileType  scss     setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
   autocmd FileType  php      setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
+  autocmd FileType  vim      setlocal  sw=2  sts=2  ts=2  et
   autocmd FileType  yaml     setlocal  sw=2  sts=2  ts=2  et
   autocmd FileType  markdown setlocal  sw=2  sts=2  ts=2  et
   autocmd FileType  go       setlocal  sw=4  sts=4  ts=4  noet  colorcolumn=120
@@ -198,7 +223,20 @@ endif
 
 
 "
-set list listchars=tab:\¦\
 let g:indentLine_fileTypeExclude = ['help', 'nerdtree']
 
 
+" go
+let g:go_highlight_function_calls = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_term_mode = "vsplit"
+
+" ちょっと面白そう
+"" 行を移動
+"nnoremap <C-Up> "zdd<Up>"zP
+"nnoremap <C-Down> "zdd"zp
+"" 複数行を移動
+"vnoremap <C-Up> "zx<Up>"zP`[V`]
+"vnoremap <C-Down> "zx"zp`[V`]
