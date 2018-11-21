@@ -223,7 +223,7 @@ endif
 
 
 "
-let g:indentLine_fileTypeExclude = ['help', 'nerdtree']
+let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'vimfiler']
 
 
 " go

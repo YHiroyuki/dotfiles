@@ -1,8 +1,8 @@
 [[plugins]]
 repo = 'Shougo/defx.nvim'
-hook_add = '''
-nnoremap <silent> <C-e> :<C-u>Defx -toggle -split=vertical -direction=topleft -winwidth=30<CR>
-'''
+# hook_add = '''
+# nnoremap <silent> <C-e> :<C-u>Defx -toggle -split=vertical -direction=topleft -winwidth=30<CR>
+# '''
 hook_source = '''
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
@@ -68,9 +68,9 @@ repo = 'Shougo/unite.vim'
 [[plugins]]
 repo = 'Shougo/vimfiler.vim'
 depends = 'unite.vim'
-# hook_add = '''
-# nnoremap <silent> <C-e> :VimFilerExplorer<CR>
-# '''
+hook_add = '''
+nnoremap <silent> <C-e> :VimFilerExplorer -split<CR>
+'''
 hook_source = '''
 call vimfiler#custom#profile('default', 'context', {
       \ 'safe' : 0,
@@ -88,6 +88,11 @@ autocmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings() abort
     set nonumber
     set norelativenumber
+    set signcolumn=no
+    nnoremap <silent><buffer> <C-j> <C-w>j
+    nnoremap <silent><buffer> <C-k> <C-w>k
+    nnoremap <silent><buffer> <C-h> <C-w>h
+    nnoremap <silent><buffer> <C-l> <C-w>l
 endfunction
 '''
 

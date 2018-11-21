@@ -29,6 +29,8 @@ repo = 'airblade/vim-gitgutter'
 hook_add = '''
   set signcolumn=yes
   set updatetime=500
+  let g:gitgutter_sign_added = ">"
+  let g:gitgutter_sign_removed = "<"
 '''
 
 [[plugins]]
