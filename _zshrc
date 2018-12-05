@@ -4,6 +4,7 @@ export GOPATH=/Users/yamawaki/go
 export PATH=$HOME/.pyenv/shims/:$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
 export MANPATH=/opt/local/man:$MANPATH
 export GO15VENDOREXPERIMENT=1
+export TERM=xterm-256color
 autoload -U compinit
 compinit -u
 bindkey -v
