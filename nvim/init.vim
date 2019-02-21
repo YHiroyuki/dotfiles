@@ -13,6 +13,7 @@ nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
 nmap <Leader>n :<C-u>split +enew<CR>
 cnoremap %%% <C-R>=expand("<cword>")<CR>
 nmap <leader>s :Ack %%%<CR>
+nmap <leader>l <C-w>x
 
 "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
 filetype plugin indent on
@@ -232,6 +233,7 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_term_mode = "vsplit"
+let g:go_fmt_command = "goimports"
 
 " ちょっと面白そう
 "" 行を移動
