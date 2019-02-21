@@ -24,6 +24,13 @@ repo = 'romainl/Apprentice'
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 
+# VimShell入れようかと思ったけどやめた
+# [[plugins]]
+# repo = 'Shougo/vimproc'
+# 
+# [[plugins]]
+# repo = 'Shougo/vimshell.vim'
+
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''

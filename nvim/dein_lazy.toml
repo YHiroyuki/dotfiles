@@ -63,6 +63,9 @@ endfunction
 '''
 
 [[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
 repo = 'Shougo/unite.vim'
 
 [[plugins]]
@@ -103,10 +106,11 @@ repo = 'thinca/vim-quickrun'
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = '''
-nnoremap <Leader>b :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
-nnoremap <Leader>f :<C-u>Denite file_rec -highlight-mode-insert=Search<CR>
-nnoremap <Leader>g :<C-u>Denite grep -highlight-mode-insert=Search<CR>
+nnoremap <Leader>b :<C-u>Denite buffer -highlight-mode-insert=Visual -highlight-matched-char=Statement -highlight-matched-range=VisualNOS<CR>
+nnoremap <Leader>f :<C-u>Denite file_mru -highlight-mode-insert=Visual -highlight-matched-char=Statement -highlight-matched-range=VisualNOS<CR>
+nnoremap <Leader>p :<C-u>Denite file_rec -highlight-mode-insert=Visual -highlight-matched-char=Statement -highlight-matched-range=VisualNOS<CR>
 '''
+# nnoremap <Leader>g :<C-u>Denite grep -highlight-mode-insert=Search<CR>
 hook_source = '''
 call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 call denite#custom#var('grep', 'command', ['ag'])
