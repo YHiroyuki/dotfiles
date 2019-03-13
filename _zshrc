@@ -1,6 +1,10 @@
-export GOPATH=$HOME
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=/Users/yamawaki/work
+# export GOPATH=$HOME/src/ghq/github.com/Wonderplanet/YDS_gdmt
 export PATH=$HOME/.pyenv/shims/:$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
 export MANPATH=/opt/local/man:$MANPATH
+export GO15VENDOREXPERIMENT=1
+export HOMEBREW_NO_AUTO_UPDATE=1
 autoload -U compinit
 compinit -u
 bindkey -v
@@ -88,6 +92,8 @@ function change-flag(){
 #emacs?知らない子ですねvimですか？
 alias tmux="tmux"
 alias checkout='git checkout'
+alias ll="ls -al"
+alias vi="vim -u NONE -N"
 
 # ------------------ functions --------------------
 # {{{ methods for RPROMPT
@@ -211,3 +217,20 @@ fi
 if [ -f ~/.local.zsh ]; then
   source ~/.local.zsh
 fi
+
+# Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
+export COCOS_CONSOLE_ROOT=/Users/yamawaki/sdk/cocos2d-x-3.15.1/tools/cocos2d-console/bin
+export PATH=$COCOS_CONSOLE_ROOT:$PATH
+
+# Add environment variable COCOS_X_ROOT for cocos2d-x
+export COCOS_X_ROOT=/Users/yamawaki/sdk
+export PATH=$COCOS_X_ROOT:$PATH
+
+# Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
+export COCOS_TEMPLATES_ROOT=/Users/yamawaki/sdk/cocos2d-x-3.15.1/templates
+export PATH=$COCOS_TEMPLATES_ROOT:$PATH
+
+# Add environment variable ANDROID_SDK_ROOT for cocos2d-x
+export ANDROID_SDK_ROOT=/Users/yamawaki/Library/Android/sdk
+export PATH=$ANDROID_SDK_ROOT:$PATH
+export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH

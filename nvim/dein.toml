@@ -1,0 +1,61 @@
+# ステータスバーのカスタマイズ
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+# テーマ
+[[plugins]]
+repo = 'YHiroyuki/atea'
+[[plugins]]
+repo = 'romainl/Apprentice'
+
+# インデントの表示
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+
+# markdownプレビュー用
+[[plugins]]
+repo = 'kannokanno/previm'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+
+# 単語検索
+[[plugins]]
+repo = 'mileszs/ack.vim'
+
+# 整形
+[[plugins]]
+repo = 'h1mesuke/vim-alignta'
+
+# コーディングスタイル調整
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+# VimShell入れようかと思ったけどやめた
+# [[plugins]]
+# repo = 'Shougo/vimproc'
+# 
+# [[plugins]]
+# repo = 'Shougo/vimshell.vim'
+
+# Git関連
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+  set signcolumn=yes
+  set updatetime=500
+  let g:gitgutter_sign_added = ">"
+  let g:gitgutter_sign_removed = "<"
+'''
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+# Go言語用
+[[plugins]]
+repo = 'fatih/vim-go'
+[[plugins]]
+repo = 'vim-jp/vim-go-extra'
+
+# tomlファイル
+[[plugins]]
+repo = 'cespare/vim-toml'
