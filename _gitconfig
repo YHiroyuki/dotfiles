@@ -20,4 +20,4 @@
     cp = !git branch -a --sort=-authordate | sed 's/[* ]//' | sed 's remotes/origin/  ' | sed '/HEAD ->/d' | awk '!a[$0]++' | peco |xargs git checkout
 [core]
     excludesfile = ~/.gitignore
-    editor = vim
+    editor = nvim
