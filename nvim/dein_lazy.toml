@@ -89,6 +89,7 @@ let g:vimfiler_file_icon = ' '
 let g:vimfiler_readonly_file_icon = '✗'
 let g:vimfiler_marked_file_icon = '✓'
 autocmd FileType vimfiler call s:vimfiler_my_settings()
+autocmd FileType vimfiler nmap <buffer> <C-R>  <Plug>(vimfiler_redraw_screen)
 function! s:vimfiler_my_settings() abort
     set nonumber
     set norelativenumber

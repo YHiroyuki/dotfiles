@@ -11,6 +11,7 @@ let mapleader = "\<Space>"
 nmap <Leader>e :<C-u>tabnew $MYVIMRC<CR>
 nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
 nmap <Leader>n :<C-u>split +enew<CR>
+nmap <Leader>t :<C-u>tabnew<CR>
 cnoremap %%% <C-R>=expand("<cword>")<CR>
 nmap <leader>s :Ack %%%<CR>
 nmap <leader>l <C-w>x
