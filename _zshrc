@@ -12,8 +12,12 @@ bindkey -v
 branch_flag=true
 
 export PYENV_ROOT="${HOME}/.pyenv"
-eval "$(pyenv init -)"
-eval "$(rbenv init -)"
+if which pyenv > /dev/null; then
+    eval "$(pyenv init -)"
+fi
+if which rbenv > /dev/null; then
+    eval "$(rbenv init -)"
+fi
 # eval "$(direnv hook zsh)"
 
 zstyle ':completion:*:default' menu select=1
