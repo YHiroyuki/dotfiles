@@ -77,6 +77,10 @@ sh ./installer.sh ~/.config/nvim/dein
 rm -rf installer.sh
 
 # powerlineのインストール
+# [参考]
+# https://qiita.com/park-jh/items/557a9d5b470947aef2f5
+# https://qiita.com/mktktmr/items/5481eac60b96c80cc262
+
 git clone https://github.com/powerline/fonts.git --depth=1
 cd fonts
 ./install.sh
