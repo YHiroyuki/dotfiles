@@ -20,18 +20,39 @@ if which rbenv > /dev/null; then
 fi
 # eval "$(direnv hook zsh)"
 
+GHQ_ROOT=`ghq root | sed -e "s:^$HOME:~:"`
 zstyle ':completion:*:default' menu select=1
 # ------- PROMPT SETTING ----------------------
 # PROMPT=$'`battery-status`'
 #RPROMPT=$'`pyenv-status` `branch-status-check` %F{5}[%C]%f' # %~はpwd
-RPROMPT=$'`branch-status-check` %F{5}[%C]%f' # %~はpwd
+RPROMPT=$'`branch-status-check`' # %~はpwd
+function custom-pwd {
+    pwd | perl -pe "s:^`ghq root`\/.+?\/:ghq\::" | sed -e "s:^$HOME:~:"
+}
+function my-pwd {
+    local current=`pwd | sed -e "s:^$HOME:~:"`
+    if [[ "$current" =~ ^$GHQ_ROOT ]]; then
+        echo $current | perl -pe "s:^$GHQ_ROOT\/.+?\/:[ghq]\::"
+        return
+    fi
+    if [ "$current" = "~" ]; then
+        echo $current
+        return
+    fi
+
+    local dirname=`dirname $current | sed -e "s:\(\/.\)[^\/]*:\1:g"`
+    local basename=`basename $current`
+    echo "$dirname/$basename"
+}
 function zle-line-init zle-keymap-select {
     case $KEYMAP in
         vicmd)
-        PROMPT="%n %{$fg[black]%}%{$fg[red]%}>>%{$reset_color%}"
+        PROMPT="%{$fg[black]%}%{$bg[cyan]%}NORMAL%{$fg[cyan]%}%{$bg[white]%}%{$fg[black]%}%{$bg[white]%}`my-pwd`%{$fg[white]%}%{$bg[black]%}%{$reset_color%}"
+        # PROMPT="%{$fg[black]%}%{$bg[cyan]%}`my-pwd`%{$fg[cyan]%}%{$bg[black]%}%{$reset_color%}"
         ;;
         main|viins)
-        PROMPT="%n %{$fg[black]%}%{$fg[green]%}>>%{$reset_color%}"
+        PROMPT="%{$fg[black]%}%{$bg[green]%}INSERT%{$fg[green]%}%{$bg[white]%}%{$fg[black]%}%{$bg[white]%}`my-pwd`%{$fg[white]%}%{$bg[black]%}%{$reset_color%}"
+        # PROMPT="%{$fg[black]%}%{$bg[green]%}`my-pwd`%{$fg[green]%}%{$bg[black]%}%{$reset_color%}"
         ;;
     esac
     zle reset-prompt
@@ -123,7 +144,7 @@ function branch-status-check {
         suffix='%{'${reset_color}'%}'
         # echo ${prefix}${branchname}${suffix}
         green='%{'${fg[green]}'%}'
-        echo ${prefix}${branchname}${suffix}
+        echo ${prefix} ${branchname}${suffix}
 }
 function get-branch-name {
     # gitディレクトリじゃない場合のエラーは捨てます
