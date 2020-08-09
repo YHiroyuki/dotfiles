@@ -78,7 +78,8 @@ endif
 let s:dein_dir = expand('~/.config/nvim/dein')
 
 " Required:
-set runtimepath+=/Users/yamawaki/.config/nvim/dein/repos/github.com/Shougo/dein.vim
+" // FIXME
+set runtimepath+=$HOME/.config/nvim/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
 if dein#load_state(s:dein_dir)
@@ -87,7 +88,8 @@ if dein#load_state(s:dein_dir)
 
   " Let dein manage dein
   " Required:
-  call dein#add('/Users/yamawaki/.config/nvim/dein/repos/github.com/Shougo/dein.vim')
+  " // FIXME
+  " call dein#add('/Users/wp-pc-2020-154/.config/nvim/dein/repos/github.com/Shougo/dein.vim')
 
   " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイルを用意しておく
@@ -144,7 +146,7 @@ function! LightlineReadonly()
 endfunction
 function! LightlineFugitive()
   try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head())
+    if &ft !~? 'vimfiler\|gundo' && strlen(fugitive#head())
       return ' ' . fugitive#head()
     endif
   catch
@@ -160,7 +162,6 @@ ca AckFromSearch AckFromSearch!
 
 " scheme
 colorscheme atea
-
 
 " 検索などをした時に画面中央に表示
 nmap n nzz
