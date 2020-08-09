@@ -8,7 +8,6 @@ syntax on
 " leaderのキーを変更
 let mapleader = "\<Space>"
 
-nmap <Leader>e :<C-u>tabnew $MYVIMRC<CR>
 nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
 nmap <Leader>n :<C-u>split +enew<CR>
 nmap <Leader>t :<C-u>tabnew<CR>
@@ -244,3 +243,7 @@ let g:go_fmt_command = "goimports"
 "" 複数行を移動
 "vnoremap <C-Up> "zx<Up>"zP`[V`]
 "vnoremap <C-Down> "zx"zp`[V`]
+"
+
+nnoremap <silent><Leader>p :<C-u>Denite -start-filter file/rec<CR>
+nnoremap <silent><Leader>b :<C-u>Denite buffer<CR>

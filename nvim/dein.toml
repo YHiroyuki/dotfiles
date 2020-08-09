@@ -59,3 +59,11 @@ repo = 'vim-jp/vim-go-extra'
 # tomlファイル
 [[plugins]]
 repo = 'cespare/vim-toml'
+
+# アイコン
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
