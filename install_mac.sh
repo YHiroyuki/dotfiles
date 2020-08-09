@@ -15,12 +15,10 @@ function cecho {
 
 CURRENT_DIR=`pwd`
 
-if ! which hoge > /dev/null; then
+if ! which brew > /dev/null; then
     cecho $red "Please install brew\n"
     exit 1
 fi
-
-exit 1
 
 # check brew and install
 cecho $green "\n----> brew update and install commands"
