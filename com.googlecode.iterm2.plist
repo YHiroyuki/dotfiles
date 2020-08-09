@@ -70,7 +70,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>650 498 620 392 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>139 83 1130 777 0 0 1920 1057 </string>
+	<string>192 260 1130 777 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>545 229 1130 777 0 0 1920 1057 </string>
 	<key>New Bookmarks</key>
@@ -828,6 +828,8 @@
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
+			<key>Blend</key>
+			<real>0.44339863885309272</real>
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
@@ -1243,7 +1245,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.1230260724852071</real>
+			<real>0.0</real>
 			<key>Unlimited Scrollback</key>
 			<true/>
 			<key>Use Bold Font</key>
@@ -1284,7 +1286,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>C56A6B11-55CC-4282-B9AB-1F2C47DD03A8</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>19</integer>
+	<integer>20</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>614009121.36696303</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
