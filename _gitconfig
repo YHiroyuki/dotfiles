@@ -19,6 +19,9 @@
     ls = !git --no-pager log -10 --oneline --decorate
     cp = !git branch -a --sort=-authordate | sed 's/[* ]//' | sed 's remotes/origin/  ' | sed '/HEAD ->/d' | awk '!a[$0]++' | peco |xargs git checkout
     ru = remote update origin
+    unstage = reset HEAD
+    pre-stage = add -N .
+    diff-name = diff --name-only
 [core]
     excludesfile = ~/.gitignore
     editor = nvim
