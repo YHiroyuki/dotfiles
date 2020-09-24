@@ -48,7 +48,7 @@ set smartcase
 " バックスペースで改行とかも消せるように
 set backspace=indent,eol,start
 " クリップボードとの共有だっけ
-set clipboard+=unnamed
+set clipboard=unnamed
 "タブ、空白、改行の可視化
 set list
 "set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
