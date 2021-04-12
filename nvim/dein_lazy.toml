@@ -1,6 +1,7 @@
 # Filerだっけ？
 [[plugins]]
 repo = 'Shougo/defx.nvim'
+# -resume直した方が良いかも
 hook_add = '''
 nnoremap <silent> <C-e> :<C-u>Defx -resume=1<CR>
 nnoremap <Leader>e :<C-u>Defx<CR>
@@ -63,6 +64,10 @@ function! s:defx_my_settings() abort
   \ defx#do_action('print')
   nnoremap <silent><buffer><expr> cd
   \ defx#do_action('change_vim_cwd')
+  nnoremap <silent><buffer><expr> x
+  \ defx#is_directory() ?
+  \ defx#do_action('open_tree', 'recursive:10') :
+  \ defx#do_action('preview')
 endfunction
 call defx#custom#option('_', {
     \ 'winwidth': 40,
@@ -153,6 +158,15 @@ call denite#custom#option('_', {
     \ 'split': 'floating',
     \ 'highlight_matched_char': 'Visual',
     \ })
+call denite#custom#var('file/rec', 'command',
+    \ ['rg', '--files', '--glob', '!.git'])
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts',
+    \ ['-i', '--vimgrep', '--no-heading'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
 '''
 # hook_add = '''
 # nnoremap <Leader>b :<C-u>Denite buffer -highlight-mode-insert=Visual -highlight-matched-char=Statement -highlight-matched-range=VisualNOS<CR>

@@ -209,7 +209,7 @@ endif
 "
 if has("autocmd")
   autocmd FileType  c        setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
-  autocmd FileType  html     setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  html     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
   autocmd FileType  ruby     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
   autocmd FileType  js       setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
   autocmd FileType  python   setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
@@ -226,6 +226,7 @@ endif
 
 "
 let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'vimfiler']
+let g:vim_json_syntax_conceal = 0
 
 
 " go
@@ -247,3 +248,10 @@ let g:go_fmt_command = "goimports"
 
 nnoremap <silent><Leader>p :<C-u>Denite -start-filter file/rec<CR>
 nnoremap <silent><Leader>b :<C-u>Denite buffer<CR>
+
+hi NormalFloat ctermfg=lightblue ctermbg=241
+" ctermbg=#a3be8c
+
+highlight DoubleByteSpace cterm=underline ctermfg=lightblue guibg=darkgray
+
+

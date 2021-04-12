@@ -12,6 +12,9 @@ repo = 'romainl/Apprentice'
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 
+[[plugins]]
+repo = 'elzr/vim-json'
+
 # markdownプレビュー用
 [[plugins]]
 repo = 'kannokanno/previm'
@@ -67,3 +70,6 @@ repo = 'ryanoasis/vim-devicons'
 repo = 'kristijanhusak/defx-icons'
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
+
+# [[plugins]]
+# repo = 'mechatroner/rainbow_csv'
