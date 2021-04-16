@@ -14,6 +14,13 @@ nmap <Leader>t :<C-u>tabnew<CR>
 cnoremap %%% <C-R>=expand("<cword>")<CR>
 nmap <leader>s :Ack %%%<CR>
 nmap <leader>l <C-w>x
+nnoremap <Leader>s" ciw""<Esc>P
+nnoremap <Leader>s' ciw''<Esc>P
+nnoremap <Leader>s` ciw``<Esc>P
+nnoremap <Leader>s( ciw()<Esc>P
+nnoremap <Leader>s{ ciw{}<Esc>P
+nnoremap <Leader>s[ ciw[]<Esc>P
+setlocal iskeyword+=-
 
 "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
 filetype plugin indent on
