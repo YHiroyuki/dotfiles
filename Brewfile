@@ -57,3 +57,4 @@ brew "zsh"
 brew "blackfireio/blackfire/blackfire-agent"
 brew "sanemat/font/ricty", args: ["with-powerline"]
 cask "font-hack-nerd-font"
+brew "goenv"
