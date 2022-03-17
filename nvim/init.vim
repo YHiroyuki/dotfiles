@@ -3,6 +3,10 @@ if has('mac') "setting for mac
   set t_Co=256
 endif
 
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 " ハイライト
 syntax on
 " leaderのキーを変更
@@ -12,14 +16,16 @@ nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
 nmap <Leader>n :<C-u>split +enew<CR>
 nmap <Leader>t :<C-u>tabnew<CR>
 cnoremap %%% <C-R>=expand("<cword>")<CR>
-nmap <leader>s :Ack %%%<CR>
-nmap <leader>l <C-w>x
+nnoremap <leader>s :Ack %%%<CR>
+nnoremap <leader>l <C-w>x
+
 nnoremap <Leader>s" ciw""<Esc>P
 nnoremap <Leader>s' ciw''<Esc>P
 nnoremap <Leader>s` ciw``<Esc>P
 nnoremap <Leader>s( ciw()<Esc>P
 nnoremap <Leader>s{ ciw{}<Esc>P
 nnoremap <Leader>s[ ciw[]<Esc>P
+
 setlocal iskeyword+=-
 
 "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
@@ -30,6 +36,9 @@ scriptencoding utf-8
 " 行番号表示
 set number
 set relativenumber
+" ターミナルモードで行番号を消す
+autocmd TermOpen * setlocal norelativenumber
+autocmd TermOpen * setlocal nonumber
 " 入力中のコマンド表示
 set showcmd
 " 80列目をハイライトで表示
@@ -72,10 +81,8 @@ set laststatus=2
 set splitbelow
 set splitright
 
-
 " python3のパス指定(brewでinstallしたものを指定)
 let g:python3_host_prog = '/usr/local/bin/python3'
-
 
 "dein Scripts-----------------------------
 if &compatible
@@ -103,10 +110,14 @@ if dein#load_state(s:dein_dir)
   let g:rc_dir    = expand("~/.config/nvim/")
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+  let s:colors_toml = g:rc_dir . '/colors.toml'
+  let s:ddu_toml    = g:rc_dir . '/ddu.toml'
 
   " TOML を読み込み、キャッシュしておく
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  call dein#load_toml(s:toml,        {'lazy': 0})
+  call dein#load_toml(s:lazy_toml,   {'lazy': 1})
+  call dein#load_toml(s:colors_toml, {'lazy': 0})
+  call dein#load_toml(s:ddu_toml,    {'lazy': 1})
 
   call dein#end()
   call dein#save_state()
@@ -125,42 +136,7 @@ syntax enable
 " lightlineのwombatを書き換えたかった
 
 " let g:lightline#colorscheme#custom#palette = lightline#colorscheme#flatten(s:p)
-" ステータスラインのデザイン
-let g:lightline = {
-  \ 'colorscheme': 'atea',
-  \ 'active': {
-  \   'left': [
-  \     ['mode', 'paste'],
-  \     ['fugitive'],
-  \     ['readonly'],
-  \     ['filename', 'modified']
-  \ ]
-  \ },
-  \ 'separator': {
-  \   'left': '⮀',
-  \ },
-  \ 'subseparator': {
-  \   'left': '>',
-  \ },
-  \ 'component_function': {
-  \   'fugitive': 'LightlineFugitive',
-  \   'readonly': 'LightlineReadonly',
-  \ },
-  \ }
-set noshowmode
-function! LightlineReadonly()
-  return &readonly && &filetype !=# 'help' ? '' : ''
-endfunction
-function! LightlineFugitive()
-  try
-    if &ft !~? 'vimfiler\|gundo' && strlen(fugitive#head())
-      return ' ' . fugitive#head()
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
+"
 " ack
 set wildignore+=*.a,vendor/**
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -168,7 +144,17 @@ ca Ack Ack!
 ca AckFromSearch AckFromSearch!
 
 " scheme
-colorscheme atea
+colorscheme gruvbox
+
+" TODO できるかわからんけどカラースキーマによって変える
+" SignColumnを背景色と同じにしたかったから書き換え
+if g:colors_name == 'gruvbox'
+  highlight SignColumn ctermbg=NONE guibg=NONE
+  highlight link GitGutterAdd GruvboxGreen
+  highlight link GitGutterChange GruvboxAqua
+  highlight link GitGutterChangeDelete GruvboxAqua
+  highlight link GitGutterDelete GruvboxRed
+endif
 
 " 検索などをした時に画面中央に表示
 nmap n nzz
@@ -229,13 +215,11 @@ if has("autocmd")
   autocmd FileType  markdown setlocal  sw=2  sts=2  ts=2  et
   autocmd FileType  go       setlocal  sw=4  sts=4  ts=4  noet  colorcolumn=120
   autocmd FileType  json     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
+  autocmd FileType  toml     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
 endif
 
-
 "
-let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'vimfiler']
 let g:vim_json_syntax_conceal = 0
-
 
 " go
 let g:go_highlight_function_calls = 1
@@ -252,14 +236,3 @@ let g:go_fmt_command = "goimports"
 "" 複数行を移動
 "vnoremap <C-Up> "zx<Up>"zP`[V`]
 "vnoremap <C-Down> "zx"zp`[V`]
-"
-
-nnoremap <silent><Leader>p :<C-u>Denite -start-filter file/rec<CR>
-nnoremap <silent><Leader>b :<C-u>Denite buffer<CR>
-
-hi NormalFloat ctermfg=lightblue ctermbg=241
-" ctermbg=#a3be8c
-
-highlight DoubleByteSpace cterm=underline ctermfg=lightblue guibg=darkgray
-
-
