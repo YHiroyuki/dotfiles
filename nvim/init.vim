@@ -119,6 +119,12 @@ if dein#load_state(s:dein_dir)
   call dein#load_toml(s:colors_toml, {'lazy': 0})
   call dein#load_toml(s:ddu_toml,    {'lazy': 1})
 
+  " localで試す時に使うTOML
+  let s:local_toml  = g:rc_dir . '/local.toml'
+  if filereadable(expand(s:local_toml))
+    call dein#load_toml(s:local_toml, {'lazy': 0})
+  endif
+
   call dein#end()
   call dein#save_state()
 endif
@@ -236,3 +242,8 @@ let g:go_fmt_command = "goimports"
 "" 複数行を移動
 "vnoremap <C-Up> "zx<Up>"zP`[V`]
 "vnoremap <C-Down> "zx"zp`[V`]
+
+" GitHubに公開してはいけないTokenや新しいプラグインを試す時に使う設定ファイルを読み込む
+if filereadable(expand('~/.config/nvim/local.vim'))
+  source ~/.config/nvim/local.vim
+endif
