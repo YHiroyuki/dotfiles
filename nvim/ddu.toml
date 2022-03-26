@@ -13,6 +13,8 @@ call ddu#custom#patch_global({
     \ 'uiParams': {
     \   'ff': {
     \     'split': 'floating',
+    \     'startFilter': v:true,
+    \     'floatingBorder': 'single',
     \    },
     \ },
     \ 'sources': [
@@ -40,6 +42,8 @@ function! s:ddu_my_settings() abort
   nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
   nnoremap <buffer><silent> i       <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
   nnoremap <buffer><silent> q       <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  nnoremap <buffer><silent> <C-n>   j
+  nnoremap <buffer><silent> <C-p>   k
 endfunction
 autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
 function! s:ddu_filter_my_settings() abort
