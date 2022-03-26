@@ -2,13 +2,12 @@
 repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
 
-# Filerだっけ？
+# Filer
 [[plugins]]
 repo = 'Shougo/defx.nvim'
-# -resume直した方が良いかも
 hook_add = '''
-nnoremap <silent> <C-e> :<C-u>Defx<CR>
-nnoremap <Leader>e :<C-u>Defx<CR>
+nnoremap <silent> <C-e>     <Cmd>Defx -resume<CR>
+nnoremap <silent> <Leader>e <Cmd>Defx -search-recursive=`expand('%')` -resume<CR>
 '''
 hook_source = '''
 autocmd FileType defx call s:defx_my_settings()
@@ -18,15 +17,17 @@ function! s:defx_my_settings() abort
   " Define mappings
   " 移動
   nnoremap <silent><buffer><expr> h
-  \ defx#do_action('cd', ['..'])
+  \ defx#do_action('close_tree')
   nnoremap <silent><buffer><expr> j
   \ line('.') == line('$') ? 'gg' : 'j'
   nnoremap <silent><buffer><expr> k
   \ line('.') == 1 ? 'G' : 'k'
   nnoremap <silent><buffer><expr> l
-  \ defx#do_action('drop')
+  \ defx#do_action('open_tree')
   nnoremap <silent><buffer><expr> o
   \ defx#do_action('open_or_close_tree')
+  nnoremap <silent><buffer><expr> 5
+  \ defx#do_action('redraw')
   " 描画
   nnoremap <silent><buffer><expr> i
   \ defx#do_action('toggle_ignored_files')
@@ -48,12 +49,6 @@ function! s:defx_my_settings() abort
   " extra
   nnoremap <silent><buffer><expr> <CR>
   \ defx#do_action('drop')
-  " nnoremap <silent><buffer><expr> E
-  " \ defx#do_action('open', 'vsplit')
-  " nnoremap <silent><buffer><expr> P
-  " \ defx#do_action('open', 'pedit')
-  nnoremap <silent><buffer><expr> x
-  \ defx#do_action('execute_system')
   nnoremap <silent><buffer><expr> yy
   \ defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> ~

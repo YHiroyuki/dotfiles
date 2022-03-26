@@ -36,13 +36,12 @@ scriptencoding utf-8
 " 行番号表示
 set number
 set relativenumber
+nnoremap <Leader><Leader> <Cmd>set rnu!<CR>
 " ターミナルモードで行番号を消す
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen * setlocal nonumber
 " 入力中のコマンド表示
 set showcmd
-" 80列目をハイライトで表示
-set colorcolumn=80
 " カーソルのある行に下線
 set cursorline
 " 行番号は6列分確保
@@ -160,6 +159,7 @@ if g:colors_name == 'gruvbox'
   highlight link GitGutterChange GruvboxAqua
   highlight link GitGutterChangeDelete GruvboxAqua
   highlight link GitGutterDelete GruvboxRed
+  highlight link FloatBorder GruvboxAqua
 endif
 
 " 検索などをした時に画面中央に表示
