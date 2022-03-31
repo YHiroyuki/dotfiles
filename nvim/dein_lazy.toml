@@ -6,6 +6,7 @@ on_event = 'CursorHold'
 [[plugins]]
 repo = 'Shougo/defx.nvim'
 hook_add = '''
+let g:defx_icons_column_length = 2
 nnoremap <silent> <C-e>     <Cmd>Defx -resume<CR>
 nnoremap <silent> <Leader>e <Cmd>Defx -search-recursive=`expand('%')` -resume<CR>
 '''
@@ -16,6 +17,8 @@ function! s:defx_my_settings() abort
   set norelativenumber
   " Define mappings
   " 移動
+  nnoremap <silent><buffer><expr> 1
+  \ defx#do_action('call', 'DefxExtendOpen')
   nnoremap <silent><buffer><expr> h
   \ defx#do_action('close_tree')
   nnoremap <silent><buffer><expr> j
@@ -74,7 +77,7 @@ call defx#custom#option('_', {
     \ 'split': 'vertical',
     \ 'direction': 'topleft',
     \ 'show_ignored_files': 1,
-    \ 'buffer_name': 'exlorer',
+    \ 'buffer_name': '',
     \ 'toggle': 1,
     \ 'columns': 'indent:git:icons:filename:mark',
     \ })
@@ -88,6 +91,11 @@ call defx#custom#column('git', 'indicators', {
     \ 'Deleted'   : '✖',
     \ 'Unknown'   : '?'
     \ })
+call defx#custom#column('git', 'column_length', 2)
+
+function! DefxExtendOpen(context) abort
+  echo a:context.targets[0]
+endfunction
 '''
 
 [[plugins]]

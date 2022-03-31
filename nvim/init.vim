@@ -12,6 +12,13 @@ syntax on
 " leaderのキーを変更
 let mapleader = "\<Space>"
 
+inoremap { {}<LEFT>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+inoremap < <><LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+
 nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
 nmap <Leader>n :<C-u>split +enew<CR>
 nmap <Leader>t :<C-u>tabnew<CR>
@@ -182,6 +189,7 @@ noremap <C-l> <C-w>l
 "挿入モード時にMac標準の前後移動と同じことができるように
 imap <C-b> <Left>
 imap <C-f> <Right>
+imap <C-l> <Right>
 "
 noremap <C-n> :cn<CR>zz
 noremap <C-p> :cp<CR>zz

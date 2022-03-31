@@ -8,21 +8,24 @@ let g:lightline = {
   \ 'active': {
   \   'left': [
   \     ['mode', 'paste'],
-  \     ['fugitive', 'gitgutter'],
-  \     ['readonly'],
-  \     ['filename', 'modified']
-  \ ]
+  \     ['readonly', 'filename', 'modified'],
+  \     ['fugitive', 'gitgutter']
+  \   ],
+  \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype']]
   \ },
   \ 'separator': {
   \   'left': '⮀',
   \ },
   \ 'subseparator': {
-  \   'left': '>',
+  \   'left': '',
   \ },
   \ 'component_function': {
   \   'fugitive': 'MyLightlineFugitive',
   \   'readonly': 'MyLightlineReadonly',
   \   'gitgutter': 'MyLightlineGitGutter',
+  \   'fileformat': 'MyFileFormat',
+  \   'fileencoding': 'MyFileEncoding',
+  \   'filetype': 'MyLightlineFileType',
   \ },
   \ }
 function! MyLightlineReadonly()
@@ -30,6 +33,10 @@ function! MyLightlineReadonly()
 endfunction
 
 function! MyLightlineFugitive()
+  if &filetype =~ 'defx'
+    return ''
+  endif
+
   try
     if &ft !~? 'vimfiler\|gundo' && strlen(fugitive#head())
       return ' ' . fugitive#head()
@@ -40,6 +47,9 @@ function! MyLightlineFugitive()
 endfunction
 
 function! MyLightlineGitGutter()
+  if &filetype =~ 'defx'
+    return ''
+  endif
   if ! exists('*GitGutterGetHunkSummary')
         \ || ! get(g:, 'gitgutter_enabled', 0)
         \ || winwidth('.') <= 90
@@ -58,6 +68,18 @@ function! MyLightlineGitGutter()
     endif
   endfor
   return join(ret, ' ')
+endfunction
+
+function! MyFileFormat()
+  return &filetype =~ 'defx' ? '' : &fileformat
+endfunction
+
+function! MyFileEncoding()
+  return &filetype =~ 'defx' ? '' : &fileencoding
+endfunction
+
+function! MyLightlineFileType()
+  return &filetype =~ 'defx' ? '' : (strlen(&filetype) ? &filetype : 'no ft')
 endfunction
 '''
 
