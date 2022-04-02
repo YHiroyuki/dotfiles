@@ -159,3 +159,6 @@ repo = 'kristijanhusak/defx-git'
 
 [[plugins]]
 repo = 'elzr/vim-json'
+
+[[plugins]]
+repo = 'Shougo/pum.vim'

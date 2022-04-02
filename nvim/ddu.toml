@@ -61,7 +61,7 @@ repo = 'Shougo/ddu-ui-ff'
 on_source = 'ddu.vim'
 
 [[plugins]]
-repo = 'Shougo/ddu-ui-filter'
+repo = 'Shougo/ddu-ui-filer'
 on_source = 'ddu.vim'
 [[plugins]]
 repo = 'Shougo/ddu-source-file_rec'
