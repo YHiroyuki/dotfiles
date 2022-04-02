@@ -4,7 +4,7 @@ repo = 'Shougo/ddu.vim'
 depends = ['denops.vim']
 on_source = 'denops.vim'
 hook_add = '''
-noremap <Leader>o <Cmd>Ddu file_rec<CR>
+noremap <Leader>o <Cmd>Ddu file_rec -ui-param-startFilter=v:true<CR>
 noremap <Leader>b <Cmd>Ddu buffer<CR>
 '''
 hook_source = '''
@@ -13,7 +13,6 @@ call ddu#custom#patch_global({
     \ 'uiParams': {
     \   'ff': {
     \     'split': 'floating',
-    \     'startFilter': v:true,
     \     'floatingBorder': 'single',
     \    },
     \ },
