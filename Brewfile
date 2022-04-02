@@ -1,4 +1,3 @@
-tap "blackfireio/blackfire"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
@@ -54,7 +53,6 @@ brew "tmux"
 brew "wget"
 brew "zlib"
 brew "zsh"
-brew "blackfireio/blackfire/blackfire-agent"
 brew "sanemat/font/ricty", args: ["with-powerline"]
 cask "font-hack-nerd-font"
 brew "goenv"
