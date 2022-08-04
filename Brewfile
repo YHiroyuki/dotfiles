@@ -55,5 +55,6 @@ brew "zlib"
 brew "zsh"
 brew "sanemat/font/ricty", args: ["with-powerline"]
 cask "font-hack-nerd-font"
+cask "visual-studio-code"
 brew "goenv"
 brew "deno"

@@ -90,3 +90,9 @@ rm -rf fonts
 cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
 fc-cache -vf
 
+cecho $green "\n----> setup visual studio code"
+for name in `cat visual-studio-code/extentions`
+do
+    code --install-extension $name
+done
+
