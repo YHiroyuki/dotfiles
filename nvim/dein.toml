@@ -21,6 +21,7 @@ let g:lightline = {
   \ },
   \ 'component_function': {
   \   'fugitive': 'MyLightlineFugitive',
+  \   'modified': 'MyLightlineModified',
   \   'readonly': 'MyLightlineReadonly',
   \   'gitgutter': 'MyLightlineGitGutter',
   \   'fileformat': 'MyFileFormat',
@@ -28,6 +29,11 @@ let g:lightline = {
   \   'filetype': 'MyLightlineFileType',
   \ },
   \ }
+
+function! MyLightlineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? ' ' : &modifiable ? '' : '-'
+endfunction
+
 function! MyLightlineReadonly()
   return &readonly && &filetype !=# 'help' ? '' : ''
 endfunction

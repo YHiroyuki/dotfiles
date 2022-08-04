@@ -163,11 +163,18 @@ colorscheme gruvbox
 " TODO できるかわからんけどカラースキーマによって変える
 " SignColumnを背景色と同じにしたかったから書き換え
 if g:colors_name == 'gruvbox'
-  highlight SignColumn ctermbg=NONE guibg=NONE
+  highlight CursorLine gui=underline
+  highlight SignColumn ctermbg=None guibg=None
   highlight link GitGutterAdd GruvboxGreen
   highlight link GitGutterChange GruvboxAqua
   highlight link GitGutterChangeDelete GruvboxAqua
   highlight link GitGutterDelete GruvboxRed
+  " highlight SignColumn ctermbg=237 guibg=#3c3836
+  " highlight LineNr ctermfg=245 ctermbg=237 guifg=#928374 guibg=#3c3836
+  " highlight link GitGutterAdd GruvboxGreenSign
+  " highlight link GitGutterChange GruvboxAquaSign
+  " highlight link GitGutterChangeDelete GruvboxAquaSign
+  " highlight link GitGutterDelete GruvboxRedSign
   highlight link FloatBorder GruvboxAqua
 endif
 

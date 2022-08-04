@@ -115,9 +115,9 @@ do
         (( $j == 1 && $rssi > -80  )) ||
         (( $j == 2 && $rssi > -50  )); then
         # make signal
-        signal="${signal}${signals[$j]} "
+        signal="${signal}${signals[$j]}"
     else
-        signal="${signal}  "
+        signal="${signal} "
     fi
 done
 
