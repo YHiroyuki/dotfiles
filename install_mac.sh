@@ -65,6 +65,7 @@ mkdir -p ~/.config/nvim
 ln -s ${CURRENT_DIR}/nvim/dein.toml ~/.config/nvim/dein.toml
 ln -s ${CURRENT_DIR}/nvim/dein_lazy.toml ~/.config/nvim/dein_lazy.toml
 ln -s ${CURRENT_DIR}/nvim/colors.toml ~/.config/nvim/colors.toml
+ln -s ${CURRENT_DIR}/nvim/ddc.toml ~/.config/nvim/ddc.toml
 ln -s ${CURRENT_DIR}/nvim/ddu.toml ~/.config/nvim/ddu.toml
 ln -s ${CURRENT_DIR}/nvim/init.vim ~/.config/nvim/init.vim
 
