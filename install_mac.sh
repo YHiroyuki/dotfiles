@@ -34,6 +34,8 @@ cecho $green "\n----> setup gitconfig"
 ln -s ${CURRENT_DIR}/_gitconfig ~/.gitconfig
 [ -e ~/.gitignore ] && rm ~/.gitignore
 ln -s ${CURRENT_DIR}/_gitignore ~/.gitignore
+[ -e ~/.gitmessage ] && rm ~/.gitmessage
+ln -s ${CURRENT_DIR}/_gitmessage ~/.gitmessage
 
 cecho $green "\n----> setup zsh"
 mkdir -p ~/.zsh
