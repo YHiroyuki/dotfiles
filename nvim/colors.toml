@@ -1,0 +1,12 @@
+# テーマ
+[[plugins]]
+repo = 'YHiroyuki/atea'
+
+[[plugins]]
+repo = 'romainl/Apprentice'
+
+[[plugins]]
+repo = 'morhetz/gruvbox'
+
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'

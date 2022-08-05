@@ -1,10 +1,14 @@
-# Filerだっけ？
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+on_event = 'CursorHold'
+
+# Filer
 [[plugins]]
 repo = 'Shougo/defx.nvim'
-# -resume直した方が良いかも
 hook_add = '''
-nnoremap <silent> <C-e> :<C-u>Defx -resume=1<CR>
-nnoremap <Leader>e :<C-u>Defx<CR>
+let g:defx_icons_column_length = 2
+nnoremap <silent> <C-e>     <Cmd>Defx -resume<CR>
+nnoremap <silent> <Leader>e <Cmd>Defx -search-recursive=`expand('%')` -resume<CR>
 '''
 hook_source = '''
 autocmd FileType defx call s:defx_my_settings()
@@ -13,16 +17,20 @@ function! s:defx_my_settings() abort
   set norelativenumber
   " Define mappings
   " 移動
+  nnoremap <silent><buffer><expr> 1
+  \ defx#do_action('call', 'DefxExtendOpen')
   nnoremap <silent><buffer><expr> h
-  \ defx#do_action('cd', ['..'])
+  \ defx#do_action('close_tree')
   nnoremap <silent><buffer><expr> j
   \ line('.') == line('$') ? 'gg' : 'j'
   nnoremap <silent><buffer><expr> k
   \ line('.') == 1 ? 'G' : 'k'
   nnoremap <silent><buffer><expr> l
-  \ defx#do_action('drop')
+  \ defx#do_action('open_tree')
   nnoremap <silent><buffer><expr> o
   \ defx#do_action('open_or_close_tree')
+  nnoremap <silent><buffer><expr> 5
+  \ defx#do_action('redraw')
   " 描画
   nnoremap <silent><buffer><expr> i
   \ defx#do_action('toggle_ignored_files')
@@ -44,12 +52,6 @@ function! s:defx_my_settings() abort
   " extra
   nnoremap <silent><buffer><expr> <CR>
   \ defx#do_action('drop')
-  " nnoremap <silent><buffer><expr> E
-  " \ defx#do_action('open', 'vsplit')
-  " nnoremap <silent><buffer><expr> P
-  " \ defx#do_action('open', 'pedit')
-  nnoremap <silent><buffer><expr> x
-  \ defx#do_action('execute_system')
   nnoremap <silent><buffer><expr> yy
   \ defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> ~
@@ -75,7 +77,7 @@ call defx#custom#option('_', {
     \ 'split': 'vertical',
     \ 'direction': 'topleft',
     \ 'show_ignored_files': 1,
-    \ 'buffer_name': 'exlorer',
+    \ 'buffer_name': '',
     \ 'toggle': 1,
     \ 'columns': 'indent:git:icons:filename:mark',
     \ })
@@ -89,100 +91,18 @@ call defx#custom#column('git', 'indicators', {
     \ 'Deleted'   : '✖',
     \ 'Unknown'   : '?'
     \ })
+call defx#custom#column('git', 'column_length', 2)
+
+function! DefxExtendOpen(context) abort
+  echo a:context.targets[0]
+endfunction
 '''
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
 [[plugins]]
-repo = 'Shougo/unite.vim'
-
-[[plugins]]
-repo = 'Shougo/vimfiler.vim'
-depends = 'unite.vim'
-# hook_add = '''
-# nnoremap <silent> <C-e> :VimFilerExplorer -split<CR>
-# '''
-hook_source = '''
-call vimfiler#custom#profile('default', 'context', {
-      \ 'safe' : 0,
-      \ 'auto_expand' : 1,
-      \ 'parent' : 0,
-      \ })
-" Like Textmate icons.
-let g:vimfiler_tree_leaf_icon = ' '
-let g:vimfiler_tree_opened_icon = '▾'
-let g:vimfiler_tree_closed_icon = '▸'
-let g:vimfiler_file_icon = ' '
-let g:vimfiler_readonly_file_icon = '✗'
-let g:vimfiler_marked_file_icon = '✓'
-autocmd FileType vimfiler call s:vimfiler_my_settings()
-autocmd FileType vimfiler nmap <buffer> <C-R>  <Plug>(vimfiler_redraw_screen)
-function! s:vimfiler_my_settings() abort
-    set nonumber
-    set norelativenumber
-    set signcolumn=no
-    nnoremap <silent><buffer> <C-j> <C-w>j
-    nnoremap <silent><buffer> <C-k> <C-w>k
-    nnoremap <silent><buffer> <C-h> <C-w>h
-    nnoremap <silent><buffer> <C-l> <C-w>l
-endfunction
-'''
-
-
-[[plugins]]
 repo = 'thinca/vim-quickrun'
-
-# denite.nvim v3.3
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-hock_add = '''
-'''
-hook_source = '''
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('toggle_select').'j'
-endfunction
-call denite#custom#option('_', {
-    \ 'split': 'floating',
-    \ 'highlight_matched_char': 'Visual',
-    \ })
-call denite#custom#var('file/rec', 'command',
-    \ ['rg', '--files', '--glob', '!.git'])
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts',
-    \ ['-i', '--vimgrep', '--no-heading'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-'''
-# hook_add = '''
-# nnoremap <Leader>b :<C-u>Denite buffer -highlight-mode-insert=Visual -highlight-matched-char=Statement -highlight-matched-range=VisualNOS<CR>
-# nnoremap <Leader>f :<C-u>Denite file_mru -highlight-mode-insert=Visual -highlight-matched-char=Statement -highlight-matched-range=VisualNOS<CR>
-# nnoremap <Leader>p :<C-u>Denite file_rec -highlight-mode-insert=Visual -highlight-matched-char=Statement -highlight-matched-range=VisualNOS<CR>
-# '''
-# nnoremap <Leader>g :<C-u>Denite grep -highlight-mode-insert=Search<CR>
-# hook_source = '''
-# call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-# call denite#custom#var('grep', 'command', ['ag'])
-# call denite#custom#var('grep', 'recursive_opts', [])
-# call denite#custom#var('grep', 'pattern_opt', [])
-# call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
-# call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-# call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-# '''
 
 # 補完
 [[plugins]]

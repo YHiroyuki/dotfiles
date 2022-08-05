@@ -1,0 +1,49 @@
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+depends=['denops.vim', 'pum.vim']
+on_event = ['InsertEnter', 'CursorHold']
+hook_source = '''
+call ddc#custom#patch_global('completionMenu', 'pum.vim')
+call ddc#custom#patch_global('sources', [
+ \ 'around',
+ \ 'cmdline-history'
+ \ ])
+call ddc#custom#patch_global('sourceOptions', {
+ \ '_': {
+ \   'matchers': ['matcher_head'],
+ \   'sorters': ['sorter_rank'],
+ \   'converters': ['converter_remove_overlap'],
+ \ },
+ \ 'around': {'mark': 'Around'},
+ \ 'cmdline-history': {'mark': 'history'}
+ \ })
+call ddc#enable()
+
+inoremap <C-n> <Cmd>call pum#map#insert_relative(+1)<CR>
+inoremap <C-p> <Cmd>call pum#map#insert_relative(-1)<CR>
+inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+inoremap <silent><expr> <CR>
+\ pum#visible() ?
+\ '<Cmd>call pum#map#confirm()<CR>' :
+\ '<CR>'
+'''
+
+[[plugins]]
+repo = 'Shougo/ddc-around'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-converter_remove_overlap'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-cmdline-history'
+on_source = 'ddc.vim'

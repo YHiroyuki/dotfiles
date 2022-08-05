@@ -1,2 +1,2 @@
 #!/bin/sh
-date -u "+UTC(%Y-%m-%d %H:%M)"
+date -u "+%Y-%m-%d %H:%M"

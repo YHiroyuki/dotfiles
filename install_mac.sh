@@ -24,7 +24,7 @@ fi
 cecho $green "\n----> brew update and install commands"
 brew update
 
-brew install zsh peco neovim wget tig python3
+brew bundle
 
 # check zsh and install
 
@@ -52,7 +52,6 @@ cecho $green "\n----> setup vim"
 [ -d ~/.vim/dein/repos/github.com/Shougo/dein.vim ] || (
     mkdir -p ~/.vim/dein/repos/github.com/Shougo/dein.vim
     git clone https://github.com/Shougo/dein.vim.git ~/.vim/dein/repos/github.com/Shougo/dein.vim
-    brew install neovim
 )
 [ -e ~/.vimrc ] && rm ~/.vimrc
 ln -s ${CURRENT_DIR}/_vimrc ~/.vimrc
@@ -65,6 +64,9 @@ mkdir -p ~/.config/nvim
 
 ln -s ${CURRENT_DIR}/nvim/dein.toml ~/.config/nvim/dein.toml
 ln -s ${CURRENT_DIR}/nvim/dein_lazy.toml ~/.config/nvim/dein_lazy.toml
+ln -s ${CURRENT_DIR}/nvim/colors.toml ~/.config/nvim/colors.toml
+ln -s ${CURRENT_DIR}/nvim/ddc.toml ~/.config/nvim/ddc.toml
+ln -s ${CURRENT_DIR}/nvim/ddu.toml ~/.config/nvim/ddu.toml
 ln -s ${CURRENT_DIR}/nvim/init.vim ~/.config/nvim/init.vim
 
 pip3 install --upgrade pip --user
@@ -85,14 +87,12 @@ cd fonts
 cd ..
 rm -rf fonts
 
-brew install fontconfig
-
-brew tap sanemat/font
-brew install ricty --with-powerline
 cp -f /usr/local/opt/ricty/share/fonts/Ricty*.ttf ~/Library/Fonts/
 fc-cache -vf
 
-brew tap homebrew/cask-fonts
-brew cask install font-hack-nerd-font
+cecho $green "\n----> setup visual studio code"
+for name in `cat visual-studio-code/extentions`
+do
+    code --install-extension $name
+done
 
-brew install ripgrep

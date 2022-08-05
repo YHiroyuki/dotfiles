@@ -1,7 +1,9 @@
+# export GOENV_ROOT=$HOME/.goenv
+# export PATH=$GOENV_ROOT/bin:$PATH
+# eval "$(goenv init -)"
 export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=/Users/yamawaki/work
-# export GOPATH=$HOME/src/ghq/github.com/Wonderplanet/YDS_gdmt
-export PATH=$HOME/.pyenv/shims/:$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
+export GOPATH=$HOME/work
+export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin:$HOME/.pyenv/shims/
 export MANPATH=/opt/local/man:$MANPATH
 export PHPBREW_SET_PROMPT=1
 export GO15VENDOREXPERIMENT=1
@@ -9,6 +11,15 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 autoload -U compinit
 compinit -u
 bindkey -v
+
+# # vi modeのyankをclipboardにコピー
+# function vi-yank-xclip {
+#     zle vi-yank
+#    echo "$CUTBUFFER" | pbcopy -i
+# }
+# 
+# zle -N vi-yank-xclip
+# bindkey -M vicmd 'y' vi-yank-xclip
 
 branch_flag=true
 
@@ -20,6 +31,11 @@ if which pyenv > /dev/null; then
 fi
 if which rbenv > /dev/null; then
     eval "$(rbenv init -)"
+fi
+if [ "$(uname)" = "Darwin" ]; then
+    # Mac
+    alias tac="tail -r"
+
 fi
 # eval "$(direnv hook zsh)"
 
@@ -50,10 +66,13 @@ function my-pwd {
 function zle-line-init zle-keymap-select {
     case $KEYMAP in
         vicmd)
-        PROMPT="%{$fg[black]%}%{$bg[cyan]%}NORMAL%{$fg[cyan]%}%{$bg[white]%}%{$fg[black]%}%{$bg[white]%}`my-pwd`%{$fg[white]%}%{$bg[black]%}%{$reset_color%} "
+        # PROMPT="%{$fg[black]%}%{$bg[cyan]%}NORMAL%{$fg[cyan]%}%{$bg[white]%}%{$fg[black]%}%{$bg[white]%}`my-pwd`%{$fg[white]%}%{$bg[black]%}%{$reset_color%} "
+        # PROMPT="`my-pwd` %{$fg[green]%}❰%{$fg[yellow]%}❰%{$fg[red]%}❰"
+        PROMPT="%{$fg[white]%}`my-pwd`%{$reset_color%} %{$fg[cyan]%}❰%{$fg[blue]%}❰%{$fg[red]%}❰%{$reset_color%}"
         ;;
         main|viins)
-        PROMPT="%{$fg[black]%}%{$bg[green]%}INSERT%{$fg[green]%}%{$bg[white]%}%{$fg[black]%}%{$bg[white]%}`my-pwd`%{$fg[white]%}%{$bg[black]%}%{$reset_color%} "
+        # PROMPT="%{$fg[black]%}%{$bg[green]%}INSERT%{$fg[green]%}%{$bg[white]%}%{$fg[black]%}%{$bg[white]%}`my-pwd`%{$fg[white]%}%{$bg[black]%}%{$reset_color%} "
+        PROMPT="%{$fg[blue]%}`my-pwd`%{$reset_color%} %{$fg[red]%}❱%{$fg[blue]%}❱%{$fg[cyan]%}❱%{$reset_color%}"
         ;;
     esac
     zle reset-prompt
@@ -135,7 +154,6 @@ function change-flag(){
 }
 
 # --------------- alias ---------------------
-#emacs?知らない子ですねvimですか？
 alias tmux="tmux"
 alias checkout='git checkout'
 alias ll="ls -al"
@@ -284,4 +302,3 @@ export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
 if which phpenv > /dev/null; then
     eval "$(phpenv init -)"
 fi
-

@@ -3,23 +3,36 @@ if has('mac') "setting for mac
   set t_Co=256
 endif
 
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 " ハイライト
 syntax on
 " leaderのキーを変更
 let mapleader = "\<Space>"
 
+inoremap { {}<LEFT>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+inoremap < <><LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+
 nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
 nmap <Leader>n :<C-u>split +enew<CR>
 nmap <Leader>t :<C-u>tabnew<CR>
 cnoremap %%% <C-R>=expand("<cword>")<CR>
-nmap <leader>s :Ack %%%<CR>
-nmap <leader>l <C-w>x
+nnoremap <leader>s :Ack %%%<CR>
+nnoremap <leader>l <C-w>x
+
 nnoremap <Leader>s" ciw""<Esc>P
 nnoremap <Leader>s' ciw''<Esc>P
 nnoremap <Leader>s` ciw``<Esc>P
 nnoremap <Leader>s( ciw()<Esc>P
 nnoremap <Leader>s{ ciw{}<Esc>P
 nnoremap <Leader>s[ ciw[]<Esc>P
+
 setlocal iskeyword+=-
 
 "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
@@ -30,10 +43,12 @@ scriptencoding utf-8
 " 行番号表示
 set number
 set relativenumber
+nnoremap <Leader><Leader> <Cmd>set rnu!<CR>
+" ターミナルモードで行番号を消す
+autocmd TermOpen * setlocal norelativenumber
+autocmd TermOpen * setlocal nonumber
 " 入力中のコマンド表示
 set showcmd
-" 80列目をハイライトで表示
-set colorcolumn=80
 " カーソルのある行に下線
 set cursorline
 " 行番号は6列分確保
@@ -55,7 +70,8 @@ set smartcase
 " バックスペースで改行とかも消せるように
 set backspace=indent,eol,start
 " クリップボードとの共有だっけ
-set clipboard=unnamed
+" set clipboard=unnamed
+set clipboard+=unnamedplus
 "タブ、空白、改行の可視化
 set list
 "set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
@@ -71,10 +87,8 @@ set laststatus=2
 set splitbelow
 set splitright
 
-
 " python3のパス指定(brewでinstallしたものを指定)
 let g:python3_host_prog = '/usr/local/bin/python3'
-
 
 "dein Scripts-----------------------------
 if &compatible
@@ -102,10 +116,22 @@ if dein#load_state(s:dein_dir)
   let g:rc_dir    = expand("~/.config/nvim/")
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+  let s:colors_toml = g:rc_dir . '/colors.toml'
+  let s:ddu_toml    = g:rc_dir . '/ddu.toml'
+  let s:ddc_toml    = g:rc_dir . '/ddc.toml'
 
   " TOML を読み込み、キャッシュしておく
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  call dein#load_toml(s:toml,        {'lazy': 0})
+  call dein#load_toml(s:lazy_toml,   {'lazy': 1})
+  call dein#load_toml(s:colors_toml, {'lazy': 0})
+  call dein#load_toml(s:ddu_toml,    {'lazy': 1})
+  call dein#load_toml(s:ddc_toml,    {'lazy': 1})
+
+  " localで試す時に使うTOML
+  let s:local_toml  = g:rc_dir . '/local.toml'
+  if filereadable(expand(s:local_toml))
+    call dein#load_toml(s:local_toml, {'lazy': 0})
+  endif
 
   call dein#end()
   call dein#save_state()
@@ -124,42 +150,7 @@ syntax enable
 " lightlineのwombatを書き換えたかった
 
 " let g:lightline#colorscheme#custom#palette = lightline#colorscheme#flatten(s:p)
-" ステータスラインのデザイン
-let g:lightline = {
-  \ 'colorscheme': 'atea',
-  \ 'active': {
-  \   'left': [
-  \     ['mode', 'paste'],
-  \     ['fugitive'],
-  \     ['readonly'],
-  \     ['filename', 'modified']
-  \ ]
-  \ },
-  \ 'separator': {
-  \   'left': '⮀',
-  \ },
-  \ 'subseparator': {
-  \   'left': '>',
-  \ },
-  \ 'component_function': {
-  \   'fugitive': 'LightlineFugitive',
-  \   'readonly': 'LightlineReadonly',
-  \ },
-  \ }
-set noshowmode
-function! LightlineReadonly()
-  return &readonly && &filetype !=# 'help' ? '' : ''
-endfunction
-function! LightlineFugitive()
-  try
-    if &ft !~? 'vimfiler\|gundo' && strlen(fugitive#head())
-      return ' ' . fugitive#head()
-    endif
-  catch
-  endtry
-  return ''
-endfunction
-
+"
 " ack
 set wildignore+=*.a,vendor/**
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -167,7 +158,25 @@ ca Ack Ack!
 ca AckFromSearch AckFromSearch!
 
 " scheme
-colorscheme atea
+colorscheme gruvbox
+
+" TODO できるかわからんけどカラースキーマによって変える
+" SignColumnを背景色と同じにしたかったから書き換え
+if g:colors_name == 'gruvbox'
+  highlight CursorLine gui=underline
+  highlight SignColumn ctermbg=None guibg=None
+  highlight link GitGutterAdd GruvboxGreen
+  highlight link GitGutterChange GruvboxAqua
+  highlight link GitGutterChangeDelete GruvboxAqua
+  highlight link GitGutterDelete GruvboxRed
+  " highlight SignColumn ctermbg=237 guibg=#3c3836
+  " highlight LineNr ctermfg=245 ctermbg=237 guifg=#928374 guibg=#3c3836
+  " highlight link GitGutterAdd GruvboxGreenSign
+  " highlight link GitGutterChange GruvboxAquaSign
+  " highlight link GitGutterChangeDelete GruvboxAquaSign
+  " highlight link GitGutterDelete GruvboxRedSign
+  highlight link FloatBorder GruvboxAqua
+endif
 
 " 検索などをした時に画面中央に表示
 nmap n nzz
@@ -189,6 +198,7 @@ noremap <C-l> <C-w>l
 "挿入モード時にMac標準の前後移動と同じことができるように
 imap <C-b> <Left>
 imap <C-f> <Right>
+imap <C-l> <Right>
 "
 noremap <C-n> :cn<CR>zz
 noremap <C-p> :cp<CR>zz
@@ -228,13 +238,11 @@ if has("autocmd")
   autocmd FileType  markdown setlocal  sw=2  sts=2  ts=2  et
   autocmd FileType  go       setlocal  sw=4  sts=4  ts=4  noet  colorcolumn=120
   autocmd FileType  json     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
+  autocmd FileType  toml     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
 endif
 
-
 "
-let g:indentLine_fileTypeExclude = ['help', 'nerdtree', 'vimfiler']
 let g:vim_json_syntax_conceal = 0
-
 
 " go
 let g:go_highlight_function_calls = 1
@@ -251,14 +259,8 @@ let g:go_fmt_command = "goimports"
 "" 複数行を移動
 "vnoremap <C-Up> "zx<Up>"zP`[V`]
 "vnoremap <C-Down> "zx"zp`[V`]
-"
 
-nnoremap <silent><Leader>p :<C-u>Denite -start-filter file/rec<CR>
-nnoremap <silent><Leader>b :<C-u>Denite buffer<CR>
-
-hi NormalFloat ctermfg=lightblue ctermbg=241
-" ctermbg=#a3be8c
-
-highlight DoubleByteSpace cterm=underline ctermfg=lightblue guibg=darkgray
-
-
+" GitHubに公開してはいけないTokenや新しいプラグインを試す時に使う設定ファイルを読み込む
+if filereadable(expand('~/.config/nvim/local.vim'))
+  source ~/.config/nvim/local.vim
+endif
