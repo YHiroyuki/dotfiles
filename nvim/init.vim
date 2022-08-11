@@ -12,12 +12,13 @@ syntax on
 " leaderのキーを変更
 let mapleader = "\<Space>"
 
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap < <><LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
+" 対になる閉じかっこなどを入力する
+"inoremap { {}<LEFT>
+"inoremap [ []<LEFT>
+"inoremap ( ()<LEFT>
+"inoremap < <><LEFT>
+"inoremap " ""<LEFT>
+"inoremap ' ''<LEFT>
 
 nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
 nmap <Leader>n :<C-u>split +enew<CR>
@@ -264,3 +265,13 @@ let g:go_fmt_command = "goimports"
 if filereadable(expand('~/.config/nvim/local.vim'))
   source ~/.config/nvim/local.vim
 endif
+
+" プロジェクトルートに変更する
+function! s:ensure_git_root_dir() abort
+  let cmd = 'git rev-parse --show-superproject-working-tree --show-toplevel 2>/dev/null | head -1'
+  let root = system(cmd)->trim()->expand()
+  if isdirectory(root) && root != getcwd()
+    execute 'cd' root
+  endif
+endfunction
+autocmd VimEnter * ++once call s:ensure_git_root_dir()

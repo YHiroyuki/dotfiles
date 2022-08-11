@@ -25,3 +25,5 @@
 [core]
     excludesfile = ~/.gitignore
     editor = nvim
+[commit]
+	template = ~/.gitmessage
