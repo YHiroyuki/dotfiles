@@ -2,6 +2,10 @@
 if has('mac') "setting for mac
   set t_Co=256
 endif
+let g:asyncomplete_lsp_loaded=1
+let g:asyncomplete_loaded = 1
+let g:lsp_loaded = 1
+let g:loaded_lsp_settings= 1
 
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
