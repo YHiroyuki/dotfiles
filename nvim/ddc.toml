@@ -11,7 +11,7 @@ call ddc#custom#patch_global('sources', [
  \ ])
 call ddc#custom#patch_global('sourceOptions', {
  \ '_': {
- \   'matchers': ['matcher_head'],
+ \   'matchers': ['matcher_fuzzy'],
  \   'sorters': ['sorter_rank'],
  \   'converters': ['converter_remove_overlap'],
  \ },
@@ -23,7 +23,11 @@ call ddc#custom#patch_global('sourceParams', {
       \ 'nvim-lsp': { 'kindLabels': { 'Class': 'c' } },
       \ })
 call ddc#enable()
-
+call ddc#custom#patch_global('filterParams', {
+  \   'matcher_fuzzy': {
+  \     'splitMode': 'word'
+  \   }
+  \ })
 inoremap <C-n> <Cmd>call pum#map#insert_relative(+1)<CR>
 inoremap <C-p> <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
@@ -31,10 +35,17 @@ inoremap <silent><expr> <CR>
 \ pum#visible() ?
 \ '<Cmd>call pum#map#confirm()<CR>' :
 \ '<CR>'
+nnoremap <Leader>/ <Cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <Leader><Leader> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <Leader>r <cmd>lua vim.lsp.buf.references()<CR>
 '''
 
 [[plugins]]
 repo = 'Shougo/ddc-around'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'tani/ddc-fuzzy'
 on_source = 'ddc.vim'
 
 [[plugins]]
