@@ -149,21 +149,6 @@ repo = 'kristijanhusak/defx-icons'
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
 
-# [[plugins]]
-# repo = 'mechatroner/rainbow_csv'
-
-## [[plugins]]
-## repo = 'prabirshrestha/vim-lsp'
-## [[plugins]]
-## repo = 'prabirshrestha/async.vim'
-## # deopleteに移管できるかも
-## [[plugins]]
-## repo = 'prabirshrestha/asyncomplete.vim'
-## [[plugins]]
-## repo = 'prabirshrestha/asyncomplete-lsp.vim'
-## [[plugins]]
-## repo = 'mattn/vim-lsp-settings'
-
 [[plugins]]
 repo = 'elzr/vim-json'
 
