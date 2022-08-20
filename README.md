@@ -20,4 +20,6 @@ cd ~/work/src/github.com/YHiroyuki/dotfiles
 (For mac) ./install_mac.sh
 ```
 
-
+## メモ
+composerのインストール
+npmのインストール
