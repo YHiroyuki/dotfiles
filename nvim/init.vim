@@ -44,7 +44,7 @@ scriptencoding utf-8
 " 行番号表示
 set number
 set relativenumber
-nnoremap <Leader><Leader> <Cmd>set rnu!<CR>
+" nnoremap <Leader><Leader> <Cmd>set rnu!<CR>
 " ターミナルモードで行番号を消す
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen * setlocal nonumber
