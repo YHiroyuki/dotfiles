@@ -21,5 +21,6 @@ cecho $green "\nSetup Git"
 # TODO file check
 ln -s ${CURRENT_DIR}/git ~/.config/git
 
+# TODO file check
 echo "[include]" >> ~/.gitconfig
 echo "    path = ~/.config/git/.gitconfig" >> ~/.gitconfig
