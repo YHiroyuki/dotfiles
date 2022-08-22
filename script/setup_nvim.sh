@@ -18,6 +18,7 @@ CURRENT_DIR=`pwd`
 
 cecho $green "\n Setup Neovim"
 
+# TODO file check
 ln -s ${CURRENT_DIR}/nvim ~/.config/nvim
 
 pip3 install --upgrade pip --user

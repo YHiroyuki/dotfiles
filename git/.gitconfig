@@ -1,5 +1,5 @@
 [include]
-    path = ~/.gitconfig.local
+    path = ~/.config/git/local.gitconfig
 [ghq]
     root = ~/work/src/
 [alias]
@@ -23,7 +23,7 @@
     pre-stage = add -N .
     diff-name = diff --name-only
 [core]
-    excludesfile = ~/.gitignore
+    excludesfile = ~/.config/git/.gitignore
     editor = nvim
 [commit]
-	template = ~/.gitmessage
+    template = ~/.config/git/commit_message.txt
