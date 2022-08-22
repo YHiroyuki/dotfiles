@@ -12,18 +12,10 @@ syntax on
 " leaderのキーを変更
 let mapleader = "\<Space>"
 
-" 対になる閉じかっこなどを入力する
-"inoremap { {}<LEFT>
-"inoremap [ []<LEFT>
-"inoremap ( ()<LEFT>
-"inoremap < <><LEFT>
-"inoremap " ""<LEFT>
-"inoremap ' ''<LEFT>
-
-nmap <Leader>5 :<C-u>source $MYVIMRC<CR>
-nmap <Leader>n :<C-u>split +enew<CR>
-nmap <Leader>t :<C-u>tabnew<CR>
-cnoremap %%% <C-R>=expand("<cword>")<CR>
+nmap     <Leader>5 <Cmd>source $MYVIMRC<CR>
+nmap     <Leader>n <Cmd>split +enew<CR>
+nmap     <Leader>t <Cmd>tabnew<CR>
+cnoremap %%%       <C-R>=expand("<cword>")<CR>
 nnoremap <leader>s :Ack %%%<CR>
 nnoremap <leader>l <C-w>x
 
@@ -44,7 +36,6 @@ scriptencoding utf-8
 " 行番号表示
 set number
 set relativenumber
-" nnoremap <Leader><Leader> <Cmd>set rnu!<CR>
 " ターミナルモードで行番号を消す
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen * setlocal nonumber
@@ -71,11 +62,9 @@ set smartcase
 " バックスペースで改行とかも消せるように
 set backspace=indent,eol,start
 " クリップボードとの共有だっけ
-" set clipboard=unnamed
 set clipboard+=unnamedplus
 "タブ、空白、改行の可視化
 set list
-"set listchars=tab:>.,trail:_,eol:↲,extends:>,precedes:<,nbsp:%
 set listchars=tab:>.,trail:_,extends:>,precedes:<,nbsp:%
 " swap,backupファイルをoff
 set nowritebackup
@@ -106,11 +95,8 @@ set runtimepath+=$HOME/.config/nvim/dein/repos/github.com/Shougo/dein.vim
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
-
   " Let dein manage dein
   " Required:
-  " // FIXME
-  " call dein#add('/Users/wp-pc-2020-154/.config/nvim/dein/repos/github.com/Shougo/dein.vim')
 
   " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイルを用意しておく
@@ -142,16 +128,6 @@ endif
 filetype plugin indent on
 syntax enable
 
-" If you want to install not installed plugins on startup.
-"if dein#check_install()
-"  call dein#install()
-"endif
-
-"End dein Scripts-------------------------
-" lightlineのwombatを書き換えたかった
-
-" let g:lightline#colorscheme#custom#palette = lightline#colorscheme#flatten(s:p)
-"
 " ack
 set wildignore+=*.a,vendor/**
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -161,22 +137,16 @@ ca AckFromSearch AckFromSearch!
 " scheme
 colorscheme gruvbox
 
-" TODO できるかわからんけどカラースキーマによって変える
+" TODO 場所検討中
 " SignColumnを背景色と同じにしたかったから書き換え
 if g:colors_name == 'gruvbox'
   highlight CursorLine gui=underline
   highlight SignColumn ctermbg=None guibg=None
-  highlight link GitGutterAdd GruvboxGreen
-  highlight link GitGutterChange GruvboxAqua
-  highlight link GitGutterChangeDelete GruvboxAqua
-  highlight link GitGutterDelete GruvboxRed
-  " highlight SignColumn ctermbg=237 guibg=#3c3836
-  " highlight LineNr ctermfg=245 ctermbg=237 guifg=#928374 guibg=#3c3836
-  " highlight link GitGutterAdd GruvboxGreenSign
-  " highlight link GitGutterChange GruvboxAquaSign
-  " highlight link GitGutterChangeDelete GruvboxAquaSign
-  " highlight link GitGutterDelete GruvboxRedSign
-  highlight link FloatBorder GruvboxAqua
+  highlight link GitGutterAdd           GruvboxGreen
+  highlight link GitGutterChange        GruvboxAqua
+  highlight link GitGutterDelete        GruvboxRed
+  highlight link GitGutterChangeDelete  GruvboxAqua
+  highlight link FloatBorder            GruvboxAqua
 endif
 
 " 検索などをした時に画面中央に表示
@@ -186,8 +156,8 @@ nmap * *zz
 "nmap # #zz
 nmap g* g*zz
 nmap g# g#zz
-nmap { gT
-nmap } gt
+nmap { <Cmd>tabprevious<CR>
+nmap } <Cmd>tabnext<CR>
 " 半ページ送りの時画面中央に表示
 nmap <C-d> <C-d>zz
 nmap <C-u> <C-u>zz
@@ -205,15 +175,11 @@ noremap <C-n> :cn<CR>zz
 noremap <C-p> :cp<CR>zz
 noremap <C-o> <C-o>zz
 noremap <C-i> <C-i>zz
-"
-noremap tn :tabnext<CR>
-noremap tp :tabprevious<CR>
 
 " 全角スペースの可視化
 function! DoubleByteSpace()
   highlight DoubleByteSpace cterm=underline ctermfg=lightblue guibg=darkgray
 endfunction
-
 " 全角スペースの可視化
 if has('syntax')
   augroup DoubleByteSpace
@@ -267,6 +233,7 @@ if filereadable(expand('~/.config/nvim/local/local.vim'))
 endif
 
 " プロジェクトルートに変更する
+autocmd VimEnter * ++once call s:ensure_git_root_dir()
 function! s:ensure_git_root_dir() abort
   let cmd = 'git rev-parse --show-superproject-working-tree --show-toplevel 2>/dev/null | head -1'
   let root = system(cmd)->trim()->expand()
@@ -274,4 +241,3 @@ function! s:ensure_git_root_dir() abort
     execute 'cd' root
   endif
 endfunction
-autocmd VimEnter * ++once call s:ensure_git_root_dir()
