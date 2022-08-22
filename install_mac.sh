@@ -62,22 +62,6 @@ ln -s ${CURRENT_DIR}/_vimrc.keymap ~/.vimrc.keymap
 [ -e ~/.vimrc.local ] && rm ~/.vimrc.local
 ln -s ${CURRENT_DIR}/_vimrc.local ~/.vimrc.local
 
-mkdir -p ~/.config/nvim
-
-ln -s ${CURRENT_DIR}/nvim/dein.toml ~/.config/nvim/dein.toml
-ln -s ${CURRENT_DIR}/nvim/dein_lazy.toml ~/.config/nvim/dein_lazy.toml
-ln -s ${CURRENT_DIR}/nvim/colors.toml ~/.config/nvim/colors.toml
-ln -s ${CURRENT_DIR}/nvim/ddc.toml ~/.config/nvim/ddc.toml
-ln -s ${CURRENT_DIR}/nvim/ddu.toml ~/.config/nvim/ddu.toml
-ln -s ${CURRENT_DIR}/nvim/init.vim ~/.config/nvim/init.vim
-
-pip3 install --upgrade pip --user
-pip3 install neovim
-
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-sh ./installer.sh ~/.config/nvim/dein
-rm -rf installer.sh
-
 # powerlineのインストール
 # [参考]
 # https://qiita.com/park-jh/items/557a9d5b470947aef2f5

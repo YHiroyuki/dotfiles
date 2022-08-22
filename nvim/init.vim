@@ -129,7 +129,7 @@ if dein#load_state(s:dein_dir)
   call dein#load_toml(s:ddc_toml,    {'lazy': 1})
 
   " localで試す時に使うTOML
-  let s:local_toml  = g:rc_dir . '/local.toml'
+  let s:local_toml  = g:rc_dir . '/local/local.toml'
   if filereadable(expand(s:local_toml))
     call dein#load_toml(s:local_toml, {'lazy': 0})
   endif
@@ -262,8 +262,8 @@ let g:go_fmt_command = "goimports"
 "vnoremap <C-Down> "zx"zp`[V`]
 
 " GitHubに公開してはいけないTokenや新しいプラグインを試す時に使う設定ファイルを読み込む
-if filereadable(expand('~/.config/nvim/local.vim'))
-  source ~/.config/nvim/local.vim
+if filereadable(expand('~/.config/nvim/local/local.vim'))
+  source ~/.config/nvim/local/local.vim
 endif
 
 " プロジェクトルートに変更する
