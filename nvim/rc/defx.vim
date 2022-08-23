@@ -1,3 +1,29 @@
+call defx#custom#option('_', {
+\   'winwidth': 40,
+\   'winheight': 15,
+\   'split': 'vertical',
+\   'direction': 'topleft',
+\   'show_ignored_files': 1,
+\   'buffer_name': '',
+\   'toggle': 1,
+\   'columns': 'indent:git:icons:filename:mark',
+\ })
+call defx#custom#column('git', 'indicators', {
+\   'Modified'  : '✹',
+\   'Staged'    : '✚',
+\   'Untracked' : '✭',
+\   'Renamed'   : '➜',
+\   'Unmerged'  : '═',
+\   'Ignored'   : '☒',
+\   'Deleted'   : '✖',
+\   'Unknown'   : '?'
+\ })
+call defx#custom#column('git', 'column_length', 2)
+
+function! DefxExtendOpen(context) abort
+  echo a:context.targets[0]
+endfunction
+
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
   set nonumber
@@ -32,29 +58,4 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> x     defx#is_directory() ?
 \                                       defx#do_action('open_tree', 'recursive:10') :
 \                                       defx#do_action('preview')
-endfunction
-call defx#custom#option('_', {
-\   'winwidth': 40,
-\   'winheight': 15,
-\   'split': 'vertical',
-\   'direction': 'topleft',
-\   'show_ignored_files': 1,
-\   'buffer_name': '',
-\   'toggle': 1,
-\   'columns': 'indent:git:icons:filename:mark',
-\ })
-call defx#custom#column('git', 'indicators', {
-\   'Modified'  : '✹',
-\   'Staged'    : '✚',
-\   'Untracked' : '✭',
-\   'Renamed'   : '➜',
-\   'Unmerged'  : '═',
-\   'Ignored'   : '☒',
-\   'Deleted'   : '✖',
-\   'Unknown'   : '?'
-\ })
-call defx#custom#column('git', 'column_length', 2)
-
-function! DefxExtendOpen(context) abort
-  echo a:context.targets[0]
 endfunction

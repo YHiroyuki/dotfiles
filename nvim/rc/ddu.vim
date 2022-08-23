@@ -14,6 +14,7 @@ call ddu#custom#patch_global({
 \   'sourceOptions': {
 \     '_': {
 \       'matchers': ['matcher_substring'],
+\       'ignoreCase': v:true,
 \     },
 \   },
 \   'kindOptions': {
@@ -23,6 +24,9 @@ call ddu#custom#patch_global({
 \     'buffer': {
 \       'defaultAction': 'open',
 \     },
+\   },
+\   'filterParams': {
+\     'matcher_substring': {'highlightMatched': 'Search',},
 \   },
 \ })
 

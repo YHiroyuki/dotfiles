@@ -241,3 +241,6 @@ function! s:ensure_git_root_dir() abort
     execute 'cd' root
   endif
 endfunction
+
+command! -nargs=* Terminal split | wincmd j | resize 10 | terminal <args>
+autocmd TermOpen * startinsert
