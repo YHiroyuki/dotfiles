@@ -32,3 +32,11 @@ imap <C-Space> <C-x><C-o>
 hook_source = '''
 call deoplete#custom#option('smart_case', v:true)
 '''
+
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+on_source = 'defx.nvim'
+
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
+on_source = 'defx.nvim'
