@@ -1,1 +1,7 @@
 _tmux/plugins
+
+nvim/dein/*
+nvim/local/*
+!nvim/local/.gitkeep
+
+git/local.gitconfig

@@ -1,5 +1,5 @@
 [include]
-    path = ~/.gitconfig.local
+    path = ~/.config/git/local.gitconfig
 [ghq]
     root = ~/work/src/
 [alias]
@@ -17,13 +17,13 @@
     lg = log --graph --all --decorate --oneline
     ls = !git --no-pager log -10 --oneline --decorate
     # st = !echo 'stashes:' && git stash list | grep -F ': WIP on '`git rev-parse --abbrev-ref HEAD`':' | tail -r
-    cp = !git branch -a --sort=-authordate | sed 's/[* ]//' | sed 's remotes/origin/  ' | sed '/HEAD ->/d' | awk '!a[$0]++' | peco |xargs git checkout 
+    cp = !git branch -a --sort=-authordate | sed 's/[* ]//' | sed 's remotes/origin/  ' | sed '/HEAD ->/d' | awk '!a[$0]++' | fzf |xargs git checkout 
     ru = remote update origin
     unstage = reset HEAD
     pre-stage = add -N .
     diff-name = diff --name-only
 [core]
-    excludesfile = ~/.gitignore
+    excludesfile = ~/.config/git/.gitignore
     editor = nvim
 [commit]
-	template = ~/.gitmessage
+    template = ~/.config/git/commit_message.txt
