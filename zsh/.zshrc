@@ -1,6 +1,3 @@
-# export GOENV_ROOT=$HOME/.goenv
-# export PATH=$GOENV_ROOT/bin:$PATH
-# eval "$(goenv init -)"
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/work
 export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin:$HOME/.pyenv/shims/
@@ -37,13 +34,10 @@ if [ "$(uname)" = "Darwin" ]; then
     alias tac="tail -r"
 
 fi
-# eval "$(direnv hook zsh)"
 
 GHQ_ROOT=`ghq root | sed -e "s:^$HOME:~:"`
 zstyle ':completion:*:default' menu select=1
 # ------- PROMPT SETTING ----------------------
-# PROMPT=$'`battery-status`'
-#RPROMPT=$'`pyenv-status` `branch-status-check` %F{5}[%C]%f' # %~はpwd
 RPROMPT=$'`branch-status-check`' # %~はpwd
 function custom-pwd {
     pwd | perl -pe "s:^`ghq root`\/.+?\/:ghq\::" | sed -e "s:^$HOME:~:"
@@ -63,6 +57,7 @@ function my-pwd {
     local basename=`basename $current`
     echo "$dirname/$basename"
 }
+
 function zle-line-init zle-keymap-select {
     case $KEYMAP in
         vicmd)
@@ -82,7 +77,7 @@ zle -N zle-keymap-select
 setopt prompt_subst #表示毎にPROMPTで設定されている文字列を評価する
 # ---------------------------------------------
 
-HISTFILE=${HOME}/.zsh_history
+HISTFILE=${HOME}/.config/zsh/.zsh_history
 HISTSIZE=100000
 SAVEHIST=1000000
 setopt hist_ignore_all_dups
@@ -98,21 +93,22 @@ setopt hist_ignore_space
 zstyle ':completion:*' ignore-parents parent pwd ..
 
 zle -N change-flag
+zle -N git-branch-src
+zle -N peco-src
+zle -N tmux-newwindow
+zle -N peco-history-selection
+
 bindkey '^\' change-flag
 bindkey '^r' history-incremental-search-backward
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 # peco+ghq Gitのリポジトリを一覧表示
 # ghq get (Git repos PATH)
-zle -N peco-src
 bindkey '^]' peco-src
-
 # Ctrl+g gitのブランチをぺこ
-zle -N git-branch-src
 bindkey '^g' git-branch-src
-
-zle -N tmux-newwindow
 bindkey '^n' tmux-newwindow
+bindkey '^R' peco-history-selection
 
 function tmux-newwindow {
     tmux new-window
@@ -124,8 +120,6 @@ function peco-history-selection() {
     zle reset-prompt
 }
 
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
 
 function git-branch-src(){
     local selected_branch=$(git branch | peco --query "$LBUFFER" | cut -c3-)
@@ -155,7 +149,6 @@ function change-flag(){
 
 # --------------- alias ---------------------
 alias tmux="tmux"
-alias checkout='git checkout'
 alias ll="ls -al"
 alias vi="vim -u NONE -N"
 
@@ -277,9 +270,6 @@ function notify () {
 
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-if [ -f ~/.local.zsh ]; then
-  source ~/.local.zsh
 fi
 
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x

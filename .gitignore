@@ -5,3 +5,6 @@ nvim/local/*
 !nvim/local/.gitkeep
 
 git/local.gitconfig
+
+zsh/local.zsh
+zsh/.zsh_history
