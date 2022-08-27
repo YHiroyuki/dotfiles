@@ -5,6 +5,7 @@ export MANPATH=/opt/local/man:$MANPATH
 export PHPBREW_SET_PROMPT=1
 export GO15VENDOREXPERIMENT=1
 export HOMEBREW_NO_AUTO_UPDATE=1
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 autoload -U compinit
 compinit -u
 bindkey -v
@@ -58,22 +59,41 @@ function my-pwd {
     echo "$dirname/$basename"
 }
 
+PROMPT_NOR=$'%{$fg[white]%}`my-pwd`%{$reset_color%} %{$fg[cyan]%}❰%{$fg[blue]%}❰%{$fg[red]%}❰%{$reset_color%}'
+PROMPT_INS=$'%{$fg[blue]%}`my-pwd`%{$reset_color%} %{$fg[red]%}❱%{$fg[blue]%}❱%{$fg[cyan]%}❱%{$reset_color%}'
+PROMPT_VIS=$'%{$fg[yellow]%}`my-pwd`%{$reset_color%} %{$fg[red]%}❰%{$fg[blue]%}❰%{$fg[cyan]%}❰%{$reset_color%}'
+PROMPT=$PROMPT_INS
+function zle-line-pre-redraw {
+  if [[ $REGION_ACTIVE -ne 0 ]]; then
+    NEW_PROMPT=$PROMPT_VIS
+  elif [[ $KEYMAP = vicmd ]]; then
+    NEW_PROMPT=$PROMPT_NOR
+  elif [[ $KEYMAP = main ]]; then
+    NEW_PROMPT=$PROMPT_INS
+  fi
+
+  if [[ $PROMPT = $NEW_PROMPT ]]; then
+    return
+  fi
+
+  PROMPT=$NEW_PROMPT
+
+  zle reset-prompt
+}
 function zle-line-init zle-keymap-select {
     case $KEYMAP in
         vicmd)
-        # PROMPT="%{$fg[black]%}%{$bg[cyan]%}NORMAL%{$fg[cyan]%}%{$bg[white]%}%{$fg[black]%}%{$bg[white]%}`my-pwd`%{$fg[white]%}%{$bg[black]%}%{$reset_color%} "
-        # PROMPT="`my-pwd` %{$fg[green]%}❰%{$fg[yellow]%}❰%{$fg[red]%}❰"
-        PROMPT="%{$fg[white]%}`my-pwd`%{$reset_color%} %{$fg[cyan]%}❰%{$fg[blue]%}❰%{$fg[red]%}❰%{$reset_color%}"
+        PROMPT=$PROMPT_NOR
         ;;
         main|viins)
-        # PROMPT="%{$fg[black]%}%{$bg[green]%}INSERT%{$fg[green]%}%{$bg[white]%}%{$fg[black]%}%{$bg[white]%}`my-pwd`%{$fg[white]%}%{$bg[black]%}%{$reset_color%} "
-        PROMPT="%{$fg[blue]%}`my-pwd`%{$reset_color%} %{$fg[red]%}❱%{$fg[blue]%}❱%{$fg[cyan]%}❱%{$reset_color%}"
+        PROMPT=$PROMPT_INS
         ;;
     esac
     zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
+zle -N zle-line-pre-redraw
 setopt prompt_subst #表示毎にPROMPTで設定されている文字列を評価する
 # ---------------------------------------------
 
@@ -86,16 +106,31 @@ setopt inc_append_history
 setopt share_history
 setopt EXTENDED_HISTORY
 setopt hist_ignore_space
-#setopt auto_menu
-#setopt list_packed
 
 #cd ../のときに今いるディレクトリを表示しない
 zstyle ':completion:*' ignore-parents parent pwd ..
 
+if [[ ! -n $TMUX && $- == *l* ]]; then
+  # get the IDs
+  ID="`tmux list-sessions`"
+  if [[ -z "$ID" ]]; then
+    tmux new-session
+  fi
+  create_new_session="Create New Session"
+  ID="$ID\n${create_new_session}:"
+  ID="`echo $ID | fzf | cut -d: -f1`"
+  if [[ "$ID" = "${create_new_session}" ]]; then
+    tmux new-session
+  elif [[ -n "$ID" ]]; then
+    tmux attach-session -t "$ID"
+  else
+    :  # Start terminal normally
+  fi
+fi
+
 zle -N change-flag
 zle -N git-branch-src
 zle -N peco-src
-zle -N tmux-newwindow
 zle -N peco-history-selection
 
 bindkey '^\' change-flag
@@ -107,22 +142,17 @@ bindkey '^e' end-of-line
 bindkey '^]' peco-src
 # Ctrl+g gitのブランチをぺこ
 bindkey '^g' git-branch-src
-bindkey '^n' tmux-newwindow
 bindkey '^R' peco-history-selection
 
-function tmux-newwindow {
-    tmux new-window
-}
-
 function peco-history-selection() {
-    BUFFER=`history -n 1 | tac  | awk '!a[$0]++' | peco`
+    BUFFER=`history -n 1 | tac  | awk '!a[$0]++' | fzf`
     CURSOR=$#BUFFER
     zle reset-prompt
 }
 
 
 function git-branch-src(){
-    local selected_branch=$(git branch | peco --query "$LBUFFER" | cut -c3-)
+    local selected_branch=$(git branch | fzf | cut -c3-)
     if [ -n "$selected_branch" ]; then
         BUFFER="git checkout ${selected_branch}"
         zle accept-line
@@ -131,7 +161,7 @@ function git-branch-src(){
 }
 
 function php-switch() {
-    local selected_php=$(phpbrew list | peco --query "$LBUFFER" | cut -c3-)
+    local selected_php=$(phpbrew list | fzf | cut -c3-)
     if [ -n "$selected_php" ]; then
         phpbrew switch ${selected_php}
     fi
@@ -243,7 +273,7 @@ function pyenv-status
 #   ghq get (Git Repository PATH)
 ############################################################
 function peco-src () {
-    local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+    local selected_dir=$(ghq list -p | fzf)
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
@@ -293,4 +323,3 @@ if which phpenv > /dev/null; then
     eval "$(phpenv init -)"
 fi
 
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
