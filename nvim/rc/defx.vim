@@ -6,7 +6,7 @@ call defx#custom#option('_', {
 \   'show_ignored_files': 1,
 \   'buffer_name': '',
 \   'toggle': 1,
-\   'columns': 'indent:git:icons:filename:mark',
+\   'columns': 'git:indent:icons:filename:mark',
 \ })
 call defx#custom#column('git', 'indicators', {
 \   'Modified'  : '✹',
@@ -19,6 +19,7 @@ call defx#custom#column('git', 'indicators', {
 \   'Unknown'   : '?'
 \ })
 call defx#custom#column('git', 'column_length', 2)
+" call defx#custom#column('git', 'show_ignored', v:true)
 
 function! DefxExtendOpen(context) abort
   echo a:context.targets[0]

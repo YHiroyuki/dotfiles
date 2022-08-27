@@ -1,10 +1,14 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-depends=['denops.vim', 'pum.vim']
-on_event = ['InsertEnter', 'CursorHold']
+depends=['context_filetype.vim', 'pum.vim']
+on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
 source $HOME/.config/nvim/rc/ddc.vim
 '''
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+on_event = 'BufRead'
 
 [[plugins]]
 repo = 'Shougo/ddc-around'
@@ -52,6 +56,6 @@ call signature_help#enable()
 [[plugins]]
 repo = 'matsui54/denops-popup-preview.vim'
 on_source = 'ddc.vim'
-hook_post_source = '''
+hook_source = '''
 call popup_preview#enable()
 '''
