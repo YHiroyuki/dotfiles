@@ -54,6 +54,7 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> d  defx#do_action('remove')
   " extra
   nnoremap <silent><buffer><expr> <CR>  defx#do_action('drop')
+  nnoremap <silent><buffer><expr> t     defx#do_action('open', 'tabnew')
   nnoremap <silent><buffer><expr> yy    defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> ~     defx#do_action('cd')
   nnoremap <silent><buffer><expr> ..    defx#do_action('cd', '..')

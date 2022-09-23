@@ -44,8 +44,8 @@ function! MyLightlineFugitive()
   endif
 
   try
-    if &ft !~? 'vimfiler\|gundo' && strlen(fugitive#head())
-      return ' ' . fugitive#head()
+    if &ft !~? 'vimfiler\|gundo' && strlen(FugitiveHead())
+      return ' ' . FugitiveHead()
     endif
   catch
   endtry
