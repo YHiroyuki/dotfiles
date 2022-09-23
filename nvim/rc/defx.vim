@@ -6,20 +6,23 @@ call defx#custom#option('_', {
 \   'show_ignored_files': 1,
 \   'buffer_name': '',
 \   'toggle': 1,
-\   'columns': 'git:indent:icons:filename:mark',
+\   'columns': 'git:indents:icons:filename:mark',
 \ })
 call defx#custom#column('git', 'indicators', {
-\   'Modified'  : '✹',
-\   'Staged'    : '✚',
-\   'Untracked' : '✭',
-\   'Renamed'   : '➜',
+\   'Modified'  : '➜',
+\   'Staged'    : '✭',
+\   'Untracked' : '✚',
+\   'Renamed'   : '✹',
 \   'Unmerged'  : '═',
 \   'Ignored'   : '☒',
 \   'Deleted'   : '✖',
 \   'Unknown'   : '?'
 \ })
-call defx#custom#column('git', 'column_length', 2)
-" call defx#custom#column('git', 'show_ignored', v:true)
+call defx#custom#column('indents', {
+      \   'node'     : '├ ',
+      \   'branch'   : '│ ',
+      \   'term'     : '└ ',
+      \ })
 
 function! DefxExtendOpen(context) abort
   echo a:context.targets[0]
@@ -31,6 +34,7 @@ function! s:defx_my_settings() abort
   set norelativenumber
   " Define mappings
   " 移動
+  "
   nnoremap <silent><buffer><expr> 1 defx#do_action('call', 'DefxExtendOpen')
   nnoremap <silent><buffer><expr> h defx#do_action('close_tree')
   nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'

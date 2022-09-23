@@ -40,3 +40,8 @@ on_source = 'defx.nvim'
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
 on_source = 'defx.nvim'
+
+
+[[plugins]]
+repo = 'YHiroyuki/defx-indents'
+on_source = 'defx.nvim'
