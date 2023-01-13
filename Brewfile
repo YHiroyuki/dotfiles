@@ -76,5 +76,6 @@ brew "blackfireio/blackfire/blackfire-agent", link: false
 brew "sanemat/font/ricty", args: ["with-powerline"]
 cask "font-hack-nerd-font"
 cask "font-hackgen-nerd"
+cask "itsycal"
 cask "spectacle"
 cask "visual-studio-code"
