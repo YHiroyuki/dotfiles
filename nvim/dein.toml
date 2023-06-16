@@ -109,8 +109,11 @@ repo = 'tyru/open-browser.vim'
 repo = 'mileszs/ack.vim'
 
 # 整形
+# [[plugins]]
+# repo = 'h1mesuke/vim-alignta'
+
 [[plugins]]
-repo = 'h1mesuke/vim-alignta'
+repo = 'kg8m/vim-simple-align'
 
 # コーディングスタイル調整
 [[plugins]]
@@ -159,4 +162,15 @@ hook_add = '''
   let g:translate_target = "ja"
   let g:translate_popup_window = 0
   let g:translate_winsize = 3
+'''
+
+[[plugins]]
+repo = 'github/copilot.vim'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+hook_add = '''
+  let g:lexima_enable_space_rules = 0
+  call lexima#add_rule({'char': '（', 'input_after': '）'})
+  call lexima#add_rule({'char': '<BS>', 'at': '（\%#）', 'delete': 1})
 '''

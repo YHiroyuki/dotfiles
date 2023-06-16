@@ -26,6 +26,9 @@ nnoremap <Leader>s( ciw()<Esc>P
 nnoremap <Leader>s{ ciw{}<Esc>P
 nnoremap <Leader>s[ ciw[]<Esc>P
 
+nnoremap x "_x
+nnoremap s "_s
+
 setlocal iskeyword+=-
 
 "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
@@ -100,12 +103,12 @@ if dein#load_state(s:dein_dir)
 
   " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイルを用意しておく
-  let g:rc_dir    = expand("~/.config/nvim/")
+  let g:rc_dir    = expand("~/.config/nvim")
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
   let s:colors_toml = g:rc_dir . '/colors.toml'
   let s:ddu_toml    = g:rc_dir . '/ddu.toml'
-  let s:fzf_toml    = g:rc_dir . 'fzf.toml'
+  let s:fzf_toml    = g:rc_dir . '/fzf.toml'
   let s:ddc_toml    = g:rc_dir . '/ddc.toml'
 
   " TOML を読み込み、キャッシュしておく
@@ -295,3 +298,8 @@ endfunction
 
 command! -nargs=* Terminal split | wincmd j | resize 10 | terminal <args>
 autocmd TermOpen * startinsert
+
+
+let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <C-J> copilot#Accept()
+
