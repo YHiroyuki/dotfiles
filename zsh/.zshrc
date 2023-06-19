@@ -1,6 +1,5 @@
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/work
-export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin:$HOME/.pyenv/shims/
 export MANPATH=/opt/local/man:$MANPATH
 export PHPBREW_SET_PROMPT=1
 export GO15VENDOREXPERIMENT=1
@@ -26,6 +25,7 @@ branch_flag=true
 export PYENV_ROOT="${HOME}/.pyenv"
 if which pyenv > /dev/null; then
     eval "$(pyenv init -)"
+    eval "$(pyenv init --path)"
 fi
 if which rbenv > /dev/null; then
     eval "$(rbenv init -)"
@@ -35,6 +35,8 @@ if [ "$(uname)" = "Darwin" ]; then
     alias tac="tail -r"
 
 fi
+
+export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
 
 GHQ_ROOT=`ghq root | sed -e "s:^$HOME:~:"`
 zstyle ':completion:*:default' menu select=1
