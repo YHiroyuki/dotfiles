@@ -100,19 +100,19 @@ if dein#load_state(s:dein_dir)
 
   " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイルを用意しておく
-  let g:rc_dir    = expand("~/.config/nvim/")
+  let g:rc_dir    = expand("~/.config/nvim")
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
   let s:colors_toml = g:rc_dir . '/colors.toml'
   let s:ddu_toml    = g:rc_dir . '/ddu.toml'
-  let s:fzf_toml    = g:rc_dir . 'fzf.toml'
+  let s:fzf_toml    = g:rc_dir . '/fzf.toml'
   let s:ddc_toml    = g:rc_dir . '/ddc.toml'
 
   " TOML を読み込み、キャッシュしておく
   call dein#load_toml(s:toml,        {'lazy': 0})
   call dein#load_toml(s:lazy_toml,   {'lazy': 1})
   call dein#load_toml(s:colors_toml, {'lazy': 0})
-  "call dein#load_toml(s:ddu_toml,    {'lazy': 1})
+  call dein#load_toml(s:ddu_toml,    {'lazy': 1})
   call dein#load_toml(s:ddc_toml,    {'lazy': 1})
   call dein#load_toml(s:fzf_toml,    {'lazy': 1})
 
@@ -243,20 +243,21 @@ endif
 
 "
 if has("autocmd")
-  autocmd FileType  c        setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
-  autocmd FileType  html     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
-  autocmd FileType  ruby     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
-  autocmd FileType  js       setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
-  autocmd FileType  python   setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
-  autocmd FileType  css      setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
-  autocmd FileType  scss     setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
-  autocmd FileType  php      setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
-  autocmd FileType  vim      setlocal  sw=2  sts=2  ts=2  et
-  autocmd FileType  yaml     setlocal  sw=2  sts=2  ts=2  et
-  autocmd FileType  markdown setlocal  sw=2  sts=2  ts=2  et
-  autocmd FileType  go       setlocal  sw=4  sts=4  ts=4  noet  colorcolumn=120
-  autocmd FileType  json     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
-  autocmd FileType  toml     setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
+  autocmd FileType  c          setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  html       setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
+  autocmd FileType  ruby       setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
+  autocmd FileType  js         setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  python     setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
+  autocmd FileType  css        setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  scss       setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  php        setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
+  autocmd FileType  vim        setlocal  sw=2  sts=2  ts=2  et
+  autocmd FileType  yaml       setlocal  sw=2  sts=2  ts=2  et
+  autocmd FileType  markdown   setlocal  sw=2  sts=2  ts=2  et
+  autocmd FileType  go         setlocal  sw=4  sts=4  ts=4  noet  colorcolumn=120
+  autocmd FileType  json       setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
+  autocmd FileType  toml       setlocal  sw=2  sts=2  ts=2  et    colorcolumn=120
+  autocmd FileType  typescript setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
 endif
 
 "

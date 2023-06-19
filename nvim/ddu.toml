@@ -3,10 +3,10 @@
 repo = 'Shougo/ddu.vim'
 depends = ['denops.vim']
 on_source = 'denops.vim'
-hook_add = '''
-noremap <Leader>o <Cmd>Ddu file_rec -ui-param-startFilter=v:true<CR>
-noremap <Leader>b <Cmd>Ddu buffer<CR>
-'''
+# hook_add = '''
+# noremap <Leader>o <Cmd>Ddu file_rec -ui-param-startFilter=v:true<CR>
+# noremap <Leader>b <Cmd>Ddu buffer<CR>
+# '''
 hook_source = '''
 source $HOME/.config/nvim/rc/ddu.vim
 '''
@@ -48,3 +48,22 @@ on_source = 'ddu.vim'
 repo = 'Shougo/ddu-filter-matcher_substring'
 on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'Shougo/ddu-column-filename'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'ryota2357/ddu-column-icon_filename'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo='Shougo/ddu-filter-sorter_alpha'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'alpaca-tc/ddu-filter-sorter_directory_file'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'YHiroyuki/ddu-column-extra_filename'
+on_source = 'ddu.vim'
