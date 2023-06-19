@@ -27,7 +27,9 @@ call ddc#custom#patch_global('filterParams', {
 inoremap <C-n>               <Cmd>call pum#map#insert_relative(+1)<CR>
 inoremap <C-p>               <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <C-e>               <Cmd>call pum#map#cancel()<CR>
-inoremap <silent><expr> <CR> pum#visible() ? '<Cmd>call pum#map#confirm()<CR>' : '<CR>'
+" inoremap <silent><expr> <CR> pum#visible() ? '<Cmd>call pum#map#confirm()<CR>' : '<CR>'
+" inoremap <silent><expr> <CR> <Cmd>call pum#map#confirm()<CR>
+inoremap <C-y>               <Cmd>call pum#map#confirm()<CR>
 nnoremap <Leader>/           <Cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <Leader><Leader>    <Cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <Leader>r           <Cmd>lua vim.lsp.buf.references()<CR>

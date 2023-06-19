@@ -26,6 +26,9 @@ nnoremap <Leader>s( ciw()<Esc>P
 nnoremap <Leader>s{ ciw{}<Esc>P
 nnoremap <Leader>s[ ciw[]<Esc>P
 
+nnoremap x "_x
+nnoremap s "_s
+
 setlocal iskeyword+=-
 
 "ファイルタイプ用のプラグインとインデントを自動読み込みをonにする
@@ -296,3 +299,8 @@ endfunction
 
 command! -nargs=* Terminal split | wincmd j | resize 10 | terminal <args>
 autocmd TermOpen * startinsert
+
+
+let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <C-J> copilot#Accept()
+
