@@ -7,6 +7,10 @@ source $HOME/.config/nvim/rc/ddc.vim
 '''
 
 [[plugins]]
+repo = 'Shougo/ddc-ui-native'
+on_source = 'ddc.vim'
+
+[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 on_event = 'BufRead'
 
