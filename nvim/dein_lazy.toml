@@ -2,18 +2,6 @@
 repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
 
-# Filer
-[[plugins]]
-repo = 'Shougo/defx.nvim'
-hook_add = '''
-let g:defx_icons_column_length = 2
-nnoremap <silent> <C-e>     <Cmd>Defx -resume<CR>
-nnoremap <silent> <Leader>e <Cmd>Defx -search-recursive=`expand('%')` -resume<CR>
-'''
-hook_source = '''
-source $HOME/.config/nvim/rc/defx.vim
-'''
-
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
@@ -32,20 +20,6 @@ imap <C-Space> <C-x><C-o>
 hook_source = '''
 call deoplete#custom#option('smart_case', v:true)
 '''
-
-[[plugins]]
-repo = 'kristijanhusak/defx-icons'
-on_source = 'defx.nvim'
-
-[[plugins]]
-repo = 'kristijanhusak/defx-git'
-on_source = 'defx.nvim'
-
-
-[[plugins]]
-repo = 'YHiroyuki/defx-indents'
-on_source = 'defx.nvim'
-
 
 [[plugins]]
 repo = 'akinsho/bufferline.nvim'

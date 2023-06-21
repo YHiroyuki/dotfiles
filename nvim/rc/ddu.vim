@@ -1,36 +1,3 @@
-" ddu-ffは使って無い気がする
-" call ddu#custom#patch_global({
-" \   'ui': 'ff',
-" \   'uiParams': {
-" \     'ff': {
-" \       'split': 'floating',
-" \       'floatingBorder': 'single',
-" \     },
-" \   },
-" \   'sources': [
-" \     {'name': 'file', 'params': {}},
-" \     {'name': 'register'},
-" \     {'name': 'buffer'},
-" \   ],
-" \   'sourceOptions': {
-" \     '_': {
-" \       'matchers': ['matcher_substring'],
-" \       'ignoreCase': v:true,
-" \     },
-" \   },
-" \   'kindOptions': {
-" \     'file': {
-" \       'defaultAction': 'open',
-" \     },
-" \     'buffer': {
-" \       'defaultAction': 'open',
-" \     },
-" \   },
-" \   'filterParams': {
-" \     'matcher_substring': {'highlightMatched': 'Search',},
-" \   },
-" \ })
-
 call ddu#custom#patch_global({
 \   'ui': 'filer',
 \   'sources': [
@@ -60,23 +27,6 @@ call ddu#custom#patch_global({
 \   },
 \ })
 
-" autocmd FileType ddu-ff call s:ddu_my_settings()
-" function! s:ddu_my_settings() abort
-"   nnoremap <buffer><silent> <CR>    <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-"   nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
-"   nnoremap <buffer><silent> i       <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
-"   nnoremap <buffer><silent> q       <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-"   nnoremap <buffer><silent> <C-n>   j
-"   nnoremap <buffer><silent> <C-p>   k
-" endfunction
-" 
-" autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
-" function! s:ddu_filter_my_settings() abort
-"   inoremap <buffer><silent> <CR>    <Esc><Cmd>close<CR>
-"   nnoremap <buffer><silent> <CR>    <Cmd>close<CR>
-"   nnoremap <buffer><silent> q       <Cmd>close<CR>
-" endfunction
-
 autocmd TabEnter,CursorHold,FocusGained <buffer>
 	\ call ddu#ui#filer#do_action('checkItems')
 
@@ -95,6 +45,11 @@ function! s:ddu_filer_my_settings() abort
 
   "nnoremap <buffer><silent> ..
   "  \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
+
+  nnoremap <buffer><silent> l
+    \ <Cmd>call ddu#ui#filer#do_action('expandItem')<CR>
+  nnoremap <buffer><silent> h
+    \ <Cmd>call ddu#ui#filer#do_action('collapseItem')<CR>
 
   nnoremap <buffer><silent> c
     \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'copy'})<CR>
@@ -121,9 +76,15 @@ function! s:ddu_filer_my_settings() abort
     \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'yank'})<CR>
 endfunction
 
-nmap <silent> ;d <Cmd>call ddu#start({
+nmap <silent> <Leader>e <Cmd>call ddu#start({
 \   'name': 'filer',
-\   'searchPath': expand('%'),
+\   'searchPath': expand('%:p'),
+\   'resume': v:true,
+\ })<CR>
+
+
+nmap <silent> <C-e> <Cmd>call ddu#start({
+\   'name': 'filer',
 \   'resume': v:true,
 \ })<CR>
 
