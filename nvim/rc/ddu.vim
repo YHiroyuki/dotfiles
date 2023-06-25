@@ -8,7 +8,7 @@ call ddu#custom#patch_global({
 \   ],
 \   'sourceOptions': {
 \     '_': {
-\       'columns': ['extra_filename'],
+\       'columns': ['rich_filename'],
 \     },
 \   },
 \   'kindOptions': {
@@ -21,6 +21,12 @@ call ddu#custom#patch_global({
 \       'winWidth': 40,
 \       'split': 'vertical',
 \       'splitDirection': 'topleft',
+\       'sort': "filename",
+\       'sortTreesFirst': v:true,
+\     }
+\   },
+\   'columnParams': {
+\     'filer': {
 \       'sort': "filename",
 \       'sortTreesFirst': v:true,
 \     }

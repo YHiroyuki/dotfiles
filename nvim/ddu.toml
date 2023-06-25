@@ -65,5 +65,5 @@ repo = 'alpaca-tc/ddu-filter-sorter_directory_file'
 on_source = 'ddu.vim'
 
 [[plugins]]
-repo = 'YHiroyuki/ddu-column-extra_filename'
+repo = 'YHiroyuki/ddu-column-rich_filename'
 on_source = 'ddu.vim'
