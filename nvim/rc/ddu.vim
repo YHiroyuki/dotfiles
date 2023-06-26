@@ -26,8 +26,8 @@ call ddu#custom#patch_global({
 \     }
 \   },
 \   'columnParams': {
-\     'filer': {
-\       'sort': "filename",
+\     'rich_filename': {
+\       'sort': 'filename',
 \       'sortTreesFirst': v:true,
 \     }
 \   },
