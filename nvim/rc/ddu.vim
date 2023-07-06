@@ -80,6 +80,8 @@ function! s:ddu_filer_my_settings() abort
 
   nnoremap <buffer><silent> yy
     \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'yank'})<CR>
+
+  nnoremap <buffer><silent> <C-e> <Cmd>call ddu#ui#filer#do_action('quit')<CR>
 endfunction
 
 nmap <silent> <Leader>e <Cmd>call ddu#start({
