@@ -49,8 +49,11 @@ function! s:ddu_filer_my_settings() abort
   nnoremap <buffer><silent> q
     \ <Cmd>call ddu#ui#filer#do_action('quit')<CR>
 
-  "nnoremap <buffer><silent> ..
-  "  \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
+  nnoremap <buffer><silent> ..
+    \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
+
+  nnoremap <buffer><silent> o
+    \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', })<CR>
 
   nnoremap <buffer><silent> l
     \ <Cmd>call ddu#ui#filer#do_action('expandItem')<CR>

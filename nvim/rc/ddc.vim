@@ -1,4 +1,4 @@
-call ddc#custom#patch_global('ui', 'native')
+call ddc#custom#patch_global('ui', 'pum')
 call ddc#custom#patch_global('sources', [
 \   'nvim-lsp',
 \   'around',
@@ -10,12 +10,16 @@ call ddc#custom#patch_global('sourceOptions', {
 \     'sorters': ['sorter_rank'],
 \     'converters': ['converter_remove_overlap'],
 \   },
-\   'around': {'mark': 'Around'},
-\   'nvim-lsp': {'mark': 'LSP', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
+\   'around': {'mark': '[Around]'},
+\   'nvim-lsp': {'mark': '[LSP]', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
 \   'cmdline-history': {'mark': 'history'}
 \ })
 call ddc#custom#patch_global('sourceParams', {
-\   'nvim-lsp': { 'kindLabels': { 'Class': 'c' } },
+\   'nvim-lsp': { 
+\     'kindLabels': { 'Class': 'c' },
+\     'enableResolveItem': v:true,
+\     'enableAdditionalTextEdit': v:true
+\   },
 \ })
 call ddc#enable()
 call ddc#custom#patch_global('filterParams', {

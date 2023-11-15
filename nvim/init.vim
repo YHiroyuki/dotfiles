@@ -249,7 +249,8 @@ if has("autocmd")
   autocmd FileType  c          setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
   autocmd FileType  html       setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
   autocmd FileType  ruby       setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
-  autocmd FileType  js         setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
+  autocmd FileType  js         setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
+  autocmd FileType  javascript setlocal  sw=2  sts=2  ts=2  et    colorcolumn=80
   autocmd FileType  python     setlocal  sw=4  sts=4  ts=4  et    colorcolumn=120
   autocmd FileType  css        setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
   autocmd FileType  scss       setlocal  sw=4  sts=4  ts=4  et    colorcolumn=80
@@ -288,16 +289,16 @@ if filereadable(expand('~/.config/nvim/local/local.vim'))
 endif
 
 " プロジェクトルートに変更する
-autocmd VimEnter * ++once call s:ensure_git_root_dir()
-function! s:ensure_git_root_dir() abort
-  let cmd = 'git rev-parse --show-superproject-working-tree --show-toplevel 2>/dev/null | head -1'
-  let root = system(cmd)->trim()->expand()
-  if isdirectory(root) && root != getcwd()
-    execute 'cd' root
-  endif
-endfunction
+" autocmd VimEnter * ++once call s:ensure_git_root_dir()
+" function! s:ensure_git_root_dir() abort
+"   let cmd = 'git rev-parse --show-superproject-working-tree --show-toplevel 2>/dev/null | head -1'
+"   let root = system(cmd)->trim()->expand()
+"   if isdirectory(root) && root != getcwd()
+"     execute 'cd' root
+"   endif
+" endfunction
 
-command! -nargs=* Terminal split | wincmd j | resize 10 | terminal <args>
+command! -nargs=* Terminal vsplit | wincmd l | terminal <args>
 autocmd TermOpen * startinsert
 
 
