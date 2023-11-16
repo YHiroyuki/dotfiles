@@ -39,20 +39,9 @@ repo = 'Shougo/ddc-cmdline-history'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
+repo = 'Shougo/ddc-source-nvim-lsp'
 on_source = 'ddc.vim'
 
-
-[[plugins]]
-repo = 'neovim/nvim-lspconfig'
-on_event = 'BufEnter'
-hook_source = '''
-source $HOME/.config/nvim/rc/lsp.vim
-'''
-
-[[plugins]]
-repo ='williamboman/nvim-lsp-installer'
-on_source = 'nvim-lspconfig'
 
 [[plugins]]
 repo = 'matsui54/denops-signature_help'

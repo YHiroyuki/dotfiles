@@ -174,3 +174,16 @@ hook_add = '''
   call lexima#add_rule({'char': '（', 'input_after': '）'})
   call lexima#add_rule({'char': '<BS>', 'at': '（\%#）', 'delete': 1})
 '''
+
+[[plugins]]
+ repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+

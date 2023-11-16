@@ -305,3 +305,5 @@ autocmd TermOpen * startinsert
 let g:copilot_no_tab_map = v:true
 imap <silent><script><expr> <C-J> copilot#Accept()
 
+
+source $HOME/.config/nvim/rc/lsp.vim

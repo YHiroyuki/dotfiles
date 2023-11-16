@@ -1,3 +1,10 @@
+lua << EOF
+local capabilities = require("ddc_nvim_lsp").make_client_capabilities()
+require("lspconfig").denols.setup({
+  capabilities = capabilities,
+})
+EOF
+
 call ddc#custom#patch_global('ui', 'pum')
 call ddc#custom#patch_global('sources', [
 \   'nvim-lsp',
