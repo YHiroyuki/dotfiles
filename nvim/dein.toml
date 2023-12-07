@@ -167,13 +167,6 @@ hook_add = '''
 [[plugins]]
 repo = 'github/copilot.vim'
 
-[[plugins]]
-repo = 'cohama/lexima.vim'
-hook_add = '''
-  let g:lexima_enable_space_rules = 0
-  call lexima#add_rule({'char': '（', 'input_after': '）'})
-  call lexima#add_rule({'char': '<BS>', 'at': '（\%#）', 'delete': 1})
-'''
 
 [[plugins]]
  repo = 'nvim-lua/plenary.nvim'

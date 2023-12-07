@@ -26,8 +26,6 @@ nnoremap <Leader>s( ciw()<Esc>P
 nnoremap <Leader>s{ ciw{}<Esc>P
 nnoremap <Leader>s[ ciw[]<Esc>P
 
-nnoremap x "_x
-nnoremap s "_s
 
 setlocal iskeyword+=-
 
@@ -81,7 +79,7 @@ set splitbelow
 set splitright
 
 " python3のパス指定(brewでinstallしたものを指定)
-let g:python3_host_prog = '/usr/local/bin/python3'
+" let g:python3_host_prog = '/usr/local/bin/python3'
 
 "dein Scripts-----------------------------
 if &compatible
