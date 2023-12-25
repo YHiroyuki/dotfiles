@@ -1,5 +1,5 @@
 lua << EOF
-local capabilities = require("ddc_nvim_lsp").make_client_capabilities()
+local capabilities = require("ddc_source_lsp").make_client_capabilities()
 require("lspconfig").denols.setup({
   capabilities = capabilities,
 })
@@ -7,7 +7,7 @@ EOF
 
 call ddc#custom#patch_global('ui', 'pum')
 call ddc#custom#patch_global('sources', [
-\   'nvim-lsp',
+\   'lsp',
 \   'around',
 \   'cmdline-history'
 \ ])
@@ -18,11 +18,11 @@ call ddc#custom#patch_global('sourceOptions', {
 \     'converters': ['converter_remove_overlap'],
 \   },
 \   'around': {'mark': '[Around]'},
-\   'nvim-lsp': {'mark': '[LSP]', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
+\   'lsp': {'mark': '[LSP]', 'forceCompletionPattern': '\.\w*|:\w*|->\w*'},
 \   'cmdline-history': {'mark': 'history'}
 \ })
 call ddc#custom#patch_global('sourceParams', {
-\   'nvim-lsp': { 
+\   'lsp': { 
 \     'kindLabels': { 'Class': 'c' },
 \     'enableResolveItem': v:true,
 \     'enableAdditionalTextEdit': v:true
