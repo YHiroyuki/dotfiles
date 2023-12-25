@@ -199,8 +199,6 @@ let s:p.tabline.right = [ [ s:bg0, s:orange ] ]
 let s:p.normal.error = [ [ s:bg0, s:orange ] ]
 let s:p.normal.warning = [ [ s:bg2, s:yellow ] ]
 
-let g:lightline#colorscheme#gruvbox#palette = lightline#colorscheme#flatten(s:p)
-
 " 検索などをした時に画面中央に表示
 nmap n nzz
 nmap N Nzz

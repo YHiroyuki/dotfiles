@@ -1,8 +1,5 @@
 # テーマ
 [[plugins]]
-repo = 'YHiroyuki/atea'
-
-[[plugins]]
 repo = 'romainl/Apprentice'
 
 [[plugins]]
