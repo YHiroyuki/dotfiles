@@ -34,9 +34,6 @@ filetype plugin indent on
 
 " 文字コード
 scriptencoding utf-8
-" 行番号表示
-set number
-set relativenumber
 " ターミナルモードで行番号を消す
 autocmd TermOpen * setlocal norelativenumber
 autocmd TermOpen * setlocal nonumber
@@ -45,7 +42,7 @@ set showcmd
 " カーソルのある行に下線
 set cursorline
 " 行番号は6列分確保
-set numberwidth=6
+set numberwidth=5
 " tabを4スペースに
 set expandtab
 set tabstop=4
@@ -64,9 +61,11 @@ set smartcase
 set backspace=indent,eol,start
 " クリップボードとの共有だっけ
 set clipboard+=unnamedplus
+"
+set signcolumn=yes:1
 "タブ、空白、改行の可視化
 set list
-set listchars=tab:>.,trail:_,extends:>,precedes:<,nbsp:%,space:.
+set listchars=tab:>.,trail:_,extends:»,precedes:«,nbsp:%,space:.,eol:↲
 " swap,backupファイルをoff
 set nowritebackup
 set nobackup
@@ -102,9 +101,9 @@ if dein#load_state(s:dein_dir)
   " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイルを用意しておく
   let g:rc_dir    = expand("~/.config/nvim")
+  let s:colors_toml = g:rc_dir . '/colors.toml'
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
-  let s:colors_toml = g:rc_dir . '/colors.toml'
   let s:ddu_toml    = g:rc_dir . '/ddu.toml'
   let s:fzf_toml    = g:rc_dir . '/fzf.toml'
   let s:ddc_toml    = g:rc_dir . '/ddc.toml'
@@ -144,6 +143,8 @@ colorscheme gruvbox
 " SignColumnを背景色と同じにしたかったから書き換え
 if g:colors_name == 'gruvbox'
   highlight CursorLine gui=underline
+  " highlight link CursorLineNr CursorLineFold
+  " highlight CursorLineNr gui=underline
   highlight SignColumn ctermbg=None guibg=None
   highlight link GitGutterAdd           GruvboxGreen
   highlight link GitGutterChange        GruvboxAqua
@@ -153,6 +154,16 @@ if g:colors_name == 'gruvbox'
   highlight link Defx_git_Modified      GruvboxAqua
   highlight link Defx_git_Untracked     GruvboxGreen
   highlight TabLineFill ctermfg=142 ctermbg=237
+
+  highlight DiffText   cterm=bold ctermfg=108 ctermbg=None gui=None guifg=None    guibg=#378246
+  highlight DiffChange cterm=None ctermfg=108 ctermbg=None gui=None guifg=None    guibg=#204b2e
+  highlight DiffAdd    cterm=None ctermfg=142 ctermbg=237  gui=None guifg=None    guibg=#204b2e
+  highlight DiffDelete cterm=None ctermfg=167 ctermbg=237  gui=None guifg=#823746 guibg=#823746
+  highlight GitSignsAdd guibg=#204b2e
+  " highlight GitSignsAddNr gui=underline guibg=#204b2e
+  " highlight GitSignsUntrackedNr gui=bold guibg=#204b2e
+  highlight GitSignsChange guibg=#378246
+  highlight GitSignsDelete  guibg=#823746
 endif
 
 function! s:getGruvColor(group)
@@ -303,3 +314,6 @@ imap <silent><script><expr> <C-J> copilot#Accept()
 
 
 source $HOME/.config/nvim/rc/lsp.vim
+lua << EOF
+require('base')
+EOF

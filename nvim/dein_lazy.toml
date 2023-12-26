@@ -31,9 +31,24 @@ lua require"bufferline".setup()
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
-on_i=1
+on_event = ['InsertEnter']
 hook_source = '''
   let g:lexima_enable_space_rules = 0
   call lexima#add_rule({'char': '（', 'input_after': '）'})
   call lexima#add_rule({'char': '<BS>', 'at': '（\%#）', 'delete': 1})
 '''
+
+# markdownプレビュー用
+[[plugins]]
+repo = 'kannokanno/previm'
+on_ft = 'markdown'
+
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_source = 'previm'
+
+
+[[plugins]]
+repo = 'github/copilot.vim'
+on_event = 'InsertCharPre'
