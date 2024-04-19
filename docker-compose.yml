@@ -4,10 +4,11 @@ services:
   app:
     build: ./
     volumes:
-      - ./setup.sh:/home/yhiroyuki/setup.sh
+      - ./setup.sh:/home/yhiroyuki/.config/setup.sh
       - ./zsh:/home/yhiroyuki/.config/zsh
       - ./tmux:/home/yhiroyuki/.config/tmux
       - ./nvim:/home/yhiroyuki/.config/nvim
       - ./git:/home/yhiroyuki/.config/git
+      - ./template:/home/yhiroyuki/.config/template
     tty: true
     stdin_open: true

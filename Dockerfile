@@ -12,7 +12,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && \
-    apt-get install -y git wget curl language-pack-ja sudo \
+    apt-get install -y git tig \
+    wget curl \
+    language-pack-ja sudo \
     neovim tmux zsh
 
 RUN useradd -m -s /usr/bin/zsh -u $USERID $USERNAME && \
@@ -23,12 +25,13 @@ USER $USERNAME
 WORKDIR /home/$USERNAME/
 
 RUN mkdir -p /home/$USERNAME/.config
-ADD --chown=$USERNAME:$USERNAME ./setup.sh setup.sh
+ADD --chown=$USERNAME:$USERNAME ./setup.sh .config/setup.sh
 ADD --chown=$USERNAME:$USERNAME ./zsh .config/zsh
 ADD --chown=$USERNAME:$USERNAME ./tmux .config/tmux
 ADD --chown=$USERNAME:$USERNAME ./nvim .config/nvim
 ADD --chown=$USERNAME:$USERNAME ./git .config/git
+ADD --chown=$USERNAME:$USERNAME ./template .config/template
 
-RUN ./setup.sh
+RUN ./.config/setup.sh
 
 USER root

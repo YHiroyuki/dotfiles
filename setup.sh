@@ -18,7 +18,8 @@ mkdir -p $HOME/work/bin
 mkdir -p $HOME/work/pkg
 
 cecho $blue "Setup zsh"
-echo "source ~/.config/zsh/init.zsh" > ~/.zshrc
+cat $HOME/.config/template/zshrc.zsh > $HOME/.zshrc
 
 cecho $blue "Setup git"
-echo -e "[include]\n    path = ~/.config/git/.gitconfig" > ~/.gitconfig
+cat $HOME/.config/template/gitconfig > $HOME/.gitconfig
+cat $HOME/.config/template/local.gitconfig > $HOME/.config/git/local.gitconfig
