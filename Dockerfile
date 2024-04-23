@@ -14,9 +14,10 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install -y git tig \
     wget curl \
-    xsel \
+    xsel fzf golang-go\
     language-pack-ja sudo \
-    neovim tmux zsh
+    neovim tmux zsh && \
+    export GOPATH=/usr/local/ && go install github.com/x-motemen/ghq@latest
 
 RUN useradd -m -s /usr/bin/zsh -u $USERID $USERNAME && \
     echo "$USERNAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
