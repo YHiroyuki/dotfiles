@@ -14,6 +14,7 @@ RUN apt-get update && \
 RUN apt-get update && \
     apt-get install -y git tig \
     wget curl \
+    xsel \
     language-pack-ja sudo \
     neovim tmux zsh
 

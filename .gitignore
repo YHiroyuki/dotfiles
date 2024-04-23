@@ -1,4 +1,6 @@
 _tmux/plugins
+tmux/plugins/*
+!tmux/plugins/.gitkeep
 
 nvim/dein/*
 nvim/local/*
