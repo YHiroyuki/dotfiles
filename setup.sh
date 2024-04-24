@@ -23,6 +23,12 @@ if [ -e $HOME/.zshrc ]; then
 else
     cat $HOME/.config/template/zshrc.zsh > $HOME/.zshrc
 fi
+mkdir -p $HOME/.config/zsh/plugins
+if [ -d $HOME/.config/zsh/plugins/zsh-syntax-highlighting ]; then
+    cecho $yellow "zsh-syntax-highlighting already exists. Skip."
+else
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.config/zsh/plugins/zsh-syntax-highlighting
+fi
 
 cecho $blue "Setup git"
 if [ -e $HOME/.gitconfig ]; then
