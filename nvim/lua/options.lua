@@ -1,4 +1,5 @@
 local options = {
+    syntax = "on",
     number = true,
     relativenumber = false,
     showcmd = true,
