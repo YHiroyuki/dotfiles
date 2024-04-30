@@ -1,82 +1,17 @@
-# 環境変数
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/work
+export MANPATH=/opt/local/man:$MANPATH
+export PHPBREW_SET_PROMPT=1
 export GO15VENDOREXPERIMENT=1
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
-
-export LANG=ja_JP.UTF-8
-export LC_ALL=ja_JP.UTF-8
 autoload -U compinit
 compinit -u
-# 色の設定
-# @see https://wiki.archlinux.org/index.php/zsh
-autoload -U colors; colors
-#cd ../のときに今いるディレクトリを表示しない
-zstyle ':completion:*' ignore-parents parent pwd ..
-
-# vi mode
 bindkey -v
 
-# 先頭、末尾に移動
-bindkey '^a' beginning-of-line
-bindkey '^e' end-of-line
 
-
-# --------------- alias ---------------------
-alias tmux="tmux"
-alias ll="ls -al"
-alias vi="vim -u NONE -N"
-
-
-# Mac固有の設定
-if [ "$(uname)" = "Darwin" ]; then
-    alias tac="tail -r"
-    export HOMEBREW_NO_AUTO_UPDATE=1
+if [ -f ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
-
-# 履歴
-HISTFILE=${HOME}/.config/zsh/.zsh_history
-HISTSIZE=100000
-SAVEHIST=1000000
-setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt inc_append_history
-setopt share_history
-setopt EXTENDED_HISTORY
-setopt hist_ignore_space
-zle -N my-history-selection
-bindkey '^r' my-history-selection
-function my-history-selection() {
-    BUFFER=`history -n 1 | tac  | awk '!a[$0]++' | fzf --no-sort`
-    CURSOR=$#BUFFER
-    zle reset-prompt
-}
-
-# Git関連
-zle -N my-ghq-source-selection
-bindkey '^]' my-ghq-source-selection
-function my-ghq-source-selection () {
-    local selected_dir=$(ghq list -p | fzf)
-    if [ -n "$selected_dir" ]; then
-        BUFFER="cd ${selected_dir}"
-        zle accept-line
-    fi
-    zle clear-screen
-}
-
-
-# ローカル、サーバの切り替え
-if [ "${WHEN_LOCAL}" -eq "1" ]; then
-    PROMPT='hoge $'
-    PROMPT_NOR=$'%{$fg[white]%}`my-pwd`%{$reset_color%} %{$fg[cyan]%}❰%{$fg[blue]%}❰%{$fg[red]%}❰%{$reset_color%}'
-    PROMPT_INS=$'%{$fg[blue]%}`my-pwd`%{$reset_color%} %{$fg[red]%}❱%{$fg[blue]%}❱%{$fg[cyan]%}❱%{$reset_color%}'
-    PROMPT_VIS=$'%{$fg[yellow]%}`my-pwd`%{$reset_color%} %{$fg[red]%}❰%{$fg[blue]%}❰%{$fg[cyan]%}❰%{$reset_color%}'
-else
-    PROMPT_NOR="${fg[white]}%n${reset_color} ❱"
-    PROMPT_INS="${fg[green]}%n${reset_color} ❱"
-    PROMPT_VIS="${fg[yellow]}%n${reset_color} ❱"
-fi
-
 
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
 
@@ -88,38 +23,42 @@ fi
 if which rbenv > /dev/null; then
     eval "$(rbenv init -)"
 fi
-if [ "$(uname)" = "Darwin" ]; then
-    # Mac
-    alias tac="tail -r"
 
+# Mac固有の設定
+if [ "$(uname)" = "Darwin" ]; then
+    # tacコマンドをalias
+    alias tac="tail -r"
+    # homebrewの自動アップデートを無効
+    export HOMEBREW_NO_AUTO_UPDATE=1
 fi
+
+# --------------- alias ---------------------
+alias tmux="tmux"
+alias ll="ls -al"
+alias vi="vim -u NONE -N"
+
 
 export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
 
 GHQ_ROOT=`ghq root | sed -e "s:^$HOME:~:"`
 zstyle ':completion:*:default' menu select=1
-# ------- PROMPT SETTING ----------------------
-RPROMPT=$'`branch-status-check`' # %~はpwd
-function custom-pwd {
-    pwd | perl -pe "s:^`ghq root`\/.+?\/:ghq\::" | sed -e "s:^$HOME:~:"
-}
-function my-pwd {
-    local current=`pwd | sed -e "s:^$HOME:~:"`
-    if [[ "$current" =~ ^$GHQ_ROOT ]]; then
-        echo $current | perl -pe "s:^$GHQ_ROOT\/.+?\/:[ghq]\::"
-        return
-    fi
-    if [ "$current" = "~" ]; then
-        echo $current
-        return
-    fi
+#cd ../のときに今いるディレクトリを表示しない
+zstyle ':completion:*' ignore-parents parent pwd ..
 
-    local dirname=`dirname $current | sed -e "s:\(\/.\)[^\/]*:\1:g"`
-    local basename=`basename $current`
-    echo "$dirname/$basename"
-}
+# ローカル、サーバの切り替え
+if [ "${WHEN_LOCAL}" -eq "1" ]; then
+    PROMPT_NOR=$'%{$fg[white]%}`my-pwd`%{$reset_color%} %{$fg[cyan]%}❰%{$fg[blue]%}❰%{$fg[red]%}❰%{$reset_color%}'
+    PROMPT_INS=$'%{$fg[blue]%}`my-pwd`%{$reset_color%} %{$fg[red]%}❱%{$fg[blue]%}❱%{$fg[cyan]%}❱%{$reset_color%}'
+    PROMPT_VIS=$'%{$fg[yellow]%}`my-pwd`%{$reset_color%} %{$fg[red]%}❰%{$fg[blue]%}❰%{$fg[cyan]%}❰%{$reset_color%}'
+else
 
+    PROMPT_NOR=$'%{$fg[white]%}%n%{$reset_color%} ❰'
+    PROMPT_INS=$'%{$fg[blue]%}%n%{$reset_color%} ❱'
+    PROMPT_VIS=$'%{$fg[yellow]%}%n%{$reset_color%} ❰'
+fi
 PROMPT=$PROMPT_INS
+RPROMPT=$'`branch-status-check`'
+
 function zle-line-pre-redraw {
   if [[ $REGION_ACTIVE -ne 0 ]]; then
     NEW_PROMPT=$PROMPT_VIS
@@ -154,6 +93,52 @@ zle -N zle-line-pre-redraw
 setopt prompt_subst #表示毎にPROMPTで設定されている文字列を評価する
 # ---------------------------------------------
 
+HISTFILE=${HOME}/.config/zsh/.zsh_history
+HISTSIZE=100000
+SAVEHIST=1000000
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt inc_append_history
+setopt share_history
+setopt EXTENDED_HISTORY
+setopt hist_ignore_space
+
+
+zle -N my-source-file-selection
+zle -N my-history-selection
+
+bindkey '^r' history-incremental-search-backward
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+# peco+ghq Gitのリポジトリを一覧表示
+# ghq get (Git repos PATH)
+bindkey '^]' my-source-file-selection
+# Ctrl+g gitのブランチをぺこ
+bindkey '^R' my-history-selection
+
+function my-history-selection() {
+    BUFFER=`history -n 1 | tac  | awk '!a[$0]++' | fzf --no-sort --color 'border:#A3BE8C'`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+
+
+function git-branch-src(){
+    local selected_branch=$(git branch | fzf | cut -c3-)
+    if [ -n "$selected_branch" ]; then
+        BUFFER="git checkout ${selected_branch}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+
+function php-switch() {
+    local selected_php=$(phpbrew list | fzf | cut -c3-)
+    if [ -n "$selected_php" ]; then
+        phpbrew switch ${selected_php}
+    fi
+    clear
+}
 
 
 # ------------------ functions --------------------
@@ -178,6 +163,7 @@ function branch-status-check {
         green='%{'${fg[green]}'%}'
         echo ${prefix} ${branchname}${suffix}
 }
+
 function get-branch-name {
     # gitディレクトリじゃない場合のエラーは捨てます
     echo `git rev-parse --abbrev-ref HEAD 2> /dev/null`
@@ -198,10 +184,31 @@ function get-branch-status {
             res='A:' # Added to commit
             color='%{'${fg[cyan]}'%}'
         fi
-        # echo ${color}${res}'%{'${reset_color}'%}'
-        echo ${color} # 色だけ返す
+        # 色だけ返す
+        echo ${color}
 }
 
-if [ -f ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
+function my-source-file-selection () {
+    local selected_dir=$(ghq list -p | fzf --color 'border:#D08770')
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+
+function my-pwd {
+    local current=`pwd | sed -e "s:^$HOME:~:"`
+    if [[ "$current" =~ ^$GHQ_ROOT ]]; then
+        echo $current | perl -pe "s:^$GHQ_ROOT\/.+?\/:[ghq]\::"
+        return
+    fi
+    if [ "$current" = "~" ]; then
+        echo $current
+        return
+    fi
+
+    local dirname=`dirname $current | sed -e "s:\(\/.\)[^\/]*:\1:g"`
+    local basename=`basename $current`
+    echo "$dirname/$basename"
+}
