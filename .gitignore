@@ -10,3 +10,5 @@ git/local.gitconfig
 
 zsh/local.zsh
 zsh/.zsh_history
+zsh/plugins/*
+!zsh/plugins/.gitkeep
