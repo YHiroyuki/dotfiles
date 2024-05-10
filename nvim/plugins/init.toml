@@ -1,0 +1,226 @@
+# indent
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+lua_add = '''
+    vim.g.indentLine_fileTypeExclude = {'help', 'nerdtree', 'vimfiler', 'defx'}
+    vim.g.indentLine_char = '│'
+'''
+
+
+# markdownプレビュー用
+[[plugins]]
+repo = 'kannokanno/previm'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+
+# 単語検索
+[[plugins]]
+repo = 'mileszs/ack.vim'
+hook_add = '''
+set wildignore+=*.a,vendor/**
+let g:ackprg = 'ag --nogroup --nocolor --column'
+ca Ack Ack!
+ca AckFromSearch AckFromSearch!
+'''
+
+# 整形
+[[plugins]]
+repo = 'kg8m/vim-simple-align'
+
+# コーディングスタイル調整
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
+# アイコン
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'github/copilot.vim'
+hook_add = '''
+let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <C-J> copilot#Accept()
+'''
+
+
+[[plugins]]
+ repo = 'nvim-lua/plenary.nvim'
+
+# lsp
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+on_source = ['williamboman/mason.nvim', 'neovim/nvim-lspconfig']
+lua_add = '''
+ local on_attach = function(client, bufnr)
+  client.server_capabilities.documentFormattingProvider = false
+  local set = vim.keymap.set
+   set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+   set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+   set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+   set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+   set('n', 'gn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+   set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+   set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+   set('n', 'gx', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+   set('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+   set('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+   set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+   end
+ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+ vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false })
+
+ require("mason").setup()
+ require("mason-lspconfig").setup()
+ require("mason-lspconfig").setup_handlers {
+   function(server_name) -- default handler (optional)
+     require("lspconfig")[server_name].setup {
+       on_attach = on_attach,
+     }
+   end
+ }
+'''
+
+# Git関連
+[[plugins]]
+repo = 'lewis6991/gitsigns.nvim'
+lua_add = '''
+require('gitsigns').setup {
+  signcolumn = false,
+  numhl = true,
+  linehl = false,
+  word_diff = false,
+}
+'''
+
+# fuzzy finder
+[[plugins]]
+repo = 'junegunn/fzf'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+# on_source = ['junegunn/fzf']
+depends = ['junegunn/fzf']
+hook_add="""
+let $FZF_DEFAULT_OPTS="--layout=reverse"
+let $FZF_DEFAULT_COMMAND="rg --files --hidden --sort path --glob '!.git/**'"
+let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'border': 'sharp' } }
+set rtp+=$HOME/.config/nvim/dein/repos/github.com/junegunn/fzf
+
+let g:fzf_colors = {
+  \ 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Define'],
+  \ 'fg+':     ['fg', 'Type', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Define'],
+  \ 'info':    ['fg', 'Identifier'],
+  \ 'border':  ['fg', 'Define'],
+  \ 'prompt':  ['fg', 'Identifier'],
+  \ 'pointer': ['fg', 'Type'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment']
+\ }
+
+lua << EOF
+require('plugin_settings').fzf()
+EOF
+"""
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+
+# ddu
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+depends = ['denops.vim']
+on_source = 'denops.vim'
+lua_add = """
+require('plugin_settings').ddu()
+"""
+
+[[plugins]]
+repo = 'Shougo/ddu-commands.vim'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-filer'
+on_source = 'ddu.vim'
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-register'
+on_source = 'ddu.vim'
+
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+on_source = 'ddu.vim'
+
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-column-filename'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'ryota2357/ddu-column-icon_filename'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo='Shougo/ddu-filter-sorter_alpha'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'alpaca-tc/ddu-filter-sorter_directory_file'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'YHiroyuki/ddu-column-rich_filename'
+on_source = 'ddu.vim'
+
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_i=1
+lua_add = '''
+require('plugin_settings').lexima()
+'''
+
+
+[[plugins]]
+repo = 'nvim-lualine/lualine.nvim'
+lua_add = '''
+require('plugin_settings').lualine()
+'''
+

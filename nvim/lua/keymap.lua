@@ -28,3 +28,9 @@ vim.keymap.set('n', '<leader>s`', 'ciw``<Esc>P')
 vim.keymap.set('n', '<leader>s(', 'ciw()<Esc>P')
 vim.keymap.set('n', '<leader>s{', 'ciw{}<Esc>P')
 vim.keymap.set('n', '<leader>s[', 'ciw[]<Esc>P')
+
+
+
+vim.keymap.set('n', '<Leader>/', "<Cmd>lua vim.lsp.buf.hover()<CR>")
+vim.keymap.set('n', '<Leader><Leader>', "<Cmd>lua vim.lsp.buf.definition()<CR>")
+vim.keymap.set('n', '<Leader>r', "<Cmd>lua vim.lsp.buf.references()<CR>")

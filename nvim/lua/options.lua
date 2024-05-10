@@ -24,8 +24,12 @@ local options = {
     laststatus = 2,
     splitbelow = true,
     splitright = true,
+    termguicolors = true,
+    signcolumn = "yes:1",
 }
 
 for k, v in pairs(options) do
     vim.opt[k] = v
 end
+-- vim.cmd('let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"')
+-- vim.cmd('let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"')
