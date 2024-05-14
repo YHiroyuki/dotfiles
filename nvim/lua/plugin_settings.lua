@@ -7,44 +7,57 @@ local function fzf()
 end
 
 local function ddc()
-    local capabilities = require("ddc_source_lsp").make_client_capabilities()
-    require("lspconfig").denols.setup({
-        capabilities = capabilities,
-    })
-    vim.fn['ddc#custom#patch_global']('ui', 'pum')
-    vim.fn['ddc#custom#patch_global']('sources', {
-        'lsp',
-        'around',
-        'cmdline-history',
-    })
-    vim.fn['ddc#custom#patch_global']('sourceOptions', {
-        _ = {
-            matchers = {'matcher_fuzzy'},
-            sorters = {'sorter_rank'},
-            converters = {'converter_remove_overlap'},
-        },
-        around = {mark = '[Around]',},
-        -- lsp = {makr = '[LSP]', forceCompletionPattern = '\.\w*|:\w*|->\w*',},
-        cmdline_history = {mark = '[History]',},
-    })
-    vim.fn['ddc#custom#patch_global']('sourceParams', {
-        lsp = {
-            kindLabels = {Class = 'c'},
-            enableResolveItem = true,
-            enableAdditionalTextEdit = true,
-        },
-    })
-    vim.fn['ddc#enable']()
-    vim.fn['ddc#custom#patch_global']('filterParams', {
-        matcher_fuzzy = {
-            splitMode = 'word',
-        },
+    -- local capabilities = require("ddc_source_lsp").make_client_capabilities()
+    -- require("lspconfig").denols.setup({
+    --     capabilities = capabilities,
+    -- })
+    --
+    vim.fn["ddc#custom#patch_global"]('ui', 'native') 
+    vim.fn["ddc#custom#patch_global"]('sources', {'around'})
+    vim.fn["ddc#custom#patch_global"]('sourceOptions', {
+      _ = {
+        matchers = {'matcher_fuzzy'},
+        sorters = {'sorter_fuzzy'},
+        converters = {'converter_fuzzy'},
+      },
+      around = {mark = '[Around]',},
     })
 
-    vim.keymap.set('i', '<C-n>', "<Cmd>call pum#map#insert_relative(+1)<CR>")
-    vim.keymap.set('i', '<C-p>', "<Cmd>call pum#map#insert_relative(-1)<CR>")
-    vim.keymap.set('i', '<C-e>', "<Cmd>call pum#map#cancel()<CR>")
-    vim.keymap.set('i', '<C-y>', "<Cmd>call pum#map#confirm()<CR>")
+    vim.fn["ddc#enable"]()
+    -- vim.fn['ddc#custom#patch_global']('ui', 'pum')
+    -- vim.fn['ddc#custom#patch_global']('sources', {
+    --     'lsp',
+    --     'around',
+    --     'cmdline-history',
+    -- })
+    -- vim.fn['ddc#custom#patch_global']('sourceOptions', {
+    --     _ = {
+    --         matchers = {'matcher_fuzzy'},
+    --         sorters = {'sorter_rank'},
+    --         converters = {'converter_remove_overlap'},
+    --     },
+    --     around = {mark = '[Around]',},
+    --     -- lsp = {makr = '[LSP]', forceCompletionPattern = '\.\w*|:\w*|->\w*',},
+    --     cmdline_history = {mark = '[History]',},
+    -- })
+    -- vim.fn['ddc#custom#patch_global']('sourceParams', {
+    --     lsp = {
+    --         kindLabels = {Class = 'c'},
+    --         enableResolveItem = true,
+    --         enableAdditionalTextEdit = true,
+    --     },
+    -- })
+    -- vim.fn['ddc#enable']()
+    -- vim.fn['ddc#custom#patch_global']('filterParams', {
+    --     matcher_fuzzy = {
+    --         splitMode = 'word',
+    --     },
+    -- })
+
+    -- vim.keymap.set('i', '<C-n>', "<Cmd>call pum#map#insert_relative(+1)<CR>")
+    -- vim.keymap.set('i', '<C-p>', "<Cmd>call pum#map#insert_relative(-1)<CR>")
+    -- vim.keymap.set('i', '<C-e>', "<Cmd>call pum#map#cancel()<CR>")
+    -- vim.keymap.set('i', '<C-y>', "<Cmd>call pum#map#confirm()<CR>")
     --  inoremap <silent><expr> <CR> pum#visible() ? '<Cmd>call pum#map#confirm()<CR>' : '<CR>'
     --  inoremap <silent><expr> <CR> <Cmd>call pum#map#confirm()<CR>
 end
