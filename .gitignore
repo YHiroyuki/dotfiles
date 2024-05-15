@@ -11,8 +11,12 @@ anyenv/*
 gh/*
 !gh/.gitkeep
 
-item2/*
-!item2/.gitkeep
+github-copilot/*
+!github-copilot/.gitkeep
+
+iterm2/*
+!iterm2/.gitkeep
+
 
 local/*
 !local/.gitkeep
