@@ -6,6 +6,17 @@ nvim/dein/*
 nvim/local/*
 !nvim/local/.gitkeep
 
+anyenv/*
+
+gh/*
+!gh/.gitkeep
+
+item2/*
+!item2/.gitkeep
+
+local/*
+!local/.gitkeep
+
 git/local.gitconfig
 
 zsh/local.zsh

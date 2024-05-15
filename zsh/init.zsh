@@ -6,12 +6,8 @@ export GO15VENDOREXPERIMENT=1
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 autoload -U compinit
 compinit -u
+autoload -U colors; colors
 bindkey -v
-
-
-if [ -f ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
 
 [[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
 
@@ -36,8 +32,11 @@ fi
 alias tmux="tmux"
 alias ll="ls -al"
 alias vi="vim -u NONE -N"
+alias dc-reboot="docker compose down && docker compose up -d"
+alias vpn_start="scutil --nc start office --secret `cat ~/.config/secret/vpn/office`"
+alias vpn_stop="scutil --nc stop office"
 
-
+# TODO 余分なパスを追加しないように対応する
 export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
 
 GHQ_ROOT=`ghq root | sed -e "s:^$HOME:~:"`
@@ -122,6 +121,10 @@ function my-history-selection() {
     zle reset-prompt
 }
 
+function my-vpn() {
+    local vpn_name=$()
+}
+
 
 function git-branch-src(){
     local selected_branch=$(git branch | fzf | cut -c3-)
@@ -141,11 +144,11 @@ function php-switch() {
 }
 
 
+
 # ------------------ functions --------------------
 # {{{ methods for RPROMPT
 # fg[color]表記と$reset_colorを使いたい
 # @see https://wiki.archlinux.org/index.php/zsh
-autoload -U colors; colors
 function branch-status-check {
     local prefix branchname suffix
         # .gitの中だから除外
@@ -212,3 +215,7 @@ function my-pwd {
     local basename=`basename $current`
     echo "$dirname/$basename"
 }
+
+if [ -f ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
