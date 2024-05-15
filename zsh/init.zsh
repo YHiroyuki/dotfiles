@@ -92,7 +92,7 @@ zle -N zle-line-pre-redraw
 setopt prompt_subst #表示毎にPROMPTで設定されている文字列を評価する
 # ---------------------------------------------
 
-HISTFILE=${HOME}/.config/zsh/.zsh_history
+HISTFILE=${HOME}/.config/zsh/history
 HISTSIZE=100000
 SAVEHIST=1000000
 setopt hist_ignore_all_dups
