@@ -7,20 +7,27 @@ local function fzf()
 end
 
 local function ddc()
-    -- local capabilities = require("ddc_source_lsp").make_client_capabilities()
-    -- require("lspconfig").denols.setup({
-    --     capabilities = capabilities,
-    -- })
-    --
+    local capabilities = require("ddc_source_lsp").make_client_capabilities()
+    require("lspconfig").denols.setup({
+        capabilities = capabilities,
+    })
+
     vim.fn["ddc#custom#patch_global"]('ui', 'native') 
-    vim.fn["ddc#custom#patch_global"]('sources', {'around'})
+    vim.fn["ddc#custom#patch_global"]('sources', {'lsp', 'around'})
     vim.fn["ddc#custom#patch_global"]('sourceOptions', {
       _ = {
         matchers = {'matcher_fuzzy'},
-        sorters = {'sorter_fuzzy'},
+        sorters = {'sorter_rank'},
         converters = {'converter_fuzzy'},
       },
       around = {mark = '[Around]',},
+      lsp = {mark = '[LSP]', forceCompletionPattern = '.w*|:w*|->w*',},
+    })
+    vim.fn["ddc#custom#patch_global"]('sourceParams', {
+      lsp = {
+        enableResolveItem = true,
+        enableAdditionalTextEdit = true,
+      },
     })
 
     vim.fn["ddc#enable"]()
