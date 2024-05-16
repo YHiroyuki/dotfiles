@@ -1,9 +1,8 @@
 #!/bin/bash
-vpn_status=`scutil --nc status office | head -n 1`
+connected_vpn_name=`scutil --nc list | grep '^\*\s(Connected)' | sed -E 's/^.*"([^"]+)".*$/\1/'`
 
-if [ "$vpn_status" == "Connected" ]; then
-    # echo -e "\033[32mVPN\033[m"
-    echo ''
+if [ "$connected_vpn_name" == "" ]; then
+    printf "%7s\n" ""
 else
-    echo ' '
+    printf "%7s\n" "$connected_vpn_name"
 fi

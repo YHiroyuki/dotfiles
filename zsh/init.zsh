@@ -33,8 +33,6 @@ alias tmux="tmux"
 alias ll="ls -al"
 alias vi="vim -u NONE -N"
 alias dc-reboot="docker compose down && docker compose up -d"
-alias vpn_start="scutil --nc start office --secret `cat ~/.config/secret/vpn/office`"
-alias vpn_stop="scutil --nc stop office"
 
 # TODO 余分なパスを追加しないように対応する
 export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
@@ -121,8 +119,23 @@ function my-history-selection() {
     zle reset-prompt
 }
 
-function my-vpn() {
-    local vpn_name=$()
+function vpn-manager() {
+    local vpn_entry=$(scutil --nc list | grep '^\*' | sed -E 's/^\* \((Connected|Disconnected)\).*"([^"]+)".*$/\1 \2/' | fzf)
+    local vpn_status=$(echo "$vpn_entry" | awk '{print $1}')
+    local vpn_name=$(echo "$vpn_entry" | awk '{print substr($0, index($0,$2))}')
+
+    case "$vpn_status" in
+        Connected)
+            scutil --nc stop $vpn_name
+            ;;
+        Disconnected)
+            scutil --nc start $vpn_name --secret `cat ~/.config/secret/vpn/${vpn_name}`
+            ;;
+        *)
+            echo "Unknown status."
+            exit 1
+            ;;
+    esac
 }
 
 
