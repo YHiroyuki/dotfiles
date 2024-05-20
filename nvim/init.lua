@@ -35,4 +35,3 @@ vim.cmd('syntax enable')
 require('keymap')
 
 require('colorscheme')
-

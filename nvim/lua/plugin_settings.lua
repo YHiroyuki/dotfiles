@@ -31,42 +31,21 @@ local function ddc()
     })
 
     vim.fn["ddc#enable"]()
-    -- vim.fn['ddc#custom#patch_global']('ui', 'pum')
-    -- vim.fn['ddc#custom#patch_global']('sources', {
-    --     'lsp',
-    --     'around',
-    --     'cmdline-history',
-    -- })
-    -- vim.fn['ddc#custom#patch_global']('sourceOptions', {
-    --     _ = {
-    --         matchers = {'matcher_fuzzy'},
-    --         sorters = {'sorter_rank'},
-    --         converters = {'converter_remove_overlap'},
-    --     },
-    --     around = {mark = '[Around]',},
-    --     -- lsp = {makr = '[LSP]', forceCompletionPattern = '\.\w*|:\w*|->\w*',},
-    --     cmdline_history = {mark = '[History]',},
-    -- })
-    -- vim.fn['ddc#custom#patch_global']('sourceParams', {
-    --     lsp = {
-    --         kindLabels = {Class = 'c'},
-    --         enableResolveItem = true,
-    --         enableAdditionalTextEdit = true,
-    --     },
-    -- })
-    -- vim.fn['ddc#enable']()
-    -- vim.fn['ddc#custom#patch_global']('filterParams', {
-    --     matcher_fuzzy = {
-    --         splitMode = 'word',
-    --     },
-    -- })
+end
 
-    -- vim.keymap.set('i', '<C-n>', "<Cmd>call pum#map#insert_relative(+1)<CR>")
-    -- vim.keymap.set('i', '<C-p>', "<Cmd>call pum#map#insert_relative(-1)<CR>")
-    -- vim.keymap.set('i', '<C-e>', "<Cmd>call pum#map#cancel()<CR>")
-    -- vim.keymap.set('i', '<C-y>', "<Cmd>call pum#map#confirm()<CR>")
-    --  inoremap <silent><expr> <CR> pum#visible() ? '<Cmd>call pum#map#confirm()<CR>' : '<CR>'
-    --  inoremap <silent><expr> <CR> <Cmd>call pum#map#confirm()<CR>
+local function get_ddu_cr_action()
+    local item = vim.fn['ddu#ui#get_item']()
+
+    -- itemがnilでないことを確認
+    if item ~= nil and item['isTree'] ~= nil then
+        if item['isTree'] then
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Cmd>call ddu#ui#do_action('expandItem', { 'mode': 'toggle' })<CR>", true, true, true), 'n', true)
+            return ""
+        end
+    end
+
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Cmd>call ddu#ui#do_action('itemAction', { 'name': 'open' })<CR>", true, true, true), 'n', true)
+    return ""
 end
 
 local function ddu()
@@ -85,8 +64,12 @@ local function ddu()
         },
         kindOptions = {
             file = {
-                defaultAction = 'open'
-
+                defaultAction = 'open',
+                actions = {
+                    custom_create_file = function (items, params, helper)
+                        print("custom action")
+                    end,
+                },
             }
         },
         uiParams = {
@@ -109,9 +92,7 @@ local function ddu()
     vim.api.nvim_create_autocmd('FileType', {
         pattern = 'ddu-filer',
         callback = function()
-            -- vim.keymap.set('n', '<CR>', "ddu#ui#get_item()->get('isTree', v:false) ? <Cmd>call ddu#ui#do_action('expandItem', {'mode': 'toggle'})<CR>: <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open'})<CR>", {silent = true, buffer = true})
-            -- FIXME: expandItem mode toggleで切り替えるようにする
-            vim.keymap.set('n', '<CR>', "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'open'})<CR>", {silent = true, buffer = true})
+            vim.api.nvim_buf_set_keymap(0, 'n', '<CR>', "v:lua.require'plugin_settings'.get_ddu_cr_action()", { noremap = true, silent = true, expr = true })
             vim.keymap.set('n', '<Esc>', "<Cmd>call ddu#ui#do_action('quit')<CR>", {silent = true, buffer = true})
             vim.keymap.set('n', 'q', "<Cmd>call ddu#ui#do_action('quit')<CR>", {silent = true, buffer = true})
             vim.keymap.set('n', '..', "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>", {silent = true, buffer = true})
@@ -124,6 +105,7 @@ local function ddu()
             vim.keymap.set('n', 'r', "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'rename'})<CR>", {silent = true, buffer = true})
             vim.keymap.set('n', 'mv', "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'move'})<CR>", {silent = true, buffer = true})
             vim.keymap.set('n', 't', "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'newFile'})<CR>", {silent = true, buffer = true})
+            -- vim.keymap.set('n', 'n', "<Cmd>call ddu#ui#do_action('custom_create_file', {'name': 'test'})<CR>", {silent = true, buffer = true})
             vim.keymap.set('n', 'mk', "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'newDirectory'})<CR>", {silent = true, buffer = true})
             vim.keymap.set('n', 'yy', "<Cmd>call ddu#ui#do_action('itemAction', {'name': 'yank'})<CR>", {silent = true, buffer = true})
             vim.keymap.set('n', '<C-e>', "<Cmd>call ddu#ui#do_action('quit')<CR>", {silent = true, buffer = true})
@@ -132,7 +114,6 @@ local function ddu()
 
     vim.keymap.set('n', '<C-e>', "<Cmd>call ddu#start({'name': 'filer','resume': v:true,})<CR>")
     vim.keymap.set('n', '<Leader>e', "<Cmd>call ddu#start({'name': 'filer','searchPath': expand('%:p'),'resume': v:true,})<CR>")
-
 end
 
 local function lexima()
@@ -222,6 +203,7 @@ M = {
     ddu = ddu,
     lexima = lexima,
     lualine = lualine,
+    get_ddu_cr_action = get_ddu_cr_action,
 }
 
 return M
