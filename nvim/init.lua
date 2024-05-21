@@ -32,7 +32,7 @@ vim.cmd('filetype plugin indent on')
 vim.cmd('syntax enable')
 
 
-require('keymap')
+require('keymap').setup()
 
 require('colorscheme')
 
@@ -58,3 +58,12 @@ require 'lspconfig'.lua_ls.setup {
     }
   }
 }
+
+-- フォーマットを実行するカスタムコマンドを作成
+vim.api.nvim_create_user_command(
+  'Format',
+  function()
+    vim.lsp.buf.format({ async = true })
+  end,
+  { desc = "Format the current buffer using LSP" }
+)

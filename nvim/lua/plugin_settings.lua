@@ -39,14 +39,14 @@ local function get_ddu_cr_action()
   if item ~= nil and item['isTree'] ~= nil then
     if item['isTree'] then
       vim.api.nvim_feedkeys(
-      vim.api.nvim_replace_termcodes("<Cmd>call ddu#ui#do_action('expandItem', { 'mode': 'toggle' })<CR>", true, true,
-        true), 'n', true)
+        vim.api.nvim_replace_termcodes("<Cmd>call ddu#ui#do_action('expandItem', { 'mode': 'toggle' })<CR>", true, true,
+          true), 'n', true)
       return ""
     end
   end
 
   vim.api.nvim_feedkeys(
-  vim.api.nvim_replace_termcodes("<Cmd>call ddu#ui#do_action('itemAction', { 'name': 'open' })<CR>", true, true, true),
+    vim.api.nvim_replace_termcodes("<Cmd>call ddu#ui#do_action('itemAction', { 'name': 'open' })<CR>", true, true, true),
     'n', true)
   return ""
 end
@@ -169,14 +169,14 @@ local function lualine()
       lualine_b = {
         {
           'filename',
-          file_status = true,       -- Displays file status (readonly status, modified status)
-          newfile_status = false,   -- Display new file status (new file means no write after created)
-          path = 0,                 -- 0: Just the filename
+          file_status = true,     -- Displays file status (readonly status, modified status)
+          newfile_status = false, -- Display new file status (new file means no write after created)
+          path = 0,               -- 0: Just the filename
           -- 1: Relative path
           -- 2: Absolute path
           -- 3: Absolute path, with tilde as the home directory
           -- 4: Filename and parent dir, with tilde as the home directory
-          shorting_target = 40,   -- Shortens path to leave 40 spaces in the window
+          shorting_target = 40, -- Shortens path to leave 40 spaces in the window
           -- for other components. (terrible name, any suggestions?)
           symbols = {
             modified = ' ', -- Text to show when the file is modified.
@@ -213,12 +213,104 @@ local function lualine()
   }
 end
 
+local function tree()
+  local function my_on_attach(bufnr)
+    local api = require "nvim-tree.api"
+
+    local function opts(desc)
+      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    -- default mappings
+    api.config.mappings.default_on_attach(bufnr)
+
+    -- custom mappings
+    -- vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent, opts('Up'))
+    vim.keymap.set('n', 'n', api.fs.create, opts('Create File Or Directory'))
+  end
+
+
+  require("nvim-tree").setup({
+    on_attach = my_on_attach,
+    sort = {
+      sorter = "name",
+      folders_first = true,
+    },
+    view = {
+      width = 30,
+    },
+    renderer = {
+      highlight_git = true,
+      highlight_opened_files = "none",
+      group_empty = true,
+      indent_markers = {
+        enable = true,
+        inline_arrows = false,
+        icons = {
+          corner = "└",
+          edge = "│",
+          item = "├",
+          bottom = "─",
+          none = " ",
+        },
+      },
+      icons = {
+        web_devicons = {
+          file = {
+            enable = true,
+            color = true,
+          },
+          folder = {
+            enable = false,
+            color = true,
+          },
+        },
+        show = {
+          folder_arrow = false,
+        },
+        glyphs = {
+          default = "",
+          symlink = "",
+          bookmark = "󰆤",
+          modified = "●",
+          folder = {
+            arrow_closed = "",
+            arrow_open = "",
+            default = "",
+            open = "",
+            empty = "",
+            empty_open = "",
+            symlink = "",
+            symlink_open = "",
+          },
+          git = {
+            unstaged = "",
+            staged = "",
+            unmerged = "",
+            renamed = "",
+            untracked = "",
+            deleted = "",
+            ignored = "",
+          },
+        },
+
+      },
+    },
+    filters = {
+      dotfiles = true,
+    },
+  })
+
+  require('keymap').tree()
+end
+
 M = {
   fzf = fzf,
   ddc = ddc,
   ddu = ddu,
   lexima = lexima,
   lualine = lualine,
+  tree = tree,
   get_ddu_cr_action = get_ddu_cr_action,
 }
 

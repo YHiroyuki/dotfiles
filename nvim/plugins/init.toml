@@ -143,72 +143,6 @@ repo = 'Shougo/neomru.vim'
 [[plugins]]
 repo = 'Shougo/pum.vim'
 
-# ddu
-# [[plugins]]
-# repo = 'Shougo/ddu.vim'
-# depends = ['denops.vim']
-# on_source = 'denops.vim'
-# lua_add = """
-# require('plugin_settings').ddu()
-# """
-# 
-# [[plugins]]
-# repo = 'Shougo/ddu-commands.vim'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'Shougo/ddu-ui-ff'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'Shougo/ddu-ui-filer'
-# on_source = 'ddu.vim'
-# [[plugins]]
-# repo = 'Shougo/ddu-source-file_rec'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'Shougo/ddu-source-file'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'Shougo/ddu-source-register'
-# on_source = 'ddu.vim'
-# 
-# 
-# [[plugins]]
-# repo = 'shun/ddu-source-buffer'
-# on_source = 'ddu.vim'
-# 
-# 
-# [[plugins]]
-# repo = 'Shougo/ddu-kind-file'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'Shougo/ddu-filter-matcher_substring'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'Shougo/ddu-column-filename'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'ryota2357/ddu-column-icon_filename'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo='Shougo/ddu-filter-sorter_alpha'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'alpaca-tc/ddu-filter-sorter_directory_file'
-# on_source = 'ddu.vim'
-# 
-# [[plugins]]
-# repo = 'YHiroyuki/ddu-column-rich_filename'
-# on_source = 'ddu.vim'
-
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
@@ -231,62 +165,6 @@ repo = 'nvim-tree/nvim-web-devicons'
 repo = 'nvim-tree/nvim-tree.lua'
 depends = ['nvim-tree/nvim-web-devicons']
 lua_add = '''
-require("nvim-tree").setup({
-  sort = {
-    sorter = "case_sensitive",
-  },
-  view = {
-    width = 30,
-  },
-  renderer = {
-    highlight_git = true,
-    highlight_opened_files = "none",
-    group_empty = true,
-    icons = {
-      web_devicons = {
-        file = {
-          enable = true,
-          color = true,
-        },
-        folder = {
-          enable = false,
-          color = true,
-        },
-      },
-          glyphs = {
-            default = "",
-            symlink = "",
-            bookmark = "󰆤",
-            modified = "●",
-            folder = {
-              arrow_closed = "",
-              arrow_open = "",
-              default = "",
-              open = "",
-              empty = "",
-              empty_open = "",
-              symlink = "",
-              symlink_open = "",
-            },
-            git = {
-              unstaged = "",
-              staged = "",
-              unmerged = "",
-              renamed = "",
-              untracked = "",
-              deleted = "",
-              ignored = "",
-            },
-          },
- 
-    },
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
-
-vim.keymap.set('n', '<C-e>', "<Cmd>NvimTreeToggle<CR>")
-vim.keymap.set('n', '<Leader>e', "<Cmd>NvimTreeFindFile<CR>")
+require('plugin_settings').tree()
 '''
 
