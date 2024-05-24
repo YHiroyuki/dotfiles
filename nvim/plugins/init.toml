@@ -168,3 +168,22 @@ lua_add = '''
 require('plugin_settings').tree()
 '''
 
+[[plugins]]
+repo = 'brenoprata10/nvim-highlight-colors'
+lua_add = '''
+-- vim.opt.termguicolors = true
+-- 
+-- require('nvim-highlight-colors').setup({
+--   render = 'virtual',
+--   virtual_symbol = '■',
+-- })
+'''
+
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+
+[[plugins]]
+repo = 'folke/noice.nvim'
+lua_add = '''
+require('plugin_settings').noice()
+'''
