@@ -33,6 +33,7 @@ alias tmux="tmux"
 alias ll="ls -al"
 alias vi="vim -u NONE -N"
 alias dc-reboot="docker compose down && docker compose up -d"
+alias vim="nvim -u ~/.config/vim/init.lua"
 
 # TODO 余分なパスを追加しないように対応する
 export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
