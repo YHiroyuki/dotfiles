@@ -18,8 +18,7 @@ return {
       highlight(0, "GitSignsDelete", { bg = "#823746" })
     end
   },
-  -- ステータスライン
-  {
+  { -- ステータスライン
     'nvim-lualine/lualine.nvim',
     config = function()
       require('lualine').setup {
@@ -121,8 +120,6 @@ return {
       require("ibl").setup { indent = { highlight = highlight } }
     end
   },
-  -- nvimのwebアイコン
-  'nvim-tree/nvim-web-devicons',
   {
     'github/copilot.vim',
     event = 'InsertEnter',
