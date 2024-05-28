@@ -157,22 +157,6 @@ if vim.fn.has('syntax') == 1 then
   DoubleByteSpace()
 end
 
-
-require 'lspconfig'.lua_ls.setup {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim' }
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true)
-      },
-      telemetry = {
-        enable = false
-      }
-    }
-  }
-}
 -- フォーマットを実行するカスタムコマンドを作成
 vim.api.nvim_create_user_command(
   'Format',

@@ -336,9 +336,28 @@ return {
       require("mason-lspconfig").setup()
       require("mason-lspconfig").setup_handlers {
         function(server_name) -- default handler (optional)
+          local settings = {}
+          if server_name == 'lua_ls' then
+            settings = {
+              Lua = {
+                diagnostics = {
+                  globals = { 'vim' }
+                },
+                -- -- 以下の2つがなぜ必要なのかわからない
+                -- -- 設定するとハイライトが有効になるまで時間がかかったので止めた
+                -- workspace = {
+                --   library = vim.api.nvim_get_runtime_file("", true)
+                -- },
+                -- telemetry = {
+                --   enable = false
+                -- }
+              }
+            }
+          end
           require("lspconfig")[server_name].setup {
             on_attach = on_attach,
             capabilities = capabilities, --cmpを連携⇐ココ！
+            settings = settings,
           }
         end
       }
