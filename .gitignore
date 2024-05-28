@@ -1,10 +1,31 @@
 _tmux/plugins
+tmux/plugins/*
+!tmux/plugins/.gitkeep
 
 nvim/dein/*
 nvim/local/*
 !nvim/local/.gitkeep
 
+anyenv/*
+
+gh/*
+!gh/.gitkeep
+
+github-copilot/*
+!github-copilot/.gitkeep
+
+iterm2/*
+!iterm2/.gitkeep
+
+
+local/*
+!local/.gitkeep
+
 git/local.gitconfig
 
 zsh/local.zsh
-zsh/.zsh_history
+zsh/history
+zsh/plugins/*
+!zsh/plugins/.gitkeep
+
+secret
