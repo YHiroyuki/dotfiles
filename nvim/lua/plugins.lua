@@ -147,6 +147,8 @@ return {
         -- custom mappings
         -- vim.keymap.set('n', '<C-t>', api.tree.change_root_to_parent, opts('Up'))
         vim.keymap.set('n', 't', api.fs.create, opts('Create File Or Directory'))
+        vim.keymap.del('n', '<C-e>', { buffer = bufnr })
+        vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
       end
 
 
@@ -155,6 +157,10 @@ return {
         sort = {
           sorter = "name",
           folders_first = true,
+        },
+        git = {
+          enable = true,
+          ignore = false,
         },
         view = {
           width = 30,
@@ -217,7 +223,7 @@ return {
           },
         },
         filters = {
-          dotfiles = true,
+          dotfiles = false,
         },
       })
 
@@ -272,8 +278,12 @@ return {
     end
 
   },
-  'kannokanno/previm',
-  'tyru/open-browser.vim',
+  {
+    'kannokanno/previm',
+    dependencies = { 'tyru/open-browser.vim', },
+    event = { 'CmdlineEnter', },
+    ft = { 'markdown' },
+  },
   -- 整形
   'kg8m/vim-simple-align',
   -- 単語検索
@@ -287,10 +297,10 @@ return {
       vim.g.ackprg = 'ag --nogroup --nocolor --column'
 
       -- コマンドの作成
-      vim.cmd [[
-        command! Ack Ack!
-        command! AckFromSearch AckFromSearch!
-      ]]
+      -- vim.cmd [[
+      --   command! Ack Ack!
+      --   command! AckFromSearch AckFromSearch!
+      -- ]]
     end
   },
   -- eidtorconfig
@@ -488,5 +498,15 @@ return {
     keys = {
       { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
     }
-  }
+  },
+  -- buffer
+  {
+    'akinsho/bufferline.nvim',
+    version = "*",
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      vim.opt.termguicolors = true
+      -- require("bufferline").setup()
+    end
+  },
 }

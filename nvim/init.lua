@@ -55,6 +55,13 @@ end
 
 -- autocmd
 local autocmd = vim.api.nvim_create_autocmd
+autocmd('TermOpen', {
+  pattern = '*',
+  callback = function()
+    vim.opt_local.relativenumber = false
+    vim.opt_local.number = false
+  end
+})
 -- keymap
 local keymap = vim.keymap
 
@@ -63,6 +70,7 @@ local file_type_settings = {
   { pattern = "lua",  command = "setlocal sw=2 sts=2 ts=2 expandtab colorcolumn=120" },
   { pattern = "html", command = "setlocal sw=2 sts=2 ts=2 et colorcolumn=80" },
   { pattern = "php",  command = "setlocal sw=4 sts=4 ts=4 et colorcolumn=120" },
+  { pattern = 'sql',  command = 'setlocal sw=2 sts=2 ts=2 et colorcolumn=80' },
 }
 for _, setting in ipairs(file_type_settings) do
   autocmd("FileType", setting)
