@@ -52,6 +52,8 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+vim.opt.wildignore:append { "*.pyc", ".git/**", "vendor/**", "bundle/**"}
+
 
 -- autocmd
 local autocmd = vim.api.nvim_create_autocmd
@@ -112,6 +114,8 @@ keymap.set('n', '<Leader>/', "<Cmd>lua vim.lsp.buf.hover()<CR>")
 keymap.set('n', '<Leader><Leader>', "<Cmd>lua vim.lsp.buf.definition()<CR>")
 keymap.set('n', '<Leader>r', "<Cmd>lua vim.lsp.buf.references()<CR>")
 
+keymap.set('n', 'tt', "<cmd>Terminal<CR>")
+
 
 -- terminalを開く時の制御
 local function open_terminal()
@@ -165,3 +169,12 @@ vim.api.nvim_create_user_command(
   end,
   { desc = "Format the current buffer using LSP" }
 )
+
+if vim.fn.executable('nvr') == 1 then
+  vim.env.EDITOR = 'nvr -cc split -c "set bufhidden=delete" --remote-wait'
+end
+
+if vim.fn.executable('rg') == 1 then
+  vim.o.grepprg = 'rg --vimgrep --hidden'
+  vim.o.grepformat = '%f:%l:%c:%m'
+end

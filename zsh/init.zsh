@@ -19,6 +19,9 @@ fi
 if which rbenv > /dev/null; then
     eval "$(rbenv init -)"
 fi
+if which phpenv > /dev/null; then
+    eval "$(phpenv init -)"
+fi
 
 # Mac固有の設定
 if [ "$(uname)" = "Darwin" ]; then
@@ -37,6 +40,7 @@ alias vim="nvim -u ~/.config/vim/init.lua"
 
 # TODO 余分なパスを追加しないように対応する
 export PATH=$HOME/.nodebrew/current/bin:$HOME/.rbenv/bin:/usr/local/bin:$HOME/.phpenv/bin:/usr/local/texlive/2014/bin:/opt/local/bin:/usr/local/mysql/bin:/opt/local/sbin:$PATH:$GOPATH/bin
+
 
 GHQ_ROOT=`ghq root | sed -e "s:^$HOME:~:"`
 zstyle ':completion:*:default' menu select=1
@@ -232,4 +236,8 @@ function my-pwd {
 
 if [ -f ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+if [[ -n ${EDITOR} ]]; then
+    alias nvim=${EDITOR}
 fi
