@@ -16,6 +16,7 @@ return {
       highlight(0, "GitSignsAdd", { bg = "#204b2e" })
       highlight(0, "GitSignsChange", { bg = "#378246" })
       highlight(0, "GitSignsDelete", { bg = "#823746" })
+      highlight(0, "WinSeparator", {link = "GruvboxBlue"})
     end
   },
   { -- ステータスライン
@@ -271,9 +272,10 @@ return {
       }
 
       vim.keymap.set('n', '<Leader>o', '<Cmd>call fzf#vim#files("", fzf#vim#with_preview(), 0)<CR>')
+      vim.keymap.set('n', '<Leader>g', '<Cmd>GFiles?<CR>')
       vim.keymap.set('n', '<Leader>b',
         '<Cmd>call fzf#vim#buffers("", fzf#vim#with_preview({ "placeholder": "{1}" }), 0)<CR>')
-      vim.keymap.set('n', '<Leader>F',
+      vim.keymap.set('n', '<Leader>f',
         'fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(""), 1, fzf#vim#with_preview(), 0)<CR>')
     end
 
@@ -282,7 +284,7 @@ return {
     'kannokanno/previm',
     dependencies = { 'tyru/open-browser.vim', },
     event = { 'CmdlineEnter', },
-    ft = { 'markdown' },
+    ft = { 'markdown', 'html' },
   },
   -- 整形
   'kg8m/vim-simple-align',
@@ -511,12 +513,12 @@ return {
     -- optional for floating window border decoration
     dependencies = {
       "nvim-lua/plenary.nvim",
-    },
+    }
     -- setting the keybinding for LazyGit with 'keys' is recommended in
     -- order to load the plugin when the command is run for the first time
-    keys = {
-      { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-    }
+    -- keys = {
+    --   { "lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+    -- }
   },
   -- buffer
   {
