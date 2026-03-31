@@ -69,6 +69,7 @@ local file_type_settings = {
 	{ pattern = "html", command = "setlocal sw=2 sts=2 ts=2 et colorcolumn=80" },
 	{ pattern = "php", command = "setlocal sw=4 sts=4 ts=4 et colorcolumn=120" },
 	{ pattern = "sql", command = "setlocal sw=2 sts=2 ts=2 et colorcolumn=80" },
+	{ pattern = "markdown", command = "setlocal sw=2 sts=2 ts=2 et colorcolumn=80" },
 }
 for _, setting in ipairs(file_type_settings) do
 	autocmd("FileType", setting)
